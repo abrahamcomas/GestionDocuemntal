@@ -131,7 +131,7 @@ class FirmarDocumentoController extends Controller
                             "checksum"=> $Sha256
                             
                                         
-                    ])
+                    ])       
             ]);
                                         
             $responseBody = json_decode($response->getBody());
