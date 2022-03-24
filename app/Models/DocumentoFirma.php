@@ -19,8 +19,7 @@ class DocumentoFirma extends Model
            "ID_Documento",
            "FechaFirma",
            "Firmado"
-  
-       ]; 
+       ];  
 
        public $timestamps = false;
 }

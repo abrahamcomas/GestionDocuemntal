@@ -26,13 +26,13 @@
 								</div>
 							</div>
 							<div class="btn-group" style=" width:100%;">	
-								<button type="submit" class="btn btn-info active" style="background: #31A877;">Aceptar</button>
+								<button type="submit" class="btn btn-primary active">ACEPTAR</button>
 							</div>	
 						</form>
 					</div> 	
 					<div class="card-footer text-muted">
 						<div class="btn-group" style=" width:100%;">	
-							<a href="{{ route('Index') }}" style="color: #31A877;"><strong>Volver</strong></a>
+							<a href="{{ route('Index') }}" style="color: #2AADB8;"><strong>VOLVER</strong></a>
 						</div>	      
 					</div>	
 				</div>

@@ -14,7 +14,7 @@
 		<div class="col-lg-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<center><h1>SISTEMA CONTRATOS</h1></center>
+					<center><h1>SISTEMA GESTIÓN DOCUMENTAL</h1></center>
 				</div>
 				<hr style="width:100%; border-color: green;">
 				<div class="panel-body">
@@ -24,7 +24,7 @@
 						</h4>
 						<center>
 							<a href="{{ $token }}" style="color: black;">
-		      				Recuperar Contraseña
+		      				RECUPERAR CONTRASEÑA
 		      			</center>
 					</center>
 					</center> 

@@ -15,7 +15,9 @@ class TipoDocumento extends Model
    
        //pongo los caampos para permitir insert multiple
        protected $fillable=[
-           "Nombre_T"
-   
+           "Nombre_T",
+           "EstadoTipoDocumento"
        ]; 
+       
+       public $timestamps = false;
 }

@@ -161,7 +161,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
+        /*Dubocr\PdfUtils\Providers\PdfUtilsServiceProvider::class,*/
+        LaravelQRCode\Providers\QRCodeServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -174,7 +176,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Codedge\Fpdf\FpdfServiceProvider::class,
+        Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class
     ],
 
     /*
@@ -228,7 +231,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
+        'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class,
+        'PdfUtils' => Dubocr\PdfUtils\Facades\PdfUtils::class,
+        
+        
+        'QRCode' => LaravelQRCode\Facades\QRCode::class,
     ],
 
 ];

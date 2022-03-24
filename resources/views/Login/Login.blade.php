@@ -32,16 +32,29 @@
 										</div>
 									</div>
 									<div class="btn-group" style=" width:100%;">	
-										<button type="submit" class="btn btn-success active btn-info"  style="background: #31A877;">Aceptar</button>
+										<button type="submit" class="btn btn-primary active">ACEPTAR</button>
 									</div>
-								</form>
+								</form> 
 							</div> 
 							<div class="card-footer text-muted">
 								<div class="btn-group" style=" width:100%;">	
-									<a href="{{ route('Recuperar') }}" style="color: #31A877;"><center><strong>Recuperar Contraseña</strong></center></a>
-								</div>	      
-							</div>
-						</div>	
+									<a href="{{ route('Recuperar') }}" style="color: #2AADB8;"><center><strong>RECUPERAR CONTRASEÑA</strong></center></a>
+								</div>   
+							</div> 
+						</div>
+                        <div class="card-footer text-muted">
+                            <h3>¿Qué es una versión Beta?</h3>
+                            <strong>Una versión Beta es una versión de software que ha pasado la etapa de prueba interna, llamada "Alfa" y ha sido lanzada a los usuarios para pruebas públicas. La versión Beta del software suele ser un prototipo del producto final destinado al lanzamiento público.</strong>
+						</div>
+                        <div class="card-footer text-muted">
+                        <center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="90" height="90"/></center>
+					        <center>
+                            <strong> MUNICIPALIDAD DE CURICÓ</strong>
+					        </center>
+                            <center><strong>DEPARTAMENTO DE INFORMÁTICA 2022</strong>
+                            <h6 style="color: #FF0C00;"><strong>VERSIÓN BETA 0.5.230322</strong></h6></center>
+                    
+                        </div>
 					</div> 
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
@@ -61,6 +74,6 @@
 			    	window.location.reload();
 			  	}
 			});
-	});	
+	});	 
 </script>
 @endsection

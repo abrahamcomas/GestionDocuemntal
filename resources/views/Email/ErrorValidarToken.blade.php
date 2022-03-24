@@ -17,7 +17,7 @@
 					</div> 
 					<div class="card-footer text-muted">
 						<div class="btn-group" style=" width:100%;">	
-						<a href="{{ route('Index') }}" style="color: #31A877;"><strong>Volver</strong></a>
+						<a href="{{ route('Index') }}" style="color: #31A877;"><strong>VOLVER</strong></a>
 						</div>	      
 					</div>
 				</div>	

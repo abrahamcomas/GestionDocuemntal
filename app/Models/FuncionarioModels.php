@@ -17,12 +17,16 @@ class FuncionarioModels extends Model
     protected $fillable=[
         "Activo",
         "TipoFirma",
-    	"Root ",
+        "Root",
+        "Jefe",
+        "Secretaria",
+        "FirmaMasiva",
     	"Rut",
     	"Nombres",
         "Apellidos", 
         "Email", 
         "Telefono",
+        "Cargo", 
         "password",
         "CorreoActivo"
 

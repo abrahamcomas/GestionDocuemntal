@@ -18,7 +18,7 @@
 					<hr style="width:100%; border-color: blue;">
 					<br>
 					<center>
-						<a href="{{ route('Index') }}" style="color: black;"><strong>Volver</strong></a>
+						<a href="{{ route('Index') }}" style="color: black;"><strong>VOLVER</strong></a>
 					</center> 
 				</div>
 			</div> 

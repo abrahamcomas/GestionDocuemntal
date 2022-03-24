@@ -14,9 +14,8 @@ class ResetearContrasenia extends Controller
 {
     public function index(Request $request)
     {
-  
         $rules = [
-            'Email' => 'required', 
+            'Email' => 'required',  
         ]; 
  
         $messages = [ 
@@ -31,22 +30,24 @@ class ResetearContrasenia extends Controller
 
 		if ($DatosFuncionario==1)  
 			{
-				$datos=DB::table('Funcionarios')->Select('ID_Funcionario','Nombres','Apellidos')->whereEmail($Email)->first();
+                
+				$datos=DB::table('Funcionarios')->Select('ID_Funcionario_T','Nombres','Apellidos')->whereEmail($Email)->first();
 
 				$token1=Str::random(120); 
 
-				$user = FuncionarioModels::find($datos->ID_Funcionario );
+				$user = FuncionarioModels::find($datos->ID_Funcionario_T);
 				$user->CorreoActivo = 2;  
 	            $user->Token = $token1;
 	            $user->save();
 
 				$resultado='Funcionario/a '.$datos->Nombres.' '.$datos->Apellidos.', correo enviado correctamente';
 				
-				$token= 'http://gestiondocumental.test/ResetearContrasenia?id='.$datos->ID_Funcionario .'&token='.$token1;
+				$token= 'http://sgd.municipalidadcurico.cl/ResetearContrasenia?id='.$datos->ID_Funcionario_T.'&token='.$token1;
 
 				Mail::to($Email)->send(new RecuperarPasword($datos,$token));
  
 			}
+            
 		else
 			{
 

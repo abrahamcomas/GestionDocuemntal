@@ -20,7 +20,7 @@
 							<div class="card-body">
 							<form method="POST" action="{{ route('Restaurar') }}">   
 								@csrf @method('PATCH')
-									<input type="hidden" id="Id_Funcionario" name="Id_Funcionario" value="{{ $Datos->ID_Funcionario }}">
+									<input type="hidden" id="Id_Funcionario" name="Id_Funcionario" value="{{ $Datos->ID_Funcionario_T }}">
 									<div class="form-group">
 										<div class="form-label-group">
 											<input type="password" id="Contrasenia" name="Contrasenia" class="form-control" placeholder="Ingrese Contraseña" autocomplete="on">
@@ -32,13 +32,13 @@
 										</div>
 									</div>
 									<div class="btn-group" style=" width:100%;">	
-									<button type="submit" class="btn btn-success active btn-info"  style="background: #31A877;">Aceptar</button>
+									<button type="submit" class="btn btn-success active btn-info"  style="background: #31A877;">ACEPTAR</button>
 										</div>	
 								</form>
 							</div> 
 							<div class="card-footer text-muted">
 								<div class="btn-group" style=" width:100%;">	
-								<a href="{{ route('Index') }}" style="color: #31A877;"><strong>Volver</strong></a>
+								<a href="{{ route('Index') }}" style="color: #31A877;"><strong>VOLVER</strong></a>
 								</div>	      
 							</div>
 						</div>	

@@ -11,30 +11,20 @@ class PDFGestionController extends Controller
 {
     public function index(Request $request)  
     {
+        $ID_DestinoDocumento   = $request->input('ID_DestinoDocumento');
 
-
-
-        $ID_Documento_T  = $request->input('ID_Documento_T');
-
-
-
-        $datos=DB::table('Documento')->Select('Ruta_T')->where('ID_Documento_T', '=', $ID_Documento_T)->get();
+        $datos=DB::table('DestinoDocumento')->Select('Ruta_T')->where('ID_DestinoDocumento', '=', $ID_DestinoDocumento)->get();
 	   
         foreach ($datos as $Dato){
             $Ruta = $Dato->Ruta_T;
         } 
-         
-        
-    	
+    
 		$contents = Storage::disk('PDF')->get($Ruta);
-        
-			
-
+        	
         header('Content-Type: application/pdf');
-	
         header('Content-Disposition: inline; filename="'.basename($Ruta).'"');
         echo $contents;
 
-        dd('buena');
+       
     }
 }

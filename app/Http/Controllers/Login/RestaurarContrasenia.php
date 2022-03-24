@@ -15,9 +15,9 @@ class RestaurarContrasenia extends Controller
     	$token = $request->input('token'); 
         $CorreoActivo = 2; 
 
-    	if (isset($id) AND isset($token)) {  
+    	if (isset($id) AND isset($token)) {   
   
-				$Datos=DB::table('Funcionarios')->Select('ID_Funcionario','Nombres','Apellidos','CorreoActivo','Token')->where('ID_Funcionario',$id)->first();
+				$Datos=DB::table('Funcionarios')->Select('ID_Funcionario_T','Nombres','Apellidos','CorreoActivo','Token')->where('ID_Funcionario_T',$id)->first();
     	 
     			if ($Datos->Token==$token AND $Datos->CorreoActivo==$CorreoActivo){
     				return view('Email/TokenValido')->with('Datos', $Datos);

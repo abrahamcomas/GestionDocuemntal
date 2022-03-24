@@ -45,6 +45,31 @@ return [
             'root' => public_path('PDF'),
         ],
 
+        'ImagenPDF' => [
+            'driver' => 'local',
+            'root' => public_path('ImagenPDF'),
+        ],
+
+        'QR' => [
+            'driver' => 'local',
+            'root' => public_path('QR'),
+        ], 
+
+        'WORD' => [
+            'driver' => 'local',
+            'root' => public_path('WORD'),
+        ],
+
+        'ZIP' => [
+            'driver' => 'local',
+            'root' => public_path('ZIP'),
+        ],
+
+        'Firmas' => [
+            'driver' => 'local',
+            'root' => public_path('Firmas'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

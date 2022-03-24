@@ -5,11 +5,11 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 			<br>
-			@include('messages')
+			@include('messages') 
 			<div class="panel panel-default">
 				
 			
-			</div> 
+			</div>  
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4"></div>
 	</div>
