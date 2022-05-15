@@ -36,9 +36,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header"> 
-                        <h4><strong>SOLICITUDES V°B° {{ $AnioSelect}}</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>SOLICITUDES V°B° {{ $AnioSelect}}</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -184,9 +186,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <table table class="table table-hover">
                             <thead>  
@@ -338,9 +342,11 @@
                     </div> 
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>FIRMANTES</strong></h4>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>FIRMANTES</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  
@@ -384,9 +390,11 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>ODP V°B°</strong></h4>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>ODP V°B°</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  
@@ -502,9 +510,11 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>V°B°</strong></h4>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>V°B°</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body">
                                 <table table class="table table-hover">
                                     <thead>  

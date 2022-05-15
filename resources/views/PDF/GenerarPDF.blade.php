@@ -1,0 +1,8 @@
+
+         
+
+        
+            
+            {{ $text_plantilla }}
+          
+     

@@ -64,11 +64,16 @@
          $diaFC= 'Domingo';  
       }
   @endphp 
-
+<!--<!DOCTYPE html>-->
 <meta charset="utf-8">
 <title>GestionDocumental</title>
 <head>
+<meta name="description" content="SGD">
 	<meta name="viewport" content="width=device-width"/>
+    <meta name="theme-color" content="#317EFB"/>
+    <link rel="manifest" href="/manifest.json">
+    <html lang="es">
+   
 	<link href="{{ asset ('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset ('ManuLateral/simple-sidebar.css ') }}" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -76,14 +81,16 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<!--Para que funione el ajax-->
+
+
+    <!--ERROR DE VULNERABILIDAD-->
+	<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>-->
+    
     <!--PDF JAVASCRIP-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
 
-    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-    
 
     <!--PARA CONVERTIR DIV EN IMAGEN-->
     <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
@@ -92,8 +99,23 @@
     <!-- ejemplos 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">-->
-
+    
+    <!--GRAFICOS-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script> 
 	
+    <!--CKEDITOR-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ asset('ckeditor/build/ckeditor.js') }}"></script>
+    <!--<script src="{{ asset('ckeditor5/build/imageresize.js') }}"></script>-->
+
+
+
+	<!--<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>-->
+
 	<script type="text/javascript">
 		function checkRut(rut)  
 		    {
@@ -116,7 +138,7 @@
 			    if(dvEsperado != dv) { rut.setCustomValidity("RUT Inválido"); return false; }
 			    rut.setCustomValidity('');
 		    }
-
+ 
             function mueveReloj(){
                 momentoActual = new Date()
                 hora = momentoActual.getHours()
@@ -128,7 +150,7 @@
                 document.getElementById("Hora").innerHTML =horaImprimible;
             
                 setTimeout("mueveReloj()",1000)
-            
+             
             }
 
             function ocultar() {
@@ -139,44 +161,244 @@
                 document.getElementById('ver').innerHTML = '<p>' + mensaje + '</p>';
                 document.getElementById('ver').style.opacity= 1;
             }
+
+            
            
 	</script>
-    
+ 
 	<style type="text/css">
  
+        @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 	
+    <?php   if(!empty(session('ColorPrincipal'))){  ?>
+             
+                .card-header, #h { 
+                    height:auto;
+                    background: linear-gradient(0deg, <?php echo session('ColorSecundario'); ?>, <?php echo session('ColorPrincipal'); ?>);
+                    color: white !important;
+                } 
 
-        .card-header, #h,.btn-primary { 
-            height:auto;
-	        background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(76, 25, 88,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(255, 255, 255,.25) 0%,rgba(0, 0, 0) 100%), -webkit-linear-gradient(-45deg,  #2AADB8 0%,#2AADB8 100%);
-			color: white !important;
-		
-		}
+    <?php 
+            } 
+            else { ?>
 
-		.btn-warning{
-			color: #FFFFFF !important;
-		}
+                .card-header, #h { 
+                    height:auto;
+                    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(76, 25, 88,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(255, 255, 255,.25) 0%,rgba(0, 0, 0) 100%), -webkit-linear-gradient(-45deg,  #2AADB8 0%,#2AADB8 100%);
+                    color: white !important;
+                }
+
+    <?php   }   ?>
+
+    <?php if(!empty(session('ColorSecundario'))){  ?>
+
+                /*Colo letras menu opincipal*/
+                  #sidebar {
+                    min-width: 250px;
+                    max-width: 250px;
+                    background: linear-gradient(70deg, <?php echo session('ColorSecundario'); ?>, <?php echo session('ColorPrincipal'); ?>);
+                    color: #FFFFFF;
+                    transition: all 0.9s;
+                    min-height: 100vh;
+                }
+
+    <?php 
+            } 
+            else { ?>
+
+                /*Colo letras menu opincipal*/
+                #sidebar {
+                    min-width: 250px;
+                    max-width: 250px;
+                    background: linear-gradient(70deg, #000000, #09818F);
+                    color: #FFFFFF;
+                    transition: all 0.9s;
+                    min-height: 100vh;
+                }
+
+    <?php   }   ?>
+
+
+    <?php   if(!empty(session('BodyPrincipal'))){  ?>
+                body {
+                    font-family: 'Poppins', sans-serif;
+                    background: linear-gradient(10deg, <?php echo session('BodyPrincipal'); ?>, <?php echo session('BodySecundario'); ?>);
+                }
+
+    <?php 
+            } 
+            else { ?>
+                body {
+                    font-family: 'Poppins', sans-serif;
+                    background: linear-gradient(10deg, #8AB3D3, #FFFFFF);
+                }
+
+    <?php   }   ?>
+
+    <?php   if(!empty(session('FocoNoSelecLetra'))){  ?>
+
+                /*Foco sin seleccionar*/
+                #sidebar ul li  a:hover {
+                    color: <?php echo session('FocoNoSelecLetra'); ?>;
+                    background: <?php echo session('FocoNoSelecFondo'); ?>;
+                }
+    <?php 
+            } 
+            else { ?>
+
+                 /*Foco sin seleccionar*/
+                #sidebar ul li  a:hover {
+                    color: #56FF02;
+                    background: #0E8B85;
+                }
+ 
+    <?php   }   ?>
+
+    <?php   if(!empty(session('FocoSelecLetra'))){  ?> 
+                /*Foco seleccionado*/
+                #sidebar ul li.active>a,
+                a[aria-expanded="true"] {
+                    color:<?php echo session('FocoSelecLetra'); ?>;
+                    background: <?php echo session('FocoSelecFondo'); ?>;
+                }
+    <?php 
+            } 
+            else { ?>
+
+                /*Foco seleccionado*/
+                #sidebar ul li.active>a,
+                a[aria-expanded="true"] {
+                    color: #FFFFFF;
+                    background: #0E8B85;
+                }
+
+    <?php   }   ?>
+
+    <?php   if(!empty(session('LetraLista'))){  ?> 
+
+                /*Color letras*/
+                .btn-link {
+                    color: <?php echo session('LetraLista'); ?>;
+                    font-weight: bold;
+                }
+    <?php 
+            } 
+            else { ?>
+
+                 /*Color letras*/
+                .btn-link {
+                    color: #56FF02;
+                    font-weight: bold;
+                }
+
+    <?php   }   ?>
+
+    <?php   if(!empty(session('LetraPrincipal'))){  ?> 
+
+                a,
+                a:hover,
+                a:focus {
+                    color: <?php echo session('LetraPrincipal'); ?>;
+                    text-decoration: none;
+                    transition: all 0.9s;
+                }
+    <?php 
+            } 
+            else { ?>
+
+                a,
+                a:hover,
+                a:focus {
+                    color: #FFFFFF;
+                    text-decoration: none;
+                    transition: all 0.9s;
+                }
+	<?php	
+            }   ?>
         
-        /* CODIGO VISUALIZADOR PDF*/
-            #canvas_container {
-            overflow: auto;
-            background: #333; 
-            text-align: center; 
-            border: solid 3px;
-            overflow-y: scroll;
-            overflow-y: scroll;
-        }
 
-        #Hora{
-            width:100%;
-            text-align:center; 
-            margin-top:10%;
-            color:#000000;
-            font-size:20px;
-            position:relative;
-            top:-27px;
-            left:-10px;
-        }
+    .btn-warning{
+		color: #FFFFFF !important;
+	}
+        
+    /* CODIGO VISUALIZADOR PDF*/
+        #canvas_container {
+        overflow: auto;
+        background: #333; 
+        text-align: center; 
+        border: solid 3px;
+        overflow-y: scroll;
+        overflow-y: scroll;
+    }
+
+    #Hora{
+        width:100%;
+        text-align:center; 
+        margin-top:10%;
+        color:#FFFFFF;
+        font-size:20px;
+        position:relative;
+        top:-27px;
+        left:-10px;
+    }
+
+    /* ---------------------------------------------------
+        SIDEBAR STYLE
+    ----------------------------------------------------- */
+
+    .wrapper {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+    }
+
+
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
+    /*Separacion menu*/
+    #sidebar ul li a {
+        padding: 12px;
+        font-size: 1.1em;
+        display: block;
+    }
+
+    a[data-toggle="collapse"] {
+        position: relative;
+    }
+
+    #sidebar p:hover{
+        color: #00CD19;
+        background: #0E8B85;
+    }
+
+    .dropdown-toggle::after {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+
+    ul.CTAs {
+        padding: 20px;
+    }
+
+    ul.CTAs a {
+        text-align: center;
+        font-size: 0.9em !important;
+        display: block;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    #content {
+        width: 100%;
+        padding: 20px;
+        min-height: 100vh;
+        transition: all 0.3s;
+    }
 
 	</style> 
 
@@ -185,11 +407,11 @@
 			@if(Auth::guard()->check())
 				<a style="color: white;">
 					<strong>
-						<button class="btn btn-info active" id="menu-toggle" style="background: #2AADB8;">
-							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-border-width" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-							  		<path d="M0 3.5A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-2zm0 5A.5.5 0 0 1 .5 8h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+                        <button type="button" id="sidebarCollapse" class="btn btn-info">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-border-width" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 3.5A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-2zm0 5A.5.5 0 0 1 .5 8h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
 							</svg>
-						</button>
+                        </button>
 						{{ Auth::user()->Nombres}} 
 						{{ Auth::user()->Apellidos }}
 					</strong>
@@ -209,264 +431,368 @@
 				</a>
 		    @else	
 				<a href="{{ route('Registrarse') }}" style="color: white;">
-					<center><strong>REGISTRARSE </strong></center>
+					<center><strong>REGISTRO </strong></center>
                 </a>
 		    @endif
 
   		</ul>
 	</nav>  
-		@livewireStyles  
-</head>
-<body> 
+		@livewireStyles
+</head> 
+<body>
 @if(Auth::guard('web')->check()) 
-  		<div class="d-flex" id="wrapper"> 
-			<div class="bg-light border-right" id="sidebar-wrapper">
-      			<div class="sidebar-heading"><strong><center><a href="{{ route('Principal') }}" style="color: #000000;">MENÚ</a></center></strong></div>
-				<div class="list-group list-group-flush">
-                    @if(Auth::user()->Root==1)
-                        <div class="dropdown">
-                            <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>ROOT&nbsp;</strong></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 90%">
-                                <form method="POST" action="{{ route('AgregarJefes') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        AGREGAR JEFES
-                                    </button>  
-                                </form>
-                                <form method="POST" action="{{ route('AgregarFirma') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        AGREGAR FIRMA
-                                    </button>   
-                                </form> 
-                                <form method="POST" action="{{ route('AgregarPlantillas') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        AGREGAR PLANTILLAS
-                                    </button>  
-                                </form>
-                                <form method="POST" action="{{ route('HabilitarFirmaMasiva') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                      FIRMA MASIVA
-                                    </button>   
-                                </form>
-                                <form method="POST" action="{{ route('AgregarDocumentos') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        AGREGAR DOCUMENTOS
-                                    </button>   
-                                </form> 
-                                <form method="POST" action="{{ route('AgregarDirDEP') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        AGREGAR DIREC. DEPT.
-                                    </button>  
-                                </form>
-                                <form method="POST" action="{{ route('Mensaje') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        MENSAJE PÚBLICO
-                                    </button>  
-                                </form>
-                            </div>
-                        </div>
-                    @endif
-                    @if(Auth::user()->Jefe==1)
-                        <div class="dropdown">
-                            <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ENCARGADO/A ODP&nbsp;</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-                                <form method="POST" action="{{ route('AdministrarSecretaria') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        SECRETARIA 
-                                    </button> 
-                                </form>
-                                <form method="POST" action="{{ route('PortafolioDirecto') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        <strong>PORTAFOLIOS DIRECTOS</strong>
-                                    </button> 
-                                </form>
-                                <form method="POST" action="{{ route('Subrogante') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        SUBROGANTE
-                                    </button>
-                                </form>
-                            </div> 
-                        </div> 
-                    @endif
-                    @if(Auth::user()->Secretaria==1)
-                        <div class="dropdown">
-                            <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>OFICINA DE PARTES&nbsp;</strong></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-                                <form method="POST" action="{{ route('CrearDocumentoODP') }}"> 
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        NUEVA SOLIC.
-                                    </button> 
-                                </form>
-                                <form method="POST" action="{{ route('EnvioOficinaPartesODP') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        SOLIC. DETENIDAS
-                                    </button>  
-                                </form>
-                                <hr>
-                                <form method="POST" action="{{ route('Distribuccion') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        <strong>SOLIC. INTERNAS</strong>
-                                    </button> 
-                                </form>
-                                <hr>
-                                <form method="POST" action="{{ route('ODPExternos') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        SOLIC. EXTERNAS
-                                    </button>  
-                                </form>
-                                <form method="POST" action="{{ route('ODPExternosVB') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        SOLIC. EXTERNAS V°B°
-                                    </button>  
-                                </form>
-                            </div>
-                        </div> 
-                    @endif
-
-                    @if(Auth::user()->FirmaMasiva==1)
-                    <div class="dropdown">
-                            <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #FF0C00;"><strong>FIRMA MASIVA&nbsp;</strong></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-                                <form method="POST" action="{{ route('DocumentoExt') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        <a style="color: #FF0C00;"><strong>FIRMA MASIVA ARCHIVOS EXT.</strong></a>
-                                    </button>
-                                </form>
-                            </div> 
-                        </div>  
-                    @endif
-                        <div class="dropdown">
-                            <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SOLICITUDES&nbsp;</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-                            @if(Auth::user()->Secretaria!=1)
-                                <form method="POST" action="{{ route('CrearDocumento') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        NUEVA 
-                                    </button> 
-                                </form>
-                            @endif
-                                <form method="POST" action="{{ route('EnvioOficinaPartes') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        DETENIDAS
-                                    </button>  
-                                </form>
-                         
-                                <form method="POST" action="{{ route('DocumentoEnProcesoOP') }}">
-                                    @csrf 
-                                    <button type="submit" class="btn list-group-item-action">
-                                        EN PROCESO
-                                    </button> 
-                                </form>
-                                <form method="POST" action="{{ route('PortafoliosRecibidos') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        RECIBIDAS
-                                    </button>
-                                </form>
-                                <form method="POST" action="{{ route('PortafoliosRecibidosVB') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        V°B°
-                                    </button>
-                                </form>
-                                <hr>
-                                <center><strong>HISTORIAL</strong></center>
-                                <hr>
-                                <form method="POST" action="{{ route('PortafoliosFinalizados') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        FINALIZADAS
-                                    </button>
-                                </form> 
-                                <form method="POST" action="{{ route('PortafoliosFinalizadosFir') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        FIRMADAS
-                                    </button>
-                                </form> 
-                                <form method="POST" action="{{ route('PortafoliosFinalizadosVB') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        V°B°
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    <!--<div class="dropdown">
-			  			<a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PLANTILLAS&nbsp;</a>
-				  		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 90%">
-                            <form method="POST" action="{{ route('DescargarPlantillasU') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action">
-                                    DESCARGAR
+    <div class="d-flex" id="wrapper"> 
+        <nav id="sidebar">
+            <ul class="list-unstyled">
+                <br>
+                <div class="sidebar-heading"><strong><a href="{{ route('Principal') }}" style="color: #ffffff;"><center><h4>MENÚ</h4></center></a></strong></div>
+                <hr style="background-color: #56FF02;">
+                @if(Auth::user()->Root==1 || Auth::user()->Root==2)
+                    <li>
+                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ROOT</strong></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu1">
+                            <hr style="background-color: #FFFFFF;">
+                            
+                            <form method="POST" action="{{ route('AgregarJefes') }}">
+                                @csrf 
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR JEFES
                                 </button>  
+                            </form>
+                            <form method="POST" action="{{ route('AgregarSecretaria') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR SECRETARIA
+                                </button>    
                             </form> 
-						</div> 
-				  	</div>-->
-                    <div class="dropdown">
-                        <a href="" class="list-group-item list-group-item-action dropdown-toggle" id="dropdownMenuButton" 
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">OPCIONES&nbsp;</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%">
-                            @if(Auth::user()->Secretaria==1)
-                                <form method="POST" action="{{ route('AutorizarRegistro') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                        <strong>ADMINISTRAR REGISTROS</strong>
-                                    </button>   
-                                </form>
-                                <form method="POST" action="{{ route('ListaFuncionarios') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action">
-                                       <strong>LISTA FUNCIONARIOS</strong> 
-                                    </button> 
-                                </form>
-                            @endif
-                            <form method="POST" action="{{ route('CambiarCorreo') }}">
+                            <form method="POST" action="{{ route('AgregarFirma') }}">
                                 @csrf
-                                <button type="submit" class="btn list-group-item-action">
-                                EMAIL 
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR IMAGEN FIRMA
+                                </button>   
+                            </form>  
+                            <form method="POST" action="{{ route('HabilitarFirmaMasiva') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                FIRMA MASIVA
+                                </button>   
+                            </form>
+                            <form method="POST" action="{{ route('DesactivarUsuario') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    ESTADO USUARIOS
+                                </button>   
+                            </form>
+                        @if(Auth::user()->Root==2)
+                            <form method="POST" action="{{ route('Acta') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    ACTA DE ENTREGA
+                                </button>   
+                            </form> 
+                            <form method="POST" action="{{ route('AgregarPlantillas') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR PLANTILLAS
+                                </button>  
+                            </form>
+                            <form method="POST" action="{{ route('AgregarDocumentos') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR DOCUMENTOS
+                                </button>    
+                            </form>
+                            <form method="POST" action="{{ route('AgregarDirDEP') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    AGREGAR DIREC. DEPT.
+                                </button>  
+                            </form>
+
+                            <form method="POST" action="{{ route('Mensaje') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    MENSAJE PÚBLICO
+                                </button>  
+                            </form>
+                        @endif
+                            <hr style="background-color: #FFFFFF;"> 
+                        </ul>
+                    </li>
+                @endif
+                @if(Auth::user()->Acta==1)
+                    <li>
+                        <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">ACTA DE ENTREGA</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu2">
+                            <hr style="background-color: #FFFFFF;">
+                            <form method="POST" action="{{ route('CrearSolicitud') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    CREAR 
+                                </button> 
+                            </form> 
+                        
+                            <form method="POST" action="{{ route('Solicitudes') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    ACTA DE ENTREGAS 
                                 </button> 
                             </form>
-                            <form method="POST" action="{{ route('CambiarContrasenia') }}">
+                            <hr style="background-color: #FFFFFF;">
+                        </ul>
+                    </li>
+                @endif
+                @if(Auth::user()->Jefe==1)
+                    <li>
+                        <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ENCARGADO/A ODP</strong></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu3">
+                        <hr style="background-color: #FFFFFF;">
+                            <form method="POST" action="{{ route('AdministrarSecretaria') }}">
                                 @csrf
-                                <button type="submit" class="btn list-group-item-action">
-                                CONTRASEÑA 
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SECRETARIA 
                                 </button> 
                             </form>
-                            <form method="POST" action="{{ route('Sessiones') }}">
-								@csrf
-								<button type="submit" class="btn">
-									<a>DISP. VINCULADOS</a>
-								</button>
-							</form>
-                        </div> 
-                    </div>
+                         
+                            <form method="POST" action="{{ route('PortafolioDirecto') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    PORTAFOLIOS DIRECTOS
+                                </button> 
+                            </form>
+                            
+                            <form method="POST" action="{{ route('Subrogante') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SUBROGANTE
+                                </button>
+                            </form>
+                            <hr style="background-color: #FFFFFF;">
+                        </ul>
+                    </li>
+                @endif
+                @if(Auth::user()->Secretaria==1)
+                    <li>
+                        <a href="#homeSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>OFICINA DE PARTES</strong></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu4">
+                            <hr style="background-color: #FFFFFF;">
+                            <li>
+                                <center><strong>SOLICITUDES&nbsp;</strong></center>
+                            </li>
+                          
+                            <form method="POST" action="{{ route('CrearDocumentoODP') }}"> 
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    NUEVA SOLIC.
+                                </button> 
+                            </form>
+                    
+                            <form method="POST" action="{{ route('EnvioOficinaPartesODP') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SOLIC. CREADAS
+                                </button>  
+                            </form>
+                     
+                                <center><strong>ODP&nbsp;</strong></center>
+                      
+                            <form method="POST" action="{{ route('Distribuccion') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SOLIC. INTERNAS
+                                </button> 
+                            </form>
+                         
+                            <form method="POST" action="{{ route('ODPExternos') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SOLIC. EXTERNAS
+                                </button>  
+                            </form>
+                           
+                            <form method="POST" action="{{ route('ODPExternosVB') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SOLIC. EXTERNAS V°B°
+                                </button>  
+                            </form>
+                            <hr style="background-color: #FFFFFF;">
+                        </ul>
+                    </li>
+                @endif
+            
+                <li>
+                    <a href="#homeSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>SOLICITUDES</strong></a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu6">
+                        <hr style="background-color: #FFFFFF;">
+                        @if(Auth::user()->Secretaria!=1)
+                        
+                       <!-- <form method="POST" action="{{ route('ListaPlantillas') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    CREAR DOCUMENTO 
+                                </button> 
+                            </form> -->
+ 
+                            <form method="POST" action="{{ route('CrearDocumento') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    NUEVA 
+                                </button> 
+                            </form>
+                        
+                            <form method="POST" action="{{ route('EnvioOficinaPartes') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    DETENIDAS
+                                </button>  
+                            </form>
+                        @endif
+                     
+                        <form method="POST" action="{{ route('PortafoliosRecibidos') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                RECIBIDAS
+                            </button>
+                        </form>
+                    
+                        <form method="POST" action="{{ route('PortafoliosRecibidosVB') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                V°B°
+                            </button>
+                        </form>
+                   
+                        <center><strong>HISTORIAL</strong></center>
+                        <!--<form method="POST" action="{{ route('DocumentoEnProcesoOP') }}">
+                            @csrf 
+                            <button type="submit" class="btn list-group-item-action">
+                                EN PROCESO
+                            </button> 
+                        </form>-->
+                   
+                        <form method="POST" action="{{ route('PortafoliosFinalizados') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                SOLIC. CREADAS
+                            </button>
+                        </form> 
+                 
+                        <form method="POST" action="{{ route('PortafoliosFinalizadosFir') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                FIRMADAS
+                            </button>
+                        </form> 
+                  
+                        <form method="POST" action="{{ route('PortafoliosFinalizadosVB') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                V°B°
+                            </button>
+                        </form>
+                        <hr style="background-color: #FFFFFF;">
+                    </ul>
+                </li> 
+                <li>
+                    <a href="#homeSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>OPCIONES</strong></a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu7">
+                    <hr style="background-color: #FFFFFF;">
+                        @if(Auth::user()->Secretaria==1)
+                      
+                        <form method="POST" action="{{ route('AutorizarRegistro') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                ADMINISTRAR REGISTROS
+                            </button>   
+                        </form>
+              
+                        <form method="POST" action="{{ route('ListaFuncionarios') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                            LISTA FUNCIONARIOS
+                            </button> 
+                        </form>
+                        @endif
+                      
+                        <form method="POST" action="{{ route('CambiarLugar') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                            CAMBIAR LUGAR DE TRABAJO
+                            </button>  
+                        </form>
+
+
+                        <form method="POST" action="{{ route('CambiarCorreo') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                            EMAIL 
+                            </button>  
+                        </form>
+                   
+                        <form method="POST" action="{{ route('CambiarContrasenia') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                            CONTRASEÑA 
+                            </button> 
+                        </form>
+                        <form method="POST" action="{{ route('Personalizar') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                PERSONALIZAR
+                            </button> 
+                        </form>
+                        <form method="POST" action="{{ route('Sessiones') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                DISP. VINCULADOS
+                            </button>
+                        </form>
+                        <hr style="background-color: #FFFFFF;">
+                    </ul>
+                </li>
+                @if(Auth::user()->FirmaMasiva==1)
+                    <hr style="background-color: #56FF02;">
+                    <li>
+                        <form method="POST" action="{{ route('DocumentoExt') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                FIRMA MASIVA
+                            </button> 
+                        </form> 
+                         <!--<form method="POST" action="{{ route('DocumentoExt2') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                FIRMA MASIVA 2.0
+                            </button>
+                        </form>-->
+                    </li>
+                    <hr style="background-color: #56FF02;">
+                @endif
+            </ul>
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <div class="sidebar-heading"><a href="{{ route('Graficos') }}" style="color: #FFFFFF;"><center><h4>GRÁFICOS</h4></center></a></div>
+                </li>
+            </ul>
+            <ul class="list-unstyled">
+                <center>
+                    INFORMÁTICA {{ date("Y") }}<br>
+                    <strong>VERSIÓN BETA 0.6.120422</strong><br>
+                    @if(Auth::user()->Subrogante==1)
+                        <a class="navbar-brand" href="#" style="color: red; font-size:13px;"><strong>IMPORTANTE<br>SUBROGANTE HABILITADO</strong></a>
+                    @endif
+                    <body onload="mueveReloj()">
+                    <center><h7>{{ $diaFC }} {{ $numeroDiaFC }} de {{ $mesFC }} {{ $anioFC }}</h7><br></center>
+                    <strong><div id="Hora"></div></strong>
+                    <p><strong><?php echo session('LugarDeTrabajo'); ?></strong></p>
+                </center>
+            </ul>
+            <ul class="list-unstyled">
+                <li>
                     @php
                         $Mensaje =  DB::table('Mensaje')
-                                    ->where('Estado', '=',1)
+                                    ->where('Estado', '=',1) 
                                     ->first();
                         if(!empty($Mensaje)){
 
@@ -475,41 +801,25 @@
                         }
                     @endphp 
                     <marquee><h5><strong>{{ $Mensaje }}</strong></h5></marquee> 
-				</div>
-				<br><br>
-				<div>
-					<center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="90" height="90"/></center>
-					<hr>
-					<center>
-					  	© {{ date("Y") }} DEP. DE INFORMÁTICA<br>
-						MUNICIPALIDAD DE CURICÓ<br>
-                        <hr>
-                        <strong>VERSIÓN BETA 0.5.230322</strong><br>
-                        <hr>
-                        @if(Auth::user()->Subrogante==1)
-                            <a class="navbar-brand" href="#" style="color: red; font-size:15px;"><strong>IMPORTANTE<br>SUBROGANTE HABILITADO</strong></a>
-                        @endif
-                        <body onload="mueveReloj()">
-                        <center><h7>{{ $diaFC }} {{ $numeroDiaFC }} de {{ $mesFC }} {{ $anioFC }}</h7><br></center>
-                        <strong><div id="Hora"></div></strong>
-					</center>
-				</div>
-			</div> 
-            @endif	
-
-		<div id="page-content-wrapper"> 
-			@yield("content")
-			@livewireScripts
-			@yield('scripts')
-			@yield("foot")
-		</div>
-	</div>
+                </li>
+            </ul>
+            <center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="88" height="88" alt="Curicó"/></center>
+        </nav>
+@endif	
+        <div id="page-content-wrapper">
+            @yield("content")
+            @livewireScripts
+            @yield('scripts')
+            @yield("foot")
+        </div>
+    </div>
 </body>
   <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
+    $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
   </script>
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   	<div class="modal-dialog" role="document">
@@ -520,12 +830,12 @@
 		          	<span aria-hidden="true">X</span>
 		        </button>
       		</div>
-      		<div class="modal-body"><center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/></center></div>
+      		<div class="modal-body"><center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120" alt="Curicó"/></center></div>
                 <center>
                     © {{ date("Y") }} DEP. DE INFORMÁTICA<br>
                     MUNICIPALIDAD DE CURICÓ<br>
                     <hr>
-                    <strong>VERSIÓN BETA 0.5.230322</strong><br>
+                    <strong>VERSIÓN BETA 0.6.120422</strong><br>
                     <hr>
 				</center>
 			<br>

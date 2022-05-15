@@ -15,9 +15,11 @@ class FuncionarioModels extends Model
 
     //pongo los caampos para permitir insert multiple
     protected $fillable=[
+        "Contrato",
         "Activo",
         "TipoFirma",
         "Root",
+        "Acta",
         "Jefe",
         "Secretaria",
         "FirmaMasiva",

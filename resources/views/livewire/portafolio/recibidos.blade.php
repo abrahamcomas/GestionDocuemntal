@@ -63,7 +63,11 @@
                 @include('messages')  
                 <div class="col">     
                     <div class="card bg-light mb-3">
-                        <div class="card-header"> <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></g4></div>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
+                            <hr>
+                        </div> 
                         <div class="card-body">	 
                             <div id="Imagen" class="specific"> 
                                 <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} <br>{{$Cargo}}</strong></p>
@@ -106,8 +110,10 @@
                             </div>
                         @endif
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>SOLICITUDES RECIBIDAS</strong></h4>
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>SOLICITUDES RECIBIDAS</strong></center></h1>
+                                <hr>
                             </div> 
                             <div class="card-body">  
                                 <div class="row">  
@@ -254,7 +260,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                    @endif 
+                                    @endif  
                                             <td>
                                                 <textarea rows="3" style="width:100%;" disabled> {{$post->Observacion}} </textarea>
                                             </td>
@@ -287,9 +293,11 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>ARCHIVOS</strong></h4>
-                            </div>  
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>ARCHIVOS</strong></center></h1>
+                                <hr>
+                            </div> 
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  
@@ -342,7 +350,7 @@
                                         @endforeach    
                                     </tbody> 
                                 </table> 
-                            </div>    
+                            </div>     
                             @if($cuantos>=2)
                                 <form method="POST" action="{{ route('FirmaMasivaRec') }}">
                                     @csrf      
@@ -354,128 +362,288 @@
                             @endif
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="col">
-                        <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>V°B°</strong></h4>
-                            </div> 
-                            <div class="card-body table-responsive">
-                                <table table class="table table-hover">
-                                    <thead>  
-                                        <tr>
-                                            <th>ESTADO</th>
-                                            <th>FUNCIONARIO</th>
-                                            <th>RECIBIDO</th>
-                                            <th>VISTO</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        @foreach($VistoBueno as $post)
-                                            <tr>
-                                                @if($post->Estado==0)
-                                                    <td> 
-                                                        <div class="progress" style="height: 33px;">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                PENDIENTE
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                @elseif($post->Estado==1)
-                                                    <td> 
-                                                    <div class="progress" style="height: 33px;">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                ACEPTADO
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                @else
-                                                    <td> 
-                                                        <div class="progress" style="height: 33px;">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                RECHAZADO
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                @endif
-                                                <td>
-                                                    {{ $post->Nombres }} {{ $post->Apellidos }}
-                                                </td>
-                                                @php
-                                                    $numeroDiaV = date('d', strtotime($post->FechaR ));
-                                                    $mesV = date('F', strtotime($post->FechaR ));
+            @if($Cambiar==0)
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>FIRMANTES</strong></center></h1>
+                        <hr>
+                    </div> 
+                    <div class="card-body table-responsive">
+                        <table table class="table table-hover">
+                            <thead>  
+                                <tr> 
+                                    <th>ESTADO</th>
+                                    <th>FUNCIONARIO</th>
+                                    <th>RECIBIDO</th>
+                                    <th>VISTO</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach($DestinoFirmantes as $post)
+                                    <tr>
+                                        @if($post->Estado==0)
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        PENDIENTE
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @elseif($post->Estado==1)
+                                            <td> 
+                                               <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        CONFIRMADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @else
+                                            <td>  
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        RECHAZADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @endif
+                                            <td>
+                                                {{ $post->Nombres }} {{ $post->Apellidos }}
+                                            </td>
+                                        @php
+                                            $numeroDiaR = date('d', strtotime($post->FechaR));
+                                            $mesR = date('F', strtotime($post->FechaR));
 
-                                                    if($mesV=='January'){
-                                                    $mesV= 'Enero';
-                                                    }
-                                                    elseif($mesV=='February'){   
-                                                    $mesV= 'Febrero';
-                                                    }
-                                                    elseif($mesV=='March'){  
-                                                    $mesV= 'Marzo';
-                                                    }
-                                                    elseif($mesV=='April'){
-                                                        $mesV= 'Abril';
-                                                    }
-                                                    elseif($mesV=='May'){
-                                                        $mesV= 'Mayo';
-                                                    }
-                                                    elseif($mesV=='June'){
-                                                        $mesV= 'Junio';
-                                                    }
-                                                    elseif($mesV=='July'){ 
-                                                        $mesV= 'Julio';
-                                                    }
-                                                    elseif($mesV=='August'){  
-                                                        $mesV= 'Agosto';
-                                                    }
-                                                    elseif($mesV=='September'){  
-                                                        $mesV= 'Septiembre';
-                                                    }
-                                                    elseif($mesV=='October'){  
-                                                        $mesV= 'Octubre';
-                                                    }
-                                                    elseif($mesV=='November'){  
-                                                        $mesV= 'Noviembre';
-                                                    }
-                                                    else{  
-                                                        $mesV= 'Diciembre';
-                                                    }
-                                                @endphp
+                                            if($mesR=='January'){
+                                            $mesR= 'Enero';
+                                            }
+                                            elseif($mesR=='February'){   
+                                            $mesR= 'Febrero';
+                                            }
+                                            elseif($mesR=='March'){  
+                                            $mesR= 'Marzo';
+                                            }
+                                            elseif($mesR=='April'){
+                                                $mesR= 'Abril';
+                                            }
+                                            elseif($mesR=='May'){
+                                                $mesR= 'Mayo';
+                                            }
+                                            elseif($mesR=='June'){
+                                                $mesR= 'Junio';
+                                            }
+                                            elseif($mesR=='July'){ 
+                                                $mesR= 'Julio';
+                                            }
+                                            elseif($mesR=='August'){  
+                                                $mesR= 'Agosto';
+                                            }
+                                            elseif($mesR=='September'){  
+                                                $mesR= 'Septiembre';
+                                            }
+                                            elseif($mesR=='October'){  
+                                                $mesR= 'Octubre';
+                                            }
+                                            elseif($mesR=='November'){  
+                                                $mesR= 'Noviembre';
+                                            }
+                                            else{  
+                                                $mesR= 'Diciembre';
+                                            }
+                                        @endphp
+                                        <td>
+                                            {{$numeroDiaR}} de {{$mesR}}
+                                        </td> 
+                                        @if($post->Visto==0)
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        NO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @else 
+                                        @php
+                                                $numeroDiaVV = date('d', strtotime($post->FechaR ));
+                                                $mesVV = date('F', strtotime($post->FechaR ));
+
+                                                if($mesVV=='January'){
+                                                $mesVV= 'Enero';
+                                                }
+                                                elseif($mesVV=='February'){   
+                                                $mesVV= 'Febrero';
+                                                }
+                                                elseif($mesVV=='March'){  
+                                                $mesVV= 'Marzo';
+                                                }
+                                                elseif($mesVV=='April'){
+                                                    $mesVV= 'Abril';
+                                                }
+                                                elseif($mesVV=='May'){
+                                                    $mesVV= 'Mayo';
+                                                }
+                                                elseif($mesVV=='June'){
+                                                    $mesVV= 'Junio';
+                                                }
+                                                elseif($mesVV=='July'){ 
+                                                    $mesVV= 'Julio';
+                                                }
+                                                elseif($mesVV=='August'){  
+                                                    $mesVV= 'Agosto';
+                                                }
+                                                elseif($mesVV=='September'){  
+                                                    $mesVV= 'Septiembre';
+                                                }
+                                                elseif($mesVV=='October'){  
+                                                    $mesVV= 'Octubre';
+                                                }
+                                                elseif($mesVV=='November'){  
+                                                    $mesVV= 'Noviembre';
+                                                }
+                                                else{  
+                                                    $mesVV= 'Diciembre';
+                                                }
+                                            @endphp
                                                 <td>
-                                                    {{$numeroDiaV}} de {{$mesV}}
+                                                    {{$numeroDiaVV}} de {{$mesVV}}
                                                 </td> 
-
-                                                @if($post->Visto==0)
-                                                    <td> 
-                                                        <div class="progress" style="height: 33px;">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                NO
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                @else
-                                                    <td> 
-                                                        <div class="progress" style="height: 33px;">
-                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                                SI
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach 
-                                    <tbody> 
-                                </table> 
-                            </div>
-                        </div>
+                                        @endif
+                                    </tr>
+                                @endforeach 
+                            <tbody> 
+                        </table> 
+                    </div>
+                    <div class="card-footer text-muted"> 
+                        <div class="btn-group" style=" width:100%;">
+                            <button class="btn btn-warning active" wire:click="CambiarVB">MOSTRAR V°B°</button>
+                        </div> 
                     </div>
                 </div>
-            </div>
-            <hr>
+            @else 
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>V°B°</strong></center></h1>
+                        <hr>
+                    </div> 
+                    <div class="card-body table-responsive">
+                        <table table class="table table-hover">
+                            <thead>  
+                                <tr>
+                                    <th>ESTADO</th>
+                                    <th>FUNCIONARIO</th>
+                                    <th>RECIBIDO</th>
+                                    <th>VISTO</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach($VistoBueno as $post)
+                                    <tr>
+                                        @if($post->Estado==0)
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        PENDIENTE
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @elseif($post->Estado==1)
+                                            <td> 
+                                               <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        CONFIRMADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @else
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        RECHAZADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @endif
+                                        <td>
+                                            {{ $post->Nombres }} {{ $post->Apellidos }}
+                                        </td>
+                                        @php
+                                            $numeroDiaV = date('d', strtotime($post->FechaR ));
+                                            $mesV = date('F', strtotime($post->FechaR ));
+
+                                            if($mesV=='January'){
+                                            $mesV= 'Enero';
+                                            }
+                                            elseif($mesV=='February'){   
+                                            $mesV= 'Febrero';
+                                            }
+                                            elseif($mesV=='March'){  
+                                            $mesV= 'Marzo';
+                                            }
+                                            elseif($mesV=='April'){
+                                                $mesV= 'Abril';
+                                            }
+                                            elseif($mesV=='May'){
+                                                $mesV= 'Mayo';
+                                            }
+                                            elseif($mesV=='June'){
+                                                $mesV= 'Junio';
+                                            }
+                                            elseif($mesV=='July'){ 
+                                                $mesV= 'Julio';
+                                            }
+                                            elseif($mesV=='August'){  
+                                                $mesV= 'Agosto';
+                                            }
+                                            elseif($mesV=='September'){  
+                                                $mesV= 'Septiembre';
+                                            }
+                                            elseif($mesV=='October'){  
+                                                $mesV= 'Octubre';
+                                            }
+                                            elseif($mesV=='November'){  
+                                                $mesV= 'Noviembre';
+                                            }
+                                            else{  
+                                                $mesV= 'Diciembre';
+                                            }
+                                        @endphp 
+                                        <td>
+                                            {{$numeroDiaV}} de {{$mesV}}
+                                        </td> 
+
+                                        @if($post->Visto==0)
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        NO
+                                                    </div>
+                                                </div> 
+                                            </td>
+                                        @else
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        SI
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach 
+                            <tbody> 
+                        </table> 
+                    </div>
+                    <div class="card-footer text-muted"> 
+                        <div class="btn-group" style=" width:100%;">
+                            <button class="btn btn-warning active" wire:click="CambiarFirmantes">MOSTRAR FIRMANTES</button>
+                        </div> 
+                    </div>
+                </div>
+            @endif
+            
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
@@ -485,8 +653,10 @@
                             </div>
                         @endif
                         <div class="card bg-light mb-3">
-                            <div class="card-header"> 
-                                <h4><strong>RECHAZAR</strong></h4> 
+                            <div class="text-muted">
+                                <br> 
+                                <h1><center><strong>RECHAZAR</strong></center></h1>
+                                <hr>
                             </div> 
                             <div class="card-body"> 
                                 <label><strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong></label>
@@ -495,12 +665,12 @@
                                 </div>
                             </div>
                             <div class="card-footer text-muted"> 
-                                <div class="btn-group" style=" width:100%;">	
+                                <div class="btn-group" style=" width:100%;">	 
                                     <button class="btn btn-danger active" wire:click="VolverPrincipal">VOLVER</button>
                                     <button class="btn btn-warning active" wire:click="RespuestaPortafolio">RECHAZAR</button>
                                 </div> 
                             </div>
-                            <div class="card-footer text-muted">
+                            <div class="card-footer text-muted"> 
                                 GESTION DOCUMENTAL <br>
                                 SECRETARIA OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
                             </div>

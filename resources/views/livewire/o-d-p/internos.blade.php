@@ -53,9 +53,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col"> 
                 <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <h4><strong>SOLICITUDES INTERNAS</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>SOLICITUDES INTERNAS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body"> 
                         <div class="row">   
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -107,7 +109,7 @@
                                         <th>INGRESO</th>
                                         <th>DÍAS PARA TERMINO</th>
                                         <th>OBSERVACIÓN</th>
-                                        <th>SOLICITUD</th> 
+                                        <th>ADMINISTRAR</th> 
                                         <th>ELIMINAR</th>
                                     </tr>
                                 </thead>  
@@ -275,9 +277,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ELIMINAR SOLICITUD</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ELIMINAR SOLICITUD</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <h6>Si considera que la solicitud ingresada por<strong> {{ $NombreEliminar }} {{ $ApellidoEliminar }} </strong>fue ingresado de manera incorrecta, puede eliminar dicha solicitud.</h6>
                         <br>
@@ -307,9 +311,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  
@@ -354,9 +360,11 @@
                 </div>
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ODP FIRMANTES</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ODP FIRMANTES</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  
@@ -482,9 +490,11 @@
                 <hr>
             @else 
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ODP V°B°</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ODP V°B°</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  
@@ -620,8 +630,10 @@
                     </div>
                 @endif
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ENVIAR</strong></h4>
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ENVIAR</strong></center></h1>
+                        <hr>
                     </div>
                     <div class="card-body">
                         <table table class="table table-hover">
@@ -687,9 +699,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ELIMINAR V°B°</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ELIMINAR V°B°</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <h6>Si considera que la solicitud enviada a<strong> {{ $Nombre_DepDir }} </strong>fue enviado por error, puede eliminar dicho V°B°.</h6>
                         <br>
@@ -720,9 +734,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ELIMINAR FIRMANTE</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ELIMINAR FIRMANTE</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <h6>Si considera que la solicitud enviada a<strong> {{ $NombreAnularFirmante }} </strong>fue enviado por error, puede eliminar dicho firmante.</h6>
                         <br>

@@ -5,10 +5,12 @@
 	<div class="row"> 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
-                <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <center><h5><strong>LISTA </strong></h5></center> 
-                    </div> 
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>DISPOSITIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table table class="table table-hover">

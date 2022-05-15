@@ -71,8 +71,9 @@
                                 </div>  
                             </center>  
                             <form id="F_prestamo" name="F_prestamo" method="POST" action="{{ route('FirmarPDF') }}" accept-charset="UTF-8" enctype="multipart/form-data">
-                                @csrf   
+                                @csrf    
                                 <input type="hidden" name="Ruta" value= "{{ session('Ruta') }}">
+                                <input type="hidden" name="RutaImagenFirma" value= "{{ session('RutaImagenFirma') }}">
                                 <input type="hidden" id="mousePosX" name="mousePosX">
                                 <input type="hidden" id="mousePosY" name="mousePosY">
                                 <input type="hidden" id="Pagina" name="Pagina">

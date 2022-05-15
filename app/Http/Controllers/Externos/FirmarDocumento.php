@@ -16,6 +16,9 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\File;
 use App\Models\solofirma;
+use App\Models\FirmadosDD;
+use App\Models\FirmadosFunc;
+use App\Models\AnioDD;
 use Response;
 use Illuminate\Support\Facades\DB;  
 use ZipArchive;
@@ -25,11 +28,12 @@ class FirmarDocumento extends Controller
     public function index(Request $request) 
     {  
         $Ruta  = $request->input('Ruta');
+        $RutaImagenFirma  = $request->input('RutaImagenFirma');
 
         $NombreZip =DB::table('DocumentosExterno')->Select('NombreZip')->where('Ruta_T', '=', $Ruta)->first();
 
         $NombreZip = $NombreZip->NombreZip;
-       
+        
         $Archivos =  DB::table('DocumentosExterno') 
         ->select('Ruta_T')
         ->where('NombreZip', '=',$NombreZip )
@@ -111,9 +115,20 @@ class FirmarDocumento extends Controller
                 $Sha256 = hash('sha256', $PDF);
 
                 $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
-                $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
-                $rutaImagen2="Firmas/".$rutaImagen->Ruta;
 
+
+                if($RutaImagenFirma==null){
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+    
+
+                }else{
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('Ruta', '=', $RutaImagenFirma)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+                }
+              
                 $contenidoBinario = file_get_contents($rutaImagen2);
                 $imagenComoBase64 = base64_encode($contenidoBinario);
             
@@ -317,7 +332,145 @@ class FirmarDocumento extends Controller
         $DocumentosZip->DIA             = $DIA;
         $DocumentosZip->save();  
 
-     
+
+        //INICIO NUMERO DE FIRMAS
+        $ID_Funcionario  = Auth::user()->ID_Funcionario_T;
+        $Mes=date("m");
+        $Anio=date("Y");  
+
+
+        $Funcionario  =  DB::table('Funcionarios') 
+        ->select('Nombres','Apellidos')
+        ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
+
+        $Nombre = $Funcionario->Nombres.' '.$Funcionario->Apellidos;
+
+        $DatosFunc =  DB::table('FirmadosFunc') 
+        ->where('ID_Func', '=',$ID_Funcionario)
+        ->orderBy('ID_FirmadosFunc', 'desc')->first();
+
+
+        if(!empty($DatosFunc)){
+            $DatosFunc1 =  DB::table('FirmadosFunc') 
+            ->where('Mes_Func', '=',$Mes)
+            ->where('Anio_Func', '=',$Anio)
+            ->where('ID_Func', '=',$ID_Funcionario)
+            ->first();
+
+            if(!empty($DatosFunc1)){
+                $FirmadosFunc             =FirmadosFunc::find($DatosFunc1->ID_FirmadosFunc);
+                $FirmadosFunc->NumeroFunc = $DatosFunc1->NumeroFunc+1;
+                $FirmadosFunc->save(); 
+            }
+            else{
+
+                $FirmadosFunc             =new FirmadosFunc;
+                $FirmadosFunc->Mes_Func   = $Mes;
+                $FirmadosFunc->Anio_Func  = $Anio;  
+                $FirmadosFunc->ID_Func    = $ID_Funcionario;
+                $FirmadosFunc->Nombres    = $Nombre;
+                $FirmadosFunc->NumeroFunc = 1;
+                $FirmadosFunc->save();  
+            }
+        }
+        else{
+            $FirmadosFunc             =new FirmadosFunc;
+            $FirmadosFunc->Mes_Func   = $Mes;
+            $FirmadosFunc->Anio_Func  = $Anio;  
+            $FirmadosFunc->ID_Func    = $ID_Funcionario;
+            $FirmadosFunc->Nombres    = $Nombre;
+            $FirmadosFunc->NumeroFunc = 1;
+            $FirmadosFunc->save();  
+        }
+        
+
+
+        $Nombre_DepDir  =  DB::table('Funcionarios') 
+        ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
+        ->leftjoin('DepDirecciones', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'DepDirecciones.ID_DepDir')
+        ->select('Nombre_DepDir')
+        ->where('Estado_LDT', '=',1)
+        ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
+
+        $ID_DD =  DB::table('LugarDeTrabajo')
+        ->select('ID_DepDirecciones_LDT') 
+        ->where('Estado_LDT', '=', 1)         
+        ->where('ID_Funcionario_LDT', '=', $ID_Funcionario)
+        ->first();
+
+        $DatosDD =  DB::table('FirmadosDD')
+        ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+        ->orderBy('ID_FIRMADOSDD', 'desc')->first();
+
+        if(!empty($DatosDD)){
+            $DatosDD1 =  DB::table('FirmadosDD') 
+            ->where('Mes_DD', '=',$Mes)
+            ->where('Anio_DD', '=',$Anio)
+            ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+            ->first();
+
+            if(!empty($DatosDD1)){
+                $FirmadosDD             =FirmadosDD::find($DatosDD1->ID_FIRMADOSDD);
+                $FirmadosDD->Numero_DD = $DatosDD1->Numero_DD+1;
+                $FirmadosDD->save(); 
+            }
+            else{
+
+                $FirmadosDD             =new FirmadosDD;
+                $FirmadosDD->Mes_DD   = $Mes;
+                $FirmadosDD->Anio_DD  = $Anio;  
+                $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                $FirmadosDD->Numero_DD= 1;
+                $FirmadosDD->save();  
+            }
+        }
+        else{
+            $FirmadosDD             =new FirmadosDD;
+            $FirmadosDD->Mes_DD   = $Mes;
+            $FirmadosDD->Anio_DD  = $Anio;  
+            $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+            $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+            $FirmadosDD->Numero_DD= 1;
+            $FirmadosDD->save();  
+        }
+
+        $DatosAnioDD =  DB::table('AnioDD')
+                                    ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+                                    ->orderBy('ID_Anio', 'desc')->first();
+
+
+                                    if(!empty($DatosAnioDD)){
+                                        $DatosDD1 =  DB::table('AnioDD') 
+                                        ->where('Anio_DD', '=',$Anio)
+                                        ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+                                        ->first();
+
+                                        if(!empty($DatosDD1)){
+                                            $AnioDD             =AnioDD::find($DatosDD1->ID_Anio);
+                                            $AnioDD->Numero_DD = $DatosDD1->Numero_DD+1;
+                                            $AnioDD->save(); 
+                                        }
+                                        else{
+
+                                            $AnioDD             =new AnioDD;
+                                            $AnioDD->Anio_DD  = $Anio;  
+                                            $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                            $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                            $AnioDD->Numero_DD= 1;
+                                            $AnioDD->save();  
+                                        }
+                                    }
+                                    else{
+                                        $AnioDD             =new AnioDD;
+                                        $AnioDD->Anio_DD  = $Anio;  
+                                        $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                        $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                        $AnioDD->Numero_DD= 1;
+                                        $AnioDD->save();  
+                                    }
+        //FIN NUMERO DE FIRMAS
+
         return view('DocumentosExt/Respuesta')->with('status', $status)->with('nombreArchivo', $nombreArchivo);
     }
 }

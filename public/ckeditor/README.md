@@ -1,39 +1,21 @@
-CKEditor 4
-==========
+CKEditor 5 image feature
+========================================
 
-Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
-https://ckeditor.com - See LICENSE.md for license information.
+[![npm version](https://badge.fury.io/js/%40ckeditor%2Fckeditor5-image.svg)](https://www.npmjs.com/package/@ckeditor/ckeditor5-image)
+[![Coverage Status](https://coveralls.io/repos/github/ckeditor/ckeditor5/badge.svg?branch=master)](https://coveralls.io/github/ckeditor/ckeditor5?branch=master)
+[![Build Status](https://travis-ci.com/ckeditor/ckeditor5.svg?branch=master)](https://app.travis-ci.com/github/ckeditor/ckeditor5)
+![Dependency Status](https://img.shields.io/librariesio/release/npm/@ckeditor/ckeditor5-image)
 
-CKEditor 4 is a text editor to be used inside web pages. It's not a replacement
-for desktop text editors like Word or OpenOffice, but a component to be used as
-part of web applications and websites.
+This package implements the image feature for CKEditor 5. The feature is introduced in a granular form implemented by a couple of plugins.
+
+## Demo
+
+Check out the demos in the [image feature guides](https://ckeditor.com/docs/ckeditor5/latest/features/images/images-overview.html#demo).
 
 ## Documentation
 
-The full editor documentation is available online at the following address:
-https://ckeditor.com/docs/
+See the [`@ckeditor/ckeditor5-image` package](https://ckeditor.com/docs/ckeditor5/latest/api/image.html) page in [CKEditor 5 documentation](https://ckeditor.com/docs/ckeditor5/latest/).
 
-## Installation
+## License
 
-Installing CKEditor is an easy task. Just follow these simple steps:
-
- 1. **Download** the latest version from the CKEditor website:
-    https://ckeditor.com. You should have already completed this step, but be
-    sure you have the very latest version.
- 2. **Extract** (decompress) the downloaded file into the root of your website.
-
-**Note:** CKEditor is by default installed in the `ckeditor` folder. You can
-place the files in whichever you want though.
-
-## Checking Your Installation
-
-The editor comes with a few sample pages that can be used to verify that
-installation proceeded properly. Take a look at the `samples` directory.
-
-To test your installation, just call the following page at your website:
-
-	http://<your site>/<CKEditor installation path>/samples/index.html
-
-For example:
-
-	http://www.example.com/ckeditor/samples/index.html
+Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html). For full details about the license, please check the `LICENSE.md` file or [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license).

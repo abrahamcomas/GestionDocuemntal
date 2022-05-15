@@ -34,11 +34,13 @@
 @if($Detalles==0)   
     <div class="row">  
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="col">
+            <div class="col"> 
                 <div class="card bg-light mb-3">
-                    <div class="card-header"> 
-                        <h4><strong>PORTAFOLIOS FINALIZADOS {{ $AnioSelect}}</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>SOLICITUDES {{ $AnioSelect}}</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -83,7 +85,7 @@
                 @if($posts->count())
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
-                            <thead> 
+                            <thead>  
                                 <tr>  
                                     <th>ESTADO</th>
                                     <th>N° INTERNO</th> 
@@ -98,15 +100,23 @@
                             <tbody>
                                 @foreach($posts as $post)
                                     <tr>
-                                    @if($post->Estado_T==3) 
+                                    @if($post->Estado_T==1)  
                                             <td> 
                                                 <div class="progress" style="height: 33px;">
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                        RECHAZADO
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    EN PROCESO
                                                     </div>
                                                 </div>
                                             </td>
-                                        @else
+                                    @elseif($post->Estado_T==2)   
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                    FINALIZADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                    @elseif($post->Estado_T==3)  
                                             <td> 
                                                 <div class="progress" style="height: 33px;">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
@@ -114,7 +124,15 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                        @endif
+                                    @else 
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        RECHAZADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                    @endif
                                             <td>
                                                 {{$post->NumeroInterno}}{{$post->Anio}}
                                             </td>
@@ -202,9 +220,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <table table class="table table-hover">
                             <thead>  
@@ -238,9 +258,11 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>ODP FIRMANTES</strong></h4>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>ODP FIRMANTES</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  
@@ -343,11 +365,11 @@
                                                     <td> 
                                                         {{$post->Fecha_V}}
                                                     </td>
-                                                @endif
+                                                @endif 
                                                     <td> 
-                                                        <button class="btn btn-success" wire:click="ListaFuncionarios({{ $post->ID_Documento }})">MOSTRAR</button>
+                                                        <button class="btn btn-success" wire:click="ListaFuncionarios({{ $post->ID_OP_R  }},{{ $post->ID_Documento }})">MOSTRAR</button>
                                                     </td>
-                                            </tr>
+                                            </tr> 
                                         @endforeach 
                                     <tbody> 
                                 </table>  
@@ -356,8 +378,10 @@
                     </div> 
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>FIRMANTES</strong></h4>
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>FIRMANTES</strong></center></h1>
+                                <hr>
                             </div> 
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
@@ -402,9 +426,11 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>ODP V°B°</strong></h4>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>ODP V°B°</strong></center></h1>
+                                <hr>
+                            </div>  
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  
@@ -418,7 +444,7 @@
                                             <th>FUNCIONARIOS</th>
                                         </tr>
                                     </thead>
-                                    <tbody> 
+                                    <tbody>  
                                         @foreach($VistoBueno as $post)
                                             <tr>
                                                 @if($post->Estado==0)
@@ -519,10 +545,12 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                        <div class="card bg-light mb-3">
-                            <div class="card-header">
-                                <h4><strong>V°B°</strong></h4>
-                            </div> 
+                        <div class="card bg-light mb-3"> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>V°B°</strong></center></h1>
+                                <hr>
+                            </div>  
                             <div class="card-body table-responsive">
                                 <table table class="table table-hover">
                                     <thead>  

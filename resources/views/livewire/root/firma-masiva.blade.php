@@ -35,22 +35,23 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             @include('messages')  
         </div>
-    </div>     
-    <br>
+    </div>
     <div class="container-fluid">  
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3"> 
-                        <div class="card-header">
-                            <h4><strong>HABILITAR O DESABILITAR FIRMA MASIVA DE FUNCIONARIOS</strong></h4> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>HABILITAR O DESABILITAR FIRMA MASIVA DE FUNCIONARIOS</strong></center></h1>
+                            <hr>
                         </div> 
                         <div class="card-body"> 
                         <div class="row">  
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2">
                                 <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
                             </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-6">
                                 <input class="form-control" type="text" placeholder="Buscar..." wire:model="search" title="Buscar por titulo,Tipo documento, Observación"/>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">

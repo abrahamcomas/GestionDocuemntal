@@ -27,7 +27,7 @@ class NuevoPortafolio extends Component
     
     use WithFileUploads;
  
-    //Crear imagen firma 
+    //Crear imagen firma  
     public $Nombres;
     public $Apellidos; 
     public $Rut;
@@ -49,7 +49,8 @@ class NuevoPortafolio extends Component
     }
     
     public $Titulo_T,$Tipo_T,$Folio,$Fecha_T,$Materia_T,$Privado,$NumeroIngresado;
-
+    
+    public $Acta=0;
     public $PDF= [];
     public $Pagina=0; 
 
@@ -170,16 +171,22 @@ class NuevoPortafolio extends Component
                         $pdf->setSourceFile('PDF'.'/'.$codificado);
                         $template = $pdf->importPage($i);
                         $pdf->useTemplate($template,0, 0, 215, 280, true);
-                        $pdf->Image('QR/'.$NuevaRuta2, 183, 250, 30, 30);
-                        $pdf->SetY(247);
-                        $pdf->SetFont('Arial','B',7);
-                        $pdf->Cell(182);
-                        $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
-                        $pdf->Ln(4);
+                        if($this->Acta==0){
+                            $pdf->Image('QR/'.$NuevaRuta2, 183, 250, 30, 30);
+                            $pdf->SetY(247);
+                            $pdf->SetFont('Arial','B',7);
+                            $pdf->Cell(182);
+                            $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
+                            $pdf->Ln(4);
+                        }
                     }
                 }
          
-                $pdf->Output('F', 'PDF/'.$codificado);
+
+                if($this->Acta==0){
+                    $pdf->Output('F', 'PDF/'.$codificado);
+                }
+
                 $pdf->Output('F', 'ImagenPDF/'.$codificado);
 
  

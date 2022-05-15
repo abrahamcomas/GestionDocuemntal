@@ -44,7 +44,7 @@
                 img.derecha { 
                     float: right; 
                 }
-                p {
+                p { 
                 font: oblique bold 120%;
                 }  
             </style>
@@ -63,12 +63,17 @@
                 @include('messages')  
                 <div class="col">       
                     <div class="card bg-light mb-3">
-                        <div class="card-header"> <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></g4></div>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">	 
-                            <div id="Imagen" class="specific"> 
-                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></p>
+                            <div id="Imagen" class="specific" style="height:30vh;width:35vw;"> 
+                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="260" height="260"/>
+                                    <h2><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></h2>
+                                </p>
                             </div>
-                            <br><br><br> 
                             <form method="POST" action="{{ route('ImagenCreada2') }}"> 
                                 @csrf  
                                 <div style="display: none">   
@@ -106,7 +111,7 @@
                             {{ session('message') }}
                         </div>
                     @endif
-                </div>
+                </div> 
             </div> 
         </div> 
             <div class="row">
@@ -114,8 +119,10 @@
                     <div class="col">   
                         @include('messages')  
                         <div class="card bg-light mb-3">
-                            <div class="card-header"> 
-                                <h4><strong>NUEVA SOLICITUD</strong></h4>
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
+                                <hr>
                             </div>
                             <div class="card-body"> 
                                 <div class="row">
@@ -194,20 +201,16 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
                                         <h6>DÍAS PARA FINALIZAR*</h6>
                                         <div class="form-label-group"> 
-                                            <input type="number" class="form-control" wire:model="Fecha_T">
+                                            <input type="number" class="form-control" wire:model="Fecha_T" min="1" pattern="^[0-9]+" >
                                         </div>		
                                     </div>
-                                </div>  
+                                </div>   
                                 <br>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <hr>
-                                             <!--<div class="text-muted">
-                                                <strong>Importante, los archivos subidos a gestión documental no deben tener firmas digitales avanzadas, debido a que el sistema anulara estas firmas.</strong>
-                                            </div>
-                                            <br>-->
                                             <h6>AGREGAR ARCHIVO/S* <strong>PDF</strong></h6>
                                             <div class="form-label-group"> 
                                                 <input type="file" class="form-control" id="PDF" wire:model="PDF" multiple accept="application/pdf">
@@ -220,7 +223,7 @@
                                             </div> 
                                         </div>
                                         <div class="btn-group" style=" width:100%;">
-                                            <button class="btn btn-primary" wire:click="Ingresar">CONTINUAR</button>
+                                            <button class="btn btn-primary" wire:click="Ingresar">INGRESAR</button>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>	
@@ -243,8 +246,12 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
-                        <div class="card bg-light mb-3" > 
-                            <div class="card-header"><h4><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></strong></h4></div>  
+                        <div class="card bg-light mb-3">
+                                <div class="text-muted">
+                                    <br> 
+                                    <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></center></h1>
+                                    <hr>
+                                </div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <h5>NUEVA SOLICITUD INGRESADA.</h5>

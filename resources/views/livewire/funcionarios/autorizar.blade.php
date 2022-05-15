@@ -36,11 +36,12 @@
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
-                    <div class="card bg-light mb-3"> 
-                        <div class="card-header"> 
-                            <h4><strong>NUEVOS REGISTROS</strong></h4>
+                    <div class="card bg-light mb-3">  
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>NUEVOS REGISTROS</strong></center></h1>
+                            <hr>
                         </div>
-                        <br> 
                         <div class="row"> 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                 <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
@@ -93,8 +94,10 @@
                 <div class="col">
                     <div class="table-responsive">
                         <div class="card bg-light mb-3"> 
-                            <div class="card-header"> 
-                                <center><h5><strong>ADMINISTRAR SECRETARIA</strong></h5></center> 
+                            <div class="text-muted">
+                                <br> 
+                                <h1><center><strong>ADMINISTRAR SECRETARIA</strong></center></h1>
+                                <hr>
                             </div>
                             <div class="card-body">
                                 <tbody> 

@@ -36,9 +36,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header"> 
-                        <h4><strong>SOLICITUDES EN PROCESO</strong></h4>
-                    </div>  
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>SOLICITUDES EN PROCESO</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -161,11 +163,10 @@
                             </tbody>    
                         </table>  
                     </div>
-                    
                 @else 
                 <div class="card-body">
-                            <center><strong>No hay resultados para la búsqueda "{{ $search }}"</strong></center>
-                        </div>
+                    <center><strong>No hay resultados para la búsqueda "{{ $search }}"</strong></center>
+                </div>
                 @endif 
                 <div class="card-footer table-responsive text-muted">
                         {{ $posts->links() }}
@@ -183,9 +184,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <table table class="table table-hover">
                             <thead>  
@@ -216,10 +219,12 @@
                     </div>
                 </div>
             @if($Cambiar==0)
-                <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ODP FIRMANTES</strong></h4>
-                    </div> 
+                <div class="card bg-light mb-3"> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ODP FIRMANTES</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  
@@ -335,9 +340,11 @@
                 </div> 
             @else 
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ODP V°B°</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ODP V°B°</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  

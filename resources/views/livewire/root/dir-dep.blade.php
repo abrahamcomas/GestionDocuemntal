@@ -5,9 +5,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">  
-                    <div class="card-header"> 
-                        <h4><strong>AGREGAR DIRECCIÓN O DEPARTAMENTO</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>AGREGAR DIRECCIÓN O DEPARTAMENTO</strong></center></h1>
+                        <hr>
+                    </div>  
                     <div class="card-body">
                         @include('messages')  
                         @if (session()->has('message1'))
@@ -112,9 +114,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">  
-                    <div class="card-header">
-                        <h4><strong>AGREGAR DIRECCIÓN O DEPARTAMENTO</h4></strong>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>AGREGAR DIRECCIÓN O DEPARTAMENTO</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         @include('messages')  
                         @if (session()->has('message1'))

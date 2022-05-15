@@ -28,6 +28,7 @@ class SubirImagenFirma extends Component
     public $perPage = 5;
 
     public $Detalles=0; 
+    public $NombreImagen;
     public $photo;  
 
     public $ID_Funcionario_T;  
@@ -38,63 +39,77 @@ class SubirImagenFirma extends Component
       $this->perPage='5';
     }
  
+    public $NombreSeleccionado;  
+    public $ApellidoSeleccionado;  
     public function Agregar($ID_Documento_T){ 
+
+        
+        $Datos =  DB::table('Funcionarios')
+       ->select('Nombres','Apellidos')
+        ->where('ID_Funcionario_T', '=',$ID_Documento_T)->first();
+
+        $this->NombreSeleccionado=$Datos->Nombres;
+        $this->ApellidoSeleccionado=$Datos->Apellidos;
+
 
         $this->ID_Funcionario_T=$ID_Documento_T;
         $this->Detalles=1;
     }
 
+    public function Eliminar($ID_Imagen){ 
+
+      
+
+        $ImagenFirma =  DB::table('ImagenFirma')->select('Ruta')->where('ID_Imagen', '=',$ID_Imagen)->first();
+
+        $nommbreArchivo = Storage::disk('Firmas')->delete($ImagenFirma->Ruta); 
+
+        $FuncionarioModels =ImagenFirma::find($ID_Imagen);
+        $FuncionarioModels->delete();
+
+        $this->Detalles=3;  
+    }
+
+
+    
+
     protected $rules2 = [
+        'NombreImagen' => 'required', 
         'photo' => 'required', 
     ];
  
     protected $messages2 = [
-        'photo.required' =>'El campo Foto es obligatorio.',
+        'NombreImagen.required' =>'El campo Nombre Imagen es obligatorio.',
+        'photo.required' =>'El campo Imagen Firma es obligatorio.',
     ];
 
-    public function IngresoMulta()
+    public function IngresoImagen()
     {
-        $this->validate($this->rules2,$this->messages2); 
+        $this->validate($this->rules2,$this->messages2);  
 
-        $Existe =  DB::table('ImagenFirma')->where('id_Funcionario_T', '=',$this->ID_Funcionario_T)->first();
+        $ID_Maximo =  DB::table('ImagenFirma')->select('ID_Imagen')->orderBy('ID_Imagen', 'desc')->first();
 
-        if(!empty($Existe->id_Funcionario_T)){
+        if(empty($ID_Maximo->ID_Imagen)){
+            $ID_Maximo=1;
+        }else{
+            $ID_Maximo= $ID_Maximo->ID_Imagen;
+        }
 
-         
-            if(!empty($this->photo)){ 
-                
-                $Ruta =  DB::table('Funcionarios')
-                    ->leftjoin('ImagenFirma', 'Funcionarios.ID_Funcionario_T', '=', 'ImagenFirma.id_Funcionario_T') 
-                    ->where('Funcionarios.ID_Funcionario_T', '=',$this->ID_Funcionario_T)->first();
 
-                $nommbreArchivo = Storage::disk('Firmas')->put('', $this->photo); 
+        $Ruta= $ID_Maximo.''.$this->ID_Funcionario_T;
 
-                $ImagenFirma =ImagenFirma::find($Ruta->ID_Imagen);
-                $ImagenFirma->id_Funcionario_T  = $this->ID_Funcionario_T;
-                $ImagenFirma->Ruta              = $nommbreArchivo;
-                $ImagenFirma->save();
+        $nombreArchivo = Storage::disk('Firmas')->put($this->ID_Funcionario_T, $this->photo);
+        
+        $ImagenFirma                    = new ImagenFirma;
+        $ImagenFirma->id_Funcionario_T  = $this->ID_Funcionario_T;
+        $ImagenFirma->NombreImagen      = $this->NombreImagen;
+        $ImagenFirma->Ruta              = $nombreArchivo;
+        $ImagenFirma->save();
 
-                $nommbreArchivo = Storage::disk('Firmas')->delete($Ruta->Ruta); 
-
-                $this->Detalles=2;   
-            
-            }
-        } 
-        else{
-
-            if(!empty($this->photo)){  
-
-                $nommbreArchivo = Storage::disk('Firmas')->put('', $this->photo);
-                
-                $ImagenFirma                    = new ImagenFirma;
-                $ImagenFirma->id_Funcionario_T  = $this->ID_Funcionario_T;
-                $ImagenFirma->Ruta              = $nommbreArchivo;
-                $ImagenFirma->save();
-
-                $this->Detalles=2;     
-            
-            }
-        }               
+        $this->NombreImagen="";
+        $this->photo="";
+        $this->Detalles=2;     
+                      
     }   
 
     public function Volver()
@@ -102,14 +117,16 @@ class SubirImagenFirma extends Component
  
         $this->Detalles=0;                    
    
-    }
+    } 
 
     protected $paginationTheme = 'bootstrap'; 
     public function render()
     {
         return view('livewire.root.subir-imagen-firma',[
-            'Lista' =>  DB::table('Funcionarios') 
-                ->leftjoin('ImagenFirma', 'Funcionarios.ID_Funcionario_T', '=', 'ImagenFirma.id_Funcionario_T') 
+            'Firmas' =>  DB::table('ImagenFirma')
+                ->where('id_Funcionario_T', '=', $this->ID_Funcionario_T)
+                ->get(), 
+            'Lista' =>  DB::table('Funcionarios')
                 ->where(function($query) { 
                     $query->orwhere('Rut', 'like', "%{$this->search}%")
                     ->orwhere('Nombres', 'like', "%{$this->search}%")
@@ -117,5 +134,5 @@ class SubirImagenFirma extends Component
               }) 
             ->paginate($this->perPage), 
       ]); 
-    }
+    } 
 }

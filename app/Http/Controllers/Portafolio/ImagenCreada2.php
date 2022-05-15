@@ -76,4 +76,27 @@ class ImagenCreada2 extends Controller
 
         return view('Posts/EncargadoODP/PortafolioDirecto'); 
     }
+
+    public function index5(Request $request)  
+    {
+
+        $data  = $request->input('Firma');  
+        $ID_Funcionario_T  = $request->input('SelecID_Funcionario_T'); 
+        
+        list($type, $data) = explode(';', $data); 
+        list(, $data) = explode(',', $data); 
+        $data = base64_decode($data); 
+ 
+
+        $Nombre  =  Auth::user()->ID_Funcionario_T.'.png';
+ 
+        Storage::disk('Firmas')->put($Nombre, $data);   
+
+        $ImagenFirma                    = new ImagenFirma;
+        $ImagenFirma->id_Funcionario_T  = $ID_Funcionario_T;
+        $ImagenFirma->Ruta              = $Nombre;
+        $ImagenFirma->save();
+
+        return view('Posts/Solicitudes/Solicitudes'); 
+    }
 }

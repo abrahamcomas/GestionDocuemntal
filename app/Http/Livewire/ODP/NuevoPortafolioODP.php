@@ -141,17 +141,35 @@ class NuevoPortafolioODP extends Component
                 $LinkFirma->Email            = 0;
                 $LinkFirma->direccionEmail   = $DatosFuncionario->Email; 
                 $LinkFirma->save();
-    
+
+
                 $DatosEncargado =  DB::table('OficinaPartes')
                 ->leftjoin('Funcionarios', 'OficinaPartes.ID_Jefatura', '=', 'Funcionarios.ID_Funcionario_T')
                 ->select('ID_Funcionario_T','Nombres','Apellidos','Email')
                 ->where('Id_OP', '=', $ID_OficinaPartes->Id_OP)
                 ->first();
     
+
+                $LugarDeTrabajo =  DB::table('Funcionarios')
+                    ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT') 
+                    ->select('ID_DepDirecciones_LDT')  
+                    ->where('ID_Funcionario_T', '=', $DatosEncargado->ID_Funcionario_T)->first();
+            
+                $OficinaPartes =  DB::table('OficinaPartes')
+                    ->select('Id_OP')  
+                    ->where('ID_OP_LDT', '=', $LugarDeTrabajo->ID_DepDirecciones_LDT)->first();
+
+
+                $InterPortaFuncionario1                      = new InterPortaFuncionario;
+                $InterPortaFuncionario1->IPF_ID_Funcionario  = $Funcionario;
+                $InterPortaFuncionario1->IPF_Portafolio      = $Portafolio->ID_Documento_T;  
+                $InterPortaFuncionario1->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+                $InterPortaFuncionario1->FechaR              = date("Y/m/d");  
+                $InterPortaFuncionario1->Visto               = 0;  
+                $InterPortaFuncionario1->Estado              = 11;
+                $InterPortaFuncionario1->save(); 
     
-
-
-
+            
                 if($Funcionario!=$DatosEncargado->ID_Funcionario_T){ 
              
                     $LinkFirmaE                   = new LinkFirma;
@@ -166,17 +184,6 @@ class NuevoPortafolioODP extends Component
                     $LinkFirmaE->direccionEmail   = $DatosEncargado->Email; 
                     $LinkFirmaE->save();
 
-
-                    $LugarDeTrabajo =  DB::table('Funcionarios')
-                    ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT') 
-                    ->select('ID_DepDirecciones_LDT')  
-                    ->where('ID_Funcionario_T', '=', $DatosEncargado->ID_Funcionario_T)->first();
-            
-                    $OficinaPartes =  DB::table('OficinaPartes')
-                    ->select('Id_OP')  
-                    ->where('ID_OP_LDT', '=', $LugarDeTrabajo->ID_DepDirecciones_LDT)->first();
-             
-                
                     $InterPortaFuncionario                      = new InterPortaFuncionario;
                     $InterPortaFuncionario->IPF_ID_Funcionario  = $DatosEncargado->ID_Funcionario_T;
                     $InterPortaFuncionario->IPF_Portafolio      = $Portafolio->ID_Documento_T;  

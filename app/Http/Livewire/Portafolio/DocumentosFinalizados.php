@@ -47,10 +47,12 @@ class DocumentosFinalizados extends Component
     
     public $Cambiar=0;  
  
+    public $ID_OP_R;
     public $ListaID_Documento;
-    public function ListaFuncionarios($ID_Documento)
+    public function ListaFuncionarios($ID_OP_R,$ID_Documento)
     {
 
+      $this->ID_OP_R = $ID_OP_R; 
       $this->ListaID_Documento = $ID_Documento; 
 
     }
@@ -102,8 +104,11 @@ class DocumentosFinalizados extends Component
             'posts' =>  DB::table('Portafolio') 
             ->leftjoin('TipoDocumento', 'Portafolio.Tipo_T', '=', 'TipoDocumento.ID_TipoDocumento_T')
             ->where(function($query) {
-                $query->orwhere('Estado_T', '=', 3)
-                        ->orwhere('Estado_T', '=', 4);  
+                $query->orwhere('Estado_T', '=', 1) 
+                        ->orwhere('Estado_T', '=', 2)
+                        ->orwhere('Estado_T', '=', 3)
+                        ->orwhere('Estado_T', '=', 4)
+                        ->orwhere('Estado_T', '=', 55);  
                 })  
                 ->where('Anio','=', $this->AnioSelect)
                 ->where(function($query) {
@@ -117,13 +122,13 @@ class DocumentosFinalizados extends Component
  
             'Anio' =>  DB::table('Portafolio')
             ->select('Anio')
-            ->distinct('Anio')          
+            ->distinct('Anio')           
             ->get(), 
 
             'DestinoFirmantes' =>  DB::table('DocFunc') 
             ->leftjoin('OficinaPartes', 'DocFunc.ID_OP_R', '=', 'OficinaPartes.Id_OP')
             ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir')
-            ->where('ID_Documento', '=',$this->ID_Documento_T)   
+            ->where('ID_Documento', '=',$this->ID_Documento_T)  
             ->get(), 
 
             'DestinoFuncionariosFir' =>  DB::table('InterPortaFuncionario') 
@@ -131,6 +136,7 @@ class DocumentosFinalizados extends Component
             ->leftjoin('OficinaPartes', 'InterPortaFuncionario.IPF_Id_OP', '=', 'OficinaPartes.Id_OP')
             ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir')
             ->where('IPF_Portafolio', '=',$this->ListaID_Documento)   
+            ->where('IPF_Id_OP', '=',$this->ID_OP_R)   
             ->get(),  
 
             'DestinoFuncionariosVB' =>  DB::table('InterPortaFuncionarioVB') 
@@ -144,7 +150,8 @@ class DocumentosFinalizados extends Component
             ->leftjoin('OficinaPartes', 'VistoBueno.ID_OP_R', '=', 'OficinaPartes.Id_OP')
             ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir')
             ->where('ID_Documento', '=',$this->ID_Documento_T) 
-            ->get(),
+            ->get(), 
+
             'MostrarDocumentos' =>  DB::table('DestinoDocumento') 
             ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
             ->select('ID_FSube','ID_DestinoDocumento','NombreDocumento','ID_DocumentoFirma','ID_Documento','FechaFirma','Firmado')

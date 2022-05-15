@@ -15,23 +15,23 @@ class ResetearContrasenia extends Controller
     public function index(Request $request)
     {
         $rules = [
-            'Email' => 'required',  
-        ]; 
+            'Rut' => 'required',   
+        ];  
  
         $messages = [ 
-            'Email.required' =>'El campo Email es obligatorio.',
+            'Rut.required' =>'El campo Rut es obligatorio.',
         ]; 
 
         $this->validate($request, $rules, $messages);
 
-        $Email = $request->input('Email');
+        $Rut = $request->input('Rut');
 
-		$DatosFuncionario=DB::table('Funcionarios')->where('Email', $Email)->exists(); 
+		$DatosFuncionario=DB::table('Funcionarios')->where('Rut', $Rut)->exists(); 
 
 		if ($DatosFuncionario==1)  
 			{
-                
-				$datos=DB::table('Funcionarios')->Select('ID_Funcionario_T','Nombres','Apellidos')->whereEmail($Email)->first();
+              
+				$datos=DB::table('Funcionarios')->Select('ID_Funcionario_T','Nombres','Apellidos','Email')->whereRut($Rut)->first();
 
 				$token1=Str::random(120); 
 
@@ -39,12 +39,12 @@ class ResetearContrasenia extends Controller
 				$user->CorreoActivo = 2;  
 	            $user->Token = $token1;
 	            $user->save();
-
-				$resultado='Funcionario/a '.$datos->Nombres.' '.$datos->Apellidos.', correo enviado correctamente';
+            
+				$resultado='Funcionario/a '.$datos->Nombres.' '.$datos->Apellidos.', correo enviado correctamente a '.$datos->Email;
 				
 				$token= 'http://sgd.municipalidadcurico.cl/ResetearContrasenia?id='.$datos->ID_Funcionario_T.'&token='.$token1;
 
-				Mail::to($Email)->send(new RecuperarPasword($datos,$token));
+				Mail::to($datos->Email)->send(new RecuperarPasword($datos,$token));
  
 			}
             

@@ -30,14 +30,16 @@
             </div>
         </div>
     </div>
-@else
+@else 
     <div class="container-fluid">   
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">  
-                        <div class="card-header"> 
-                            <h4><strong>AGREGAR JEFE OFICINA DE PARTES (ODP)</strong></h4>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>AGREGAR JEFE (ODP)</strong></center></h1>
+                            <hr>
                         </div>
                         <div class="row">  
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -45,21 +47,29 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                             </div>
-                        </div> 
-                        <br>
+                        </div>
                         @if($CambiarBusqueda==0)
                             @if($ID_DepDir==0)
-                                <h5><strong>BUSCAR DEPARTAMENTO O DIRECCIÓN</strong></h5>
-                                <hr>
                                 <center>
                                     <div class="btn-group" style=" width:50%;">	
                                         <button class="btn btn-success active" wire:click="CambiarBusqueda"> 
                                             CAMBIAR BUSQUEDA
                                         </button>
                                     </div>
-                                </center> 
-                                <hr>
-                                <input class="form-control" type="text" placeholder="{{$NombreOficinaParte}}" wire:model="BuscarOficinaPartes"/>
+                                </center>
+                                <div class="row">  
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                                        <div class="text-muted" >
+                                            <br>
+                                            <h3><center><strong>BUSCAR POR DEPARTAMENTO O DIRECCIÓN</strong></center></h3>
+                                            <hr>
+                                        </div>
+                                        <input class="form-control" type="text" placeholder="{{$NombreOficinaParte}}" wire:model="BuscarOficinaPartes"/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                                </div> 
+                                <br>
                             @endif
                             @if($BuscarOficinaPartes!="")
                                 <div class="card-body table-responsive">
@@ -91,17 +101,26 @@
                             @endif	
                         @else
                             @if($ID_DepDir==0)
-                                <h5><strong>BUSCAR POR FUNCIONARIO</strong></h5>
-                                <hr>
                                 <center>
                                     <div class="btn-group" style=" width:50%;">	
-                                        <button class="btn btn-success active" wire:click="CambiarBusqueda">
+                                        <button class="btn btn-success active" wire:click="CambiarBusqueda"> 
                                             CAMBIAR BUSQUEDA
                                         </button>
                                     </div>
-                                </center> 
-                                <hr>
-                                <input class="form-control" type="text" wire:model="BuscarNombre"/>
+                                </center>
+                                <div class="row">  
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                                        <div class="text-muted" >
+                                            <br>
+                                            <h3><center><strong>BUSCAR POR FUNCIONARIO</strong></center></h3>
+                                            <hr>
+                                        </div>
+                                        <input class="form-control" type="text" wire:model="BuscarNombre"/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                                </div> 
+                                <br>
                             @endif
                             @if($BuscarNombre!="")
                                 <div class="card-body table-responsive">
@@ -133,14 +152,12 @@
                          
                         @if($BuscarLista!=0)
                             <div class="card-body table-responsive">
-                                <br>                         
-                                <tbody>
-                                    <td>
-                                        @if($ID_DepDir!=0)
-                                            <h5><strong>Encargado {{ $JefeNombre }} {{ $JefeApellido }}</strong></h5>
-                                        @endif
-                                    </td>
-                                </tbody>
+                                <div class="text-muted" >
+                                    <br>
+                                    @if($ID_DepDir!=0)
+                                        <h3>Encargado<strong> {{ $JefeNombre }} {{ $JefeApellido }}</strong></h3>
+                                    @endif
+                                </div>
                                 <table table class="table table-hover">
                                     <thead>
                                         <tr> 
@@ -164,11 +181,15 @@
                                     </tbody> 
                                 </table>
                             </div>
-                            <div class="btn-group" style=" width:100%;">	
+                            <hr>
+                            <center>
+                            <div class="btn-group" style=" width:80%;">	
                                 <button type="button" class="btn btn-danger" id="IngresoMulta" wire:click="Volver">
                                     Volver
                                 </button> 
                             </div>
+                            </center>
+                            <br>
                         @endif
                         <div class="card-footer text-muted"> 
                             GESTIÓN DOCUMENTAL

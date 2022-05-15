@@ -1,10 +1,10 @@
 @extends('App')
 @section('content')
 	<div class="container-fluid">  
-		@livewire('documento-externo.documento-externo' , ['Ruta' => session('Ruta'),'cuantos' => $cuantos, 'nuevaHora' => $nuevaHora])   
-	</div>  
+		@livewire('documento-externo.documento-externo' , ['Ruta' => session('Ruta'),'cuantos' =>  session('cuantos'), 'nuevaHora' => session('nuevaHora')])   
+	</div>   
 @endsection      
-@section('scripts')
+@section('scripts') 
     <script type="text/javascript">
 
             document.addEventListener("DOMContentLoaded", function() {

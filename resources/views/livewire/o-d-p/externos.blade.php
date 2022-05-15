@@ -53,9 +53,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>SOLICITUDES EXTERNAS</strong></h4> 
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>SOLICITUDES EXTERNAS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">  
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -107,7 +109,7 @@
                                             <th>INGRESO</th> 
                                             <th>DÍAS PARA TERMINO</th>
                                             <th>OBSERVACIÓN</th>
-                                            <th>SOLICITUD</th>
+                                            <th>ADMINISTRAR</th>
                                             <th>RECHAZAR</th>
                                         </tr> 
                                     </thead>
@@ -248,9 +250,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>RECHAZAR PORTAFOLIO</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>RECHAZAR PORTAFOLIO</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <h5>Si considera que la solicitud de <strong> {{ $NombreEliminar }} </strong>fue recibida de manera incorrecta, puede rechazar dicha solicitud.</h5>
                         <br>
@@ -285,9 +289,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ARCHIVOS</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ARCHIVOS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
                                 <thead>  
@@ -329,10 +335,12 @@
                             </table>  
                         </div> 
                     </div>
-                    <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>FIRMANTES</strong></h4>
-                        </div> 
+                    <div class="card bg-light mb-3"> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>FIRMANTES</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
                                 <thead>  
@@ -448,8 +456,10 @@
                         </div>
                     </div>
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ENVIAR</strong></h4>
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ENVIAR</strong></center></h1>
+                            <hr>
                         </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
@@ -485,7 +495,7 @@
                                 <select wire:model="DestinoFuncionario" class="form-control" >
                                     <option value="" selected>---SELECCIONAR---</option>
                                     @foreach($FuncionariosAsig as $post)
-                                    <option value="{{ $post->ID_Funcionario_T }}">{{ $post->Nombres }}{{ $post->Apellidos }}</option>
+                                    <option value="{{ $post->ID_Funcionario_T }}">{{ $post->Nombres }} {{ $post->Apellidos }}</option>
                                     @endforeach
                                 </select> 
                                 <label><strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong></label>
@@ -531,8 +541,10 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>NO DISPONIBLE</strong></h4>
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>NO DISPONIBLE</strong></center></h1>
+                            <hr>
                         </div> 
                         <div class="card-body">
                             <h6>La solicitud fue enviado a un funcionario, por lo que la opción de rechazo no esta disponible.</h6>
@@ -566,11 +578,13 @@
                         </div>
                     @endif
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>FINALIZAR SOLICITUD</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>FINALIZAR SOLICITUD</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
-                            <h6>¿Desea finalizar portafolio?</h6>
+                            <h6>¿Desea finalizar?</h6>
                             <br> 
                         <strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong>
                         <div class="form-label-group"> 

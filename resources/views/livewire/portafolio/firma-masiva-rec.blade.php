@@ -20,8 +20,12 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">  
             <div class="col"> 
             @include('messages')  
-                <div class="card bg-light mb-3"> 
-                    <div class="card-header"> <h4><strong>FIRMAR ARCHIVOS</strong></h4></div>
+                <div class="card bg-light mb-3">
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>FIRMAR ARCHIVOS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
                             <h5 style="color: #FF0C00;"><strong> La posición de la firma aquí seleccionada quedara en la misma posición en todos los archivos a firmar.</strong></h5>
                             <hr>

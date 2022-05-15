@@ -6,7 +6,11 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         <div class="col">
             <div class="card bg-light mb-3" > 
-            <div class="card-header">RESULTADO</div>  
+                <div class="text-muted">
+                    <br> 
+                    <h1><center><strong>RESULTADO</strong></center></h1>
+                    <hr>
+                </div>
                     <div class="card-body">
                         <h5><strong><center>{{ $resultado }}</center></strong></h5>
                     </div>

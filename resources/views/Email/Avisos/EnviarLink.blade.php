@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class="card-header">
-        <h2><strong><center>SOLICITUD {{ $Titulo}} RECIBIDA</center></strong></h2>
+        <h2><strong><center>{{ $Titulo}} RECIBIDA</center></strong></h2>
     </div>
         <center>
             <h3>Funcionario/a {{ $Nombres}}.</h3>

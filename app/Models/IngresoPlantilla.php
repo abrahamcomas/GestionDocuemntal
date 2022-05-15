@@ -10,7 +10,7 @@ class IngresoPlantilla extends Model
     use HasFactory;
 
     //referencia a una tabla
-    protected $table="plantillas";
+    protected $table="PlantillasCredas";
     protected $primaryKey="id_plantillas";
 
     //pongo los caampos para permitir insert multiple

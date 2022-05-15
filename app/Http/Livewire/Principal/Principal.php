@@ -5,27 +5,24 @@ namespace App\Http\Livewire\Principal;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Auth;
+ 
 
 class Principal extends Component
 {
  
- 
-
-  
-
-    public $PortafoliosDetenidos;
+    public $PortafoliosDetenidos; 
     public $PortafoliosEnProceso;
     public $PortafoliosFinalizados;
     public $PortafoliosRecibidos; 
     public $PortafolioRecibidosVB;
 
     public $PortafolioExterno;
-    public $PortafolioInterno;
-    public $PortafolioExternosVB;
-
+    public $PortafolioInterno; 
+    public $PortafolioExternosVB; 
+ 
     public $PortafolioDirecto;
 
-    
+    public $Firmados;
     public function render()
     {
         $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 

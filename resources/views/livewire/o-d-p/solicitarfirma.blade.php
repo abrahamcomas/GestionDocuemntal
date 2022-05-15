@@ -20,8 +20,12 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">  
             <div class="col"> 
             @include('messages')  
-                <div class="card bg-light mb-3"> 
-                    <div class="card-header"> <h4><strong>SOLICITAR FIRMA DE ARCHIVO</strong></h4></div>
+                <div class="card bg-light mb-3">
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>SOLICITAR FIRMA A {{ session('Nombre') }}</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">  
                             <h5><strong>Advertencia, las firmas electrónicas agregadas anteriormente a este archivo, pueden no verse reflejadas en este visualizador.</strong></h5><br>
                             <strong>Por favor, haz click sobre el PDF para posicionar la firma electrónica.</strong>
@@ -70,7 +74,7 @@
                         <div class="card-footer text-muted">
                             GESTIÓN DOCUMENTAL
                         </div>     
-                    </div>      
+                    </div>       
                 </div>
             </div>  
         </div> 
@@ -84,6 +88,6 @@
         color: blue;
         width: 190;
         height: 150; 
-        text-align: center; display:none;"><strong>Posición firma<br>Gestión documental</strong>
+        text-align: center; display:none;"><strong>Posición firma de<br>{{ session('Nombre') }}</strong>
     </div>
 </div>

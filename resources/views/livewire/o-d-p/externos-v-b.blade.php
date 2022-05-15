@@ -53,9 +53,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col"> 
                     <div class="card bg-light mb-3"> 
-                        <div class="card-header">
-                            <h4><strong>SOLICITUDES EXTERNAS V°B°</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>SOLICITUDES EXTERNAS V°B°</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body"> 
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -248,9 +250,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>RECHAZAR PORTAFOLIO</strong></h4>
-                    </div> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>RECHAZAR PORTAFOLIO</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <h5>Si considera que el portafolio de <strong> {{ $NombreEliminar }} </strong>fue recibido de manera incorrecta, puede rechazar dicho portafolio.</h5>
                         <br>
@@ -285,9 +289,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ARCHIVOS</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ARCHIVOS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
                                 <thead>  
@@ -330,9 +336,11 @@
                         </div> 
                     </div>
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>V°B°</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>V°B°</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
                                 <thead>  
@@ -446,8 +454,10 @@
                         </div>
                     </div>
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ENVIAR</strong></h4>
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ENVIAR</strong></center></h1>
+                            <hr>
                         </div>
                         <div class="card-body">
                             <table table class="table table-hover">
@@ -455,7 +465,7 @@
                                 <select wire:model="DestinoFuncionario" class="form-control" >
                                     <option value="" selected>---SELECCIONAR---</option>
                                     @foreach($FuncionariosAsig as $post)
-                                    <option value="{{ $post->ID_Funcionario_T }}">{{ $post->Nombres }}{{ $post->Apellidos }}</option>
+                                    <option value="{{ $post->ID_Funcionario_T }}">{{ $post->Nombres }} {{ $post->Apellidos }}</option>
                                     @endforeach
                                 </select>
                                 <label><strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong></label>
@@ -501,9 +511,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>NO DISPONIBLE</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>NO DISPONIBLE</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
                             <h6>El portafolio fue enviado a un funcionario, por lo que la opción de rechazo no esta disponible.</h6>
                             <br>
@@ -536,9 +548,11 @@
                         </div>
                     @endif
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>FINALIZAR PORTAFOLIO</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>FINALIZAR PORTAFOLIO</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
                             <h6>¿DESEA CONFIRMAR PORTAFOLIO?</h6>
                             <br>

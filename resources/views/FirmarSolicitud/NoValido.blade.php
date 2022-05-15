@@ -31,18 +31,63 @@
 		</div>
 	</nav>  
 </head>
-<body> 
+<body>
+    <div id="MostrarFor" style="display:none">
+        <div class="col">
+            <div class="card bg-light mb-3" >
+                <div class="card-body">
+                    <center> 
+                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
+                        <h5><strong>Firmando archivo/s, espere por favor...</strong></h5>
+                    </center>
+                </div>
+                <div class="card-footer text-muted"> 
+                    GESTIÓN DOCUMENTAL
+                </div>
+            </div> 
+        </div>  
+    </div> 
     <div id="IngresoFirma" class="container-fluid">  
         <div class="row"> 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <br>
                 <div class="col">
+                    @include('messages')  
                     <div class="card bg-light mb-3">
-                        <div class="card-header">ERROR</div>  
-                        <div class="card-body">
-                            <h3><strong><center>ERROR LA URL SOLICITADA NO ESTÁ DISPONIBLE.<br></center></strong></h3>
-                            <br>
+                        <div class="card-header">
+                            <h4><strong>SOLICITUD {{ $Titulo_T }} </center></strong></h4>
+                        </div>
+                        <div class="table-responsive"> 
+                            <div class="card-body"> 
+                                <h4><strong>{{ $Nombres }} {{ $Apellidos }} </strong></h4>
+                                <table table class="table table-hover"> 
+                                    <thead> 
+                                        <tr>
+                                            <th>PDF</th>
+                                            <th>VER</th> 
+                                        </tr>
+                                    </thead>  
+                                    <tbody> 
+                                    @foreach($Archivos as $post) 
+                                        <tr>
+                                            <td>
+                                                {{$post->NombreDocumento  }} 
+                                            </td>
+                                            <td>
+                                                <form method="POST" action="{{ route('MostrarPDF11') }}">   
+                                                    @csrf             
+                                                    <input type="hidden" name="ID_DestinoDocumento" value="{{ $post->ID_DestinoDocumento }}">
+                                                    <div class="btn-group" style=" width:50%;">	
+                                                        <button type="submit" class="btn btn-primary active" formtarget="_blank">PDF</button>
+                                                    </div>
+                                                </form> 
+                                            </td>
+                                        </tr>
+                                    @endforeach    
+                                    </tbody>  
+                                </table>   
+                            </div>
                         </div>
                         <div class="card-footer text-muted"> 
                             GESTIÓN DOCUMENTAL
@@ -59,7 +104,7 @@
             <center>
                 © {{ date("Y") }} Dep. de informática V0.1<br>
                 Municipalidad de Curicó<br>
-                VERSIÓN BETA 0.5.230322
+                VERSIÓN BETA 0.5.230322 
             </center>
         </div>
     </div> 
@@ -70,3 +115,17 @@
         @yield("foot")
     </div>
 </body>
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+    $(document).ready(function(){               
+        $(document).on('click', '#btnEnviar1', function(){ 
+            $("#IngresoFirma").hide();       
+            $("#errors").hide();  
+            $("#MostrarFor").show(); 
+        }); 
+    }); 
+</script>

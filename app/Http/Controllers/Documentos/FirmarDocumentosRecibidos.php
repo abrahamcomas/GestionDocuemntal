@@ -16,6 +16,9 @@ use App\Models\Documento;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\DocFunc;
 use App\Models\DocumentoFirma;
+use App\Models\FirmadosDD;
+use App\Models\FirmadosFunc;
+use App\Models\AnioDD;
 use setasign\Fpdi\Fpdi;
 
 class FirmarDocumentosRecibidos extends Controller

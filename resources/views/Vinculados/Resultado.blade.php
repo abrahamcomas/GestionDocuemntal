@@ -6,10 +6,12 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
-                <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <center><h5><strong>RESULTADO</strong></h5></center> 
-                    </div> 
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>RESULTADO</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             @if($sessiones)

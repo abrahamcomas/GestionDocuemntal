@@ -89,19 +89,20 @@
                 }
             </script>
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div> 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                     @include('messages')  
-                    <div class="col">     
+                    <div class="col">      
                         <div class="card bg-light mb-3">
                             <div class="card-header"> 
                                 <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></h4>
                             </div>
                             <div class="card-body">	 
-                                <div id="Imagen" class="specific"> 
-                                    <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} {{$Cargo}}</strong></p>
-                                </div>
-                                <br><br><br> 
+                                <div id="Imagen" class="specific" style="height:30vh;width:35vw;"> 
+                                    <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="260" height="260"/>
+                                        <h2><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></h2>
+                                    </p>
+                                </div>  
                                 <form method="POST" action="{{ route('ImagenCreada2') }}"> 
                                     @csrf  
                                     <div style="display: none">   
@@ -111,7 +112,7 @@
                                         <div class="btn-group" style=" width:100%;">
                                             <button type="button" onclick="Capturar()" class="btn btn-warning" wire:click="Creada">
                                                 ACEPTAR
-                                            </button> 
+                                            </button>  
                                         </div> 
                                     @else
                                         <div class="btn-group" style=" width:100%;">	
@@ -151,24 +152,39 @@
                                             <input type="file" class="form-control" id="PDF" wire:model="PDF" multiple accept="application/pdf"/>
                                             <h6><strong>(MÁXIMO 10 PDF)</strong></h6>
                                         </div> 
-                                    </div>    
-                                    <br>   
-                                </div>
+                                    </div>  
+                                @if($Numero>1)
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h6>TIPO DE IMAGEN DE FIRMA*</h6>
+                                            <div class="form-label-group">  
+                                                <select wire:model="RutaImagenFirma" class="form-control" >
+                                                    <option value="0" selected>---SELECCIONAR---</option>
+                                                    @foreach($ImagenFirma as $post)
+                                                        <option value="{{ $post->Ruta }}">{{ $post->NombreImagen }}</option>
+                                                    @endforeach
+                                                </select> 
+                                            </div> 	 
+                                        </div> 
+                                    </div> 
+                                @endif
+                                <br>   
+                                </div> 
                                 <div class="card-footer text-muted">
                                         <div class="btn-group" style=" width:100%;">
                                             <button class="btn btn-warning active" wire:click="SubirArchivo">SUBIR</button>
                                         </div>
-                                    @else
+                                    @else 
                                         <br>
                                         <form method="POST" action="{{ route('FirmarExterno') }}" accept-charset="UTF-8" enctype="multipart/form-data">
                                             @csrf    
                                             <input type="hidden" name="Ruta" value= "{{ $Ruta }}"> 
-                                            
+                                            <input type="hidden" name="RutaImagenFirma" value= "{{ $RutaImagenFirma }}">
                                             <div class="btn-group" style=" width:100%;">
                                                 <button type="submit" id="btnEnviar1" class="btn btn-success active">CONTINUAR</button>
                                             </div>
                                         </form> 
-                                    @endif
+                                    @endif 
                                 </div> 
                                 <div wire:loading wire:target="PDF">
                                     <center> 

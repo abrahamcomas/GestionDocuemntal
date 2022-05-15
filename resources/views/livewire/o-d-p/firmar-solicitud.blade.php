@@ -21,7 +21,11 @@
             <div class="col"> 
             @include('messages')  
                 <div class="card bg-light mb-3"> 
-                    <div class="card-header"> <h4><strong>FIRMAR ARCHIVO</strong></h4></div>
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>FIRMAR ARCHIVO</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">  
                             <h5><strong>Advertencia, las firmas electrónicas agregadas anteriormente a este archivo, pueden no verse reflejadas en este visualizador.</strong></h5><br>
                             <strong>Por favor, haz click sobre el PDF para posicionar la firma electrónica.</strong>

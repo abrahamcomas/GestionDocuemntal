@@ -25,28 +25,48 @@ class SubirDocumento extends Component
 
     public $Creado=1;
 
-    public function Creada(){
+    public function Creada(){ 
 
         $this->Creado = 0;  
 
     }
- 
-
-
 
     public $Existe; 
     public $PDF= [];
     public $Subido=0; 
     public $Ruta;
+    public $RutaImagenFirma;
 
     protected $RulesRevision = ['PDF' => 'required'];
 	protected $RelusMessagesRevision2 = ['PDF.required' =>'El campo PDF es obligatorio.'];
 
+    protected $RulesRevision3 = ['PDF' => 'required',
+                                'RutaImagenFirma' => 'required'];
+
+	protected $RelusMessagesRevision3 = ['PDF.required' =>'El campo PDF es obligatorio.',
+                                        'RutaImagenFirma.required' =>'El campo TIPO DE IMAGEN DE FIRMA es obligatorio.'];
+
     public function SubirArchivo(){ 
 
-        $this->validate($this->RulesRevision,$this->RelusMessagesRevision2); 
-
         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+
+        $Numero =  DB::table('ImagenFirma') 
+        ->where('id_Funcionario_T', '=',$Funcionario)
+        ->count();
+
+
+        if($Numero>1){
+            
+            $this->validate($this->RulesRevision3,$this->RelusMessagesRevision3); 
+
+        }
+        else{
+            
+            $this->validate($this->RulesRevision,$this->RelusMessagesRevision2); 
+        }
+       
+
+    
         
         $milisegundos = round(microtime(true) * 1000);
         
@@ -91,7 +111,7 @@ class SubirDocumento extends Component
             $DocumentosExterno->save();   
 
             $this->Subido = 1;   
-            $this->Ruta = $DocumentosExterno->Ruta_T;  
+            $this->Ruta = $DocumentosExterno->Ruta_T; 
             
         }
 
@@ -122,6 +142,13 @@ class SubirDocumento extends Component
         $this->Existe=count($Lista);
 
     
-        return view('livewire.documento-externo.subir-documento');
+        return view('livewire.documento-externo.subir-documento',[
+            'Numero' =>  DB::table('ImagenFirma') 
+                ->where('id_Funcionario_T', '=',$Funcionario)
+            ->count(),
+            'ImagenFirma' =>  DB::table('ImagenFirma') 
+                ->where('id_Funcionario_T', '=',$Funcionario)
+            ->get(),
+        ]);
     }
 }

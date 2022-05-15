@@ -20,12 +20,15 @@ use Illuminate\Support\Facades\DB;
  
 class SubirPDFController extends Controller
 { 
-    public function index(Request $request)  
+    public function index(Request $request)   
     {  
 
-        $Ruta = $request->input('Ruta');   
+        $Ruta = $request->input('Ruta');
+
+        $RutaImagenFirma = $request->input('RutaImagenFirma'); 
 
         session(['Ruta' => $Ruta]);  
+        session(['RutaImagenFirma' => $RutaImagenFirma]);   
 
         $NombreZip =  DB::table('DocumentosExterno')->select('NombreZip')->where('Ruta_T', '=',$Ruta )->first();
         
@@ -34,16 +37,19 @@ class SubirPDFController extends Controller
         $Cuantos =  DB::table('DocumentosExterno')->select('NombreZip')->where('NombreZip', '=',$NombreZip )->get();
 
 
-        $cuantos=count($Cuantos);
+        $cuantos=count($Cuantos); 
 
         $horaInicial = date('h:i');  
         $minutoAnadir=$cuantos*30;
  
         $segundos_horaInicial=strtotime($horaInicial);
-        
+         
         $nuevaHora=date("H:i",$segundos_horaInicial+$minutoAnadir); 
+
+        session(['cuantos' => $cuantos]);  
+        session(['nuevaHora' => $nuevaHora]);  
            
-        return view('Posts/Externo/DocumentoExterno')->with('cuantos', $cuantos)->with('nuevaHora', $nuevaHora); 
+        return view('Posts/Externo/DocumentoExterno'); 
 
     }
 }

@@ -16,9 +16,11 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
 			<div class="card bg-light mb-3">
-				<div class="card-header">
-					<center><strong><h5>CAMBIAR EMAIL</h5></strong></center> 
-				</div>
+                <div class="text-muted">
+                    <br> 
+                    <h1><center><strong>CAMBIAR EMAIL</strong></center></h1>
+                    <hr>
+                </div>
 				<div class="card-body">
                 <center><strong><h5>{{ $Email }} </h5></strong></center> 
 					<form method="POST" action="{{ route('FormCorreo') }}">   

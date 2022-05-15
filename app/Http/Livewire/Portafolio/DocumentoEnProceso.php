@@ -57,7 +57,7 @@ class DocumentoEnProceso extends Component
  
    
 public $Funcionarios;
-public $TipoFirma;
+public $TipoFirma; 
 
 protected $paginationTheme = 'bootstrap'; 
     public function render()

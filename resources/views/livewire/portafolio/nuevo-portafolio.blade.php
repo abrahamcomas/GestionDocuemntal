@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-@else                            
+@else                             
     @if($Existe==0) 
         <style>
                 #Imagen {
@@ -67,10 +67,11 @@
                             <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></g4>
                         </div>
                         <div class="card-body">	 
-                            <div id="Imagen" class="specific"> 
-                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></p>
+                            <div id="Imagen" class="specific" style="height:30vh;width:35vw;"> 
+                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="260" height="260"/>
+                                    <h2><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></h2>
+                                </p>
                             </div>
-                            <br><br><br> 
                             <form method="POST" action="{{ route('ImagenCreada2') }}"> 
                                 @csrf  
                                 <div style="display: none">   
@@ -104,11 +105,12 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">   
                         @include('messages')  
-                        <div class="card bg-light mb-3">
-                            <div class="card-header"> 
-                                <!--<marquee behavior=alternate width=20%><h4><strong>NUEVA SOLICITUD</strong></h4></marquee>-->
-                                <h4><strong>NUEVA SOLICITUD</strong></h4>
-                            </div> 
+                        <div class="card bg-light mb-3"> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -203,6 +205,21 @@
                                     </div>	
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>	
                                 </div>	 
+                                @endif 
+                                @if(Auth::user()->Acta==1)
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                   <h6><strong>NO INGRESAR CODIGO QR</strong></h6>
+                                    <h8>Los archivos subidos contienen firmas electrónicas, y se deben mantener.</h8>
+                                        <div class="form-label-group">   
+                                            <select wire:model="Acta" class="form-control">
+                                                <option value="0" selected>INGRESAR QR</option>
+                                                <option value="1">SI, MANTENER FIRMAS</option>
+                                            </select> 
+                                        </div>		
+                                    </div>	
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>	
+                                </div>	 
                                 @endif
                                 <br> 
                                 <div class="row">
@@ -249,8 +266,12 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
-                        <div class="card bg-light mb-3" > 
-                            <div class="card-header"><h4><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></strong></h4></div>  
+                        <div class="card bg-light mb-3">
+                                <div class="text-muted">
+                                    <br> 
+                                    <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></center></h1>
+                                    <hr>
+                                </div> 
                                 <div class="card-body">
                                     <div class="form-group">
                                         <h5>NUEVA SOLICITUD INGRESADA.</h5>

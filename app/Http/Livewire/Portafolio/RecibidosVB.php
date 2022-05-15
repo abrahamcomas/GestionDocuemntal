@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Auth; 
 use App\Models\InterPortaFuncionarioVB;
+use App\Models\VistoBueno;
 
 
 class RecibidosVB extends Component
@@ -21,10 +22,11 @@ class RecibidosVB extends Component
     }
     
     public $ID_Documento_T;
+    public $IPF_Id_OP;
     public $Detalles=0;
     public $IPFVB;
      
-    public function Detalles($ID_Documento_T)
+    public function Detalles($ID_Documento_T,$IPF_Id_OP)
     {
      
 
@@ -43,6 +45,7 @@ class RecibidosVB extends Component
 
         $this->Detalles=1;
         $this->ID_Documento_T=$ID_Documento_T;
+        $this->IPF_Id_OP=$IPF_Id_OP;
         $this->IPFVB=$ID->IPFVB;
 
     }
@@ -54,7 +57,7 @@ class RecibidosVB extends Component
     public function clear()
     {
         $this->search='';
-        $this->perPage=5;
+        $this->perPage=5; 
     }
  
     public function Volver(){
@@ -64,7 +67,7 @@ class RecibidosVB extends Component
     
     public $Cambiar=0;
  
-    public function CambiarVB()
+    public function CambiarVB() 
     {
       $this->Cambiar=1;  
     }
@@ -101,7 +104,6 @@ class RecibidosVB extends Component
     public $ObservacionPortafolio;
     public function RespuestaPortafolio(){
 
-        $this->ID_Documento_T; 
     
         if($this->TipoRespuesta==1){ 
             
@@ -109,6 +111,7 @@ class RecibidosVB extends Component
             $InterPortaFuncionarioVB->Estado                = $this->TipoRespuesta;
             $InterPortaFuncionarioVB->ObservacionResp       = $this->ObservacionPortafolio;
             $InterPortaFuncionarioVB->save(); 
+
                 
             $this->TipoRespuesta="";
             $this->ObservacionPortafolio="";
@@ -121,7 +124,11 @@ class RecibidosVB extends Component
             $InterPortaFuncionarioVB->Estado                = $this->TipoRespuesta;
             $InterPortaFuncionarioVB->ObservacionResp       = $this->ObservacionPortafolio;
             $InterPortaFuncionarioVB->save(); 
-            
+
+            $VistoBueno                        =VistoBueno::where('ID_OP_R', $this->IPF_Id_OP)->where('ID_Documento', $this->ID_Documento_T)->first();
+            $VistoBueno->Estado                = 2;
+            $VistoBueno->save(); 
+             
             $this->TipoRespuesta="";
             $this->ObservacionPortafolio="";
             $this->Detalles=0;

@@ -53,8 +53,10 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
             <div class="col">
                 <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <h4><strong>SOLICITUDES DETENIDAS</strong></h4>
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>SOLICITUDES DETENIDAS</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body"> 
                         <div class="row">  
@@ -150,9 +152,6 @@
                                             </div>
                                         </td>
                                     @endif
-
-
-
                                         <td>
                                             {{$post->NumeroInterno }}{{$post->Anio }}
                                         </td>
@@ -316,8 +315,10 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>LISTA DE ARCHIVOS</strong></h4>
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>LISTA DE ARCHIVOS</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body">
                         <div class="text-muted"> 
@@ -387,12 +388,7 @@
                         </div>
                     @if($cuantos>=2)
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                <div class="btn-group" style=" width:100%;">	
-                                    <button class="btn btn-warning active" wire:click="ConfirmarFirmaTodos({{ $ID_Documento_T }})">FIRMADO TODOS</button>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <form method="POST" action="{{ route('FirmaDetenidoMasiva') }}">
                                     @csrf      
                                     <input type="hidden" name="ID_Documento_T" value="{{ $ID_Documento_T  }}">	
@@ -440,13 +436,14 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
-                <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ELIMINAR</strong></h4>
-                    </div> 
+                <div class="card bg-light mb-3"> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ELIMINAR</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
-                        <strong>Un portafolio puede ser eliminado del sistema si considera que fue ingresado incorrectamente.</strong>
-                        <br><br>
+                        <p>Un portafolio puede ser eliminado del sistema si considera que fue ingresado incorrectamente.</p>
                         <strong>Por favor, Confirme su contraseña de usuario.</strong>
                         <div class="form-label-group">
                             <input type="password" class="form-control" wire:model="ContraseniaPortafolio"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
@@ -470,13 +467,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3" > 
-                    <div class="table-responsive"> 
-                        <div class="card-header">
-                            <ul class="nav nav-tabs card-header-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link" wire:click="DocumentosSubidosTotal"><h4><strong>ENVIAR PORTAFOLIO</strong></h4></a>
-                                </li>
-                            </ul>
+                    <div class="table-responsive">
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ENVIAR PORTAFOLIO</strong></center></h1>
+                            <hr>
                         </div>
                         <div class="card-body"> 
                             <div class="row">  

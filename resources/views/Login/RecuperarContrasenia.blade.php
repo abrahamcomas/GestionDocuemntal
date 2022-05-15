@@ -1,44 +1,45 @@
-@extends('App')
+@extends('App2')
 @section('content')
-<br>
-<div class="container-fluid">   
-    <div class="row"> 
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-            @include('messages')
+<div class="container">   
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <div class="form-login">
+                <center><h2><strong>GESTIÓN DOCUMENTAL</strong></h2></center>  
+                <div class="card-body">
+                    <h4><strong>RESTAURACIÓN DE CONTRASEÑA</strong></h4>
+                    <form method="POST" action="{{ route('ContraseniaEnviada') }}">
+                        @csrf 
+                        @if (count($errors) > 0)
+                            @foreach ($errors->get('Rut') as $message)
+                                <p style="color: red;">{{ $message }}</p>
+                            @endforeach
+                        @endif
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><img src="{{URL::asset('Imagenes/user.png')}}" height="25" alt="Curicó"/></span>
+                            </div>
+                            <input type="text" class="form-control" name="Rut" id="Rut" oninput="checkRut(this)" placeholder="Rut" value="{{ old('Rut') }}">
+                        </div>   
+                        <div class="btn-group" style=" width:100%;">	
+                            <button type="submit" class="btn btn-success">ACEPTAR</button>
+                        </div>	
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="btn-group" style=" width:100%;">
+                        <a href="{{ route('Index') }}" style="color: white;"><strong>VOLVER</strong></a>
+                        <hr>
+                    </div>   
+                </div> 
+                <div class="card-footer text-muted" >
+                    <center><p style="color: #FFFFFF;">Proyecto Desarrollado por el Departamento de Informática 2021-2022</p></center>
+                    <center><p style="color: #FFFFFF;">ILUSTRE MUNICIPALIDAD DE CURICÓ</p></center> 
+                </div>
+            </div>
+            <br>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
-    </div>  
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-			<div class="col">  
-          		<div class="card bg-light mb-3">
-					<div class="card-header"> 
-						<center><h5><strong>RESTAURACIÓN DE CONTRASEÑA</strong></h5></center> 
-					</div>
-					<div class="card-body">
-						<form method="POST" action="{{ route('ContraseniaEnviada') }}">
-							@csrf  
-							<div class="form-group">
-								<div class="form-label-group">
-									<input type="email" id="Email" name="Email" value="{{ old('Email') }}" class="form-control" placeholder="Ingrese Email" required>
-								</div>
-							</div>
-							<div class="btn-group" style=" width:100%;">	
-								<button type="submit" class="btn btn-primary active">ACEPTAR</button>
-							</div>	
-						</form>
-					</div> 	
-					<div class="card-footer text-muted">
-						<div class="btn-group" style=" width:100%;">	
-							<a href="{{ route('Index') }}" style="color: #2AADB8;"><strong>VOLVER</strong></a>
-						</div>	      
-					</div>	
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
-	</div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"> </div>
+    </div>
 </div>
 @endsection   

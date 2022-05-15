@@ -7,9 +7,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3"> 
-                        <div class="card-header"> 
-                            <center><h5><strong>LISTA FUNCIONARIOS</strong></h5></center> 
-                        </div> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>LISTA FUNCIONARIOS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
                         <div class="row">  
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
@@ -80,10 +82,11 @@
 @elseif($Detalles==1) 
     <br>
     <div class="container-fluid">  
-        <div class="card-header"> 
-            <center><h5><strong>Funcionario {{ $Nombres}} {{$Apellidos}}</strong></h5></center>
-        </div> 
-        <br>
+        <div class="text-muted" >
+            <br> 
+            <h1><center><strong>Funcionario {{ $Nombres}} {{$Apellidos}}</strong></center></h1>
+            <hr>
+        </div>
         <div class="row"> 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <div class="col">

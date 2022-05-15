@@ -42,7 +42,7 @@ class SolicitarFirma extends Controller
         $token = md5($mousePosX); 
   
         if(empty($Pagina)){  
-            $Pagina = 1;
+            $Pagina = 1; 
         }     
    
         $Contenido='gestiondocumental.test/firmarsolicitud/'.$ID_LinkFirma.'/'.$token.'';

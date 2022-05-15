@@ -118,12 +118,16 @@ class PosicionFirmaController extends Controller
     public function index4(Request $request) 
     {   
         $ID_Documento_T = $request->input('ID_Documento_T');  
-        $ID_LinkFirma = $request->input('ID_LinkFirma');  
+        $ID_LinkFirma = $request->input('ID_LinkFirma');   
 
         $datos=DB::table('DestinoDocumento')->Select('Ruta_T')->where('DOC_ID_Documento', '=', $ID_Documento_T)->first();
+        $datosLinkFirma=DB::table('LinkFirma')->Select('Nombres_L','Apellidos_L')->where('ID_LinkFirma', '=', $ID_LinkFirma)->first();
 	   
-        $Ruta = $datos->Ruta_T;
+        $Nombre = $datosLinkFirma->Nombres_L.' '.$datosLinkFirma->Apellidos_L;
+
+        $Ruta = $datos->Ruta_T; 
  
+        session(['Nombre' => $Nombre]);  
         session(['Ruta' => $Ruta]);  
         session(['ID_LinkFirma' => $ID_LinkFirma]);  
            

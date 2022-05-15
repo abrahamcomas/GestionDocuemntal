@@ -37,7 +37,7 @@ use App\Http\Controllers\ODP\FirmandoSolicitudController;
 
 
 use App\Http\Controllers\Sessiones\SessionesController;
-use App\Http\Controllers\Sessiones\EliminarVinculo;
+use App\Http\Controllers\Sessiones\EliminarVinculo; 
 
 use App\Http\Controllers\Root\ImagenCreada;
 use App\Http\Controllers\Portafolio\ImagenCreada2;
@@ -64,6 +64,23 @@ use App\Http\Controllers\Recibidos\FirmandoRecibidoMult;
 
 use App\Http\Controllers\Detenidos\FirmandoDetenidas;
 use App\Http\Controllers\Detenidos\FirmandoDetenidasMasivo;
+
+use App\Http\Controllers\Sistema\IndexController;
+use App\Http\Controllers\Sistema\ActualizarContratoController;
+use App\Http\Controllers\Sistema\IngresoLugarController;
+
+use App\Http\Controllers\Solicitudes\PosicionarFirmaController11;
+use App\Http\Controllers\Solicitudes\SolicitarFirma11;
+use App\Http\Controllers\Solicitudes\FirmarSolicitudController11;
+use App\Http\Controllers\Solicitudes\FirmarSolicitudEmisor;
+use App\Http\Controllers\Solicitudes\FirmarSolicitudController11Emisor;
+use App\Http\Controllers\Solicitudes\PDFGestionController11;
+
+use App\Http\Controllers\Colores\ColoresController;
+
+use App\Http\Controllers\Colores\BuscarColoresController;
+
+use App\Http\Controllers\CKeditor\ImagenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,20 +89,121 @@ use App\Http\Controllers\Detenidos\FirmandoDetenidasMasivo;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
-*/ 
+|  
+*/  
 
-    Route::get('/', function () {
-        if(Auth::guard('web')->check()){
-            return view('Posts/Principal/PrincipalPosts');
-        }else{
-            return view('Login/Login');
-        }
-    })->name('Index');
+ 
 
+//CKeditor
+Route::get('/ListaPlantillas',function () {  
+    return view('Posts/CKEditor/ListaPlantillas');
+})->middleware('auth');
+
+Route::post('/ListaPlantillas',function () {  
+    return view('Posts/CKEditor/ListaPlantillas');
+})->middleware('auth')->name('ListaPlantillas');
+
+Route::post('/MostrarPlantillas', [MostrarPlantillas::class, 'index'])->middleware('auth')->name('MostrarPlantillas');  
+
+Route::post('/GuardarPlantillas', [MostrarPlantillas::class, 'GuardarPlantillas'])->middleware('auth')->name('GuardarPlantillas');  
+
+Route::post('/PDFPlantilla', [MostrarPlantillas::class, 'PDFPlantilla'])->middleware('auth')->name('PDFPlantilla');  
+
+Route::post('/images/upload', [ImagenController::class, 'upload'])->middleware('auth')->name('images.upload');  
+
+
+
+/*
+Route::post('/CrearDocumentos', [NuevoDocumentoController::class, 'index'])->middleware('auth')->name('CrearDocumentos');  
+Route::get('/CrearDocumentos', [NuevoDocumentoController::class, 'index'])->middleware('auth')->name('CrearDocumentos'); 
+*/
+ 
+
+Route::post('/GuardarPlantillas', [MostrarPlantillas::class, 'GuardarPlantillas'])->middleware('auth')->name('GuardarPlantillas');  
+
+Route::post('/GuardarImagen', [MostrarPlantillas::class, 'GuardarImagen'])->middleware('auth')->name('GuardarImagen');  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//NUEVA
+Route::get('/Personalizar',function () {  
+    return view('Colores/Colores');
+})->middleware('auth')->name('Personalizar');
+
+Route::post('/Personalizar', [BuscarColoresController::class, 'Buscar'])->middleware('auth')->name('Personalizar');   
+
+
+Route::post('/IngresarColores', [ColoresController::class, 'Ingresar'])->middleware('auth')->name('IngresarColores');   
+Route::post('/BorrarColores', [ColoresController::class, 'Borrar'])->middleware('auth')->name('BorrarColores');   
+
+
+
+
+
+
+
+
+
+
+Route::get('/offline', function () {
+    return view('vendor/laravelpwa/offline');
+});
+
+Route::get('/', function () {
+    if(Auth::guard('web')->check()){
+        return view('Posts/Principal/PrincipalPosts');
+    }else{
+        return view('Login/Login');
+    }
+})->name('Index'); 
+ 
+ 
 //PAGINA PRINCIPAL LOGIN 
 
-    Route::post('/', [Login::class, 'index'])->name('Login'); 
+Route::post('/', [Login::class, 'index'])->name('Login'); 
+
+
+Route::post('/ActualizarContrato', [ActualizarContratoController::class, 'index'])->middleware('auth')->name('Actualizar');   
+
+Route::get('/Graficos', [IndexController::class, 'index'])->middleware('auth')->name('Graficos');
+
+
+
+
+
+    
+
+
 
 // REGISTRO
 
@@ -129,6 +247,9 @@ Route::post('/FirmaDetenidoI', [PosicionFirmaController::class, 'FirmaDetenidoIn
 Route::get('/FirmaDetenidoI',function () { 
     return view('Posts/Portafolio/FirmaDetenidoIndividual'); 
 })->middleware('auth'); 
+
+
+
  
 Route::post('/FirmaDetenidoM', [PosicionFirmaController::class, 'FirmaDetenidoMasiva'])->middleware('auth')->name('FirmaDetenidoMasiva');   
 Route::get('/FirmaDetenidoM',function () { 
@@ -207,9 +328,52 @@ Route::get('/firmarsolicitud/{ID_LinkFirma}/{token}',function ($ID_LinkFirma,$to
 });  
 
 
+
+//CREAR SOLICITUD POR URL11
+Route::get('/firmarsolicitud11/{ID_LinkFirma}/{token}',function ($ID_LinkFirma,$token) { 
+   
+  
+
+    $LinkFirma =  DB::table('LinkFirma11') 
+    ->select('ID_Documento_L') 
+    ->where('ID_LinkFirma', '=', $ID_LinkFirma) 
+    ->where('token', '=', $token) 
+    ->where('Estado', '=', 1)  
+    ->first();  
+ 
+    if(!empty($LinkFirma->ID_Documento_L)){ 
+      
+        $LinkFirma =  DB::table('LinkFirma11') 
+        ->select('ID_Documento_L','Titulo_T','ID_Funcionario_L','Nombres_L','Apellidos_L','mousePosX','mousePosY','Pagina','Ancho','Alto') 
+        ->where('ID_LinkFirma', '=', $ID_LinkFirma) 
+        ->first(); 
+
+        $Archivos =  DB::table('DestinoDocumento11') 
+        ->where('DOC_ID_Documento', '=',$LinkFirma->ID_Documento_L)
+        ->get();
+
+        return view('FirmarSolicitud/FirmarSolicitud11')->with('ID_LinkFirma', $ID_LinkFirma)->with('Titulo_T', $LinkFirma->Titulo_T)->with('ID_Funcionario_T', $LinkFirma->ID_Funcionario_L )->with('Nombres', $LinkFirma->Nombres_L)->with('Apellidos', $LinkFirma->Apellidos_L)->with('Archivos', $Archivos)->with('mousePosX', $LinkFirma->mousePosX)->with('mousePosY', $LinkFirma->mousePosY)->with('Pagina', $LinkFirma->Pagina)->with('Ancho', $LinkFirma->Ancho)->with('Alto', $LinkFirma->Alto);
+    }
+    else{
+
+        $LinkFirma =  DB::table('LinkFirma11') 
+        ->select('ID_Documento_L','Titulo_T','ID_Funcionario_L','Nombres_L','Apellidos_L','mousePosX','mousePosY','Pagina','Ancho','Alto') 
+        ->where('ID_LinkFirma', '=', $ID_LinkFirma) 
+        ->first(); 
+
+        $Archivos =  DB::table('DestinoDocumento11') 
+        ->where('DOC_ID_Documento', '=',$LinkFirma->ID_Documento_L)
+        ->get();
+      
+        return view('FirmarSolicitud/NoValido')->with('ID_LinkFirma', $ID_LinkFirma)->with('Titulo_T', $LinkFirma->Titulo_T)->with('ID_Funcionario_T', $LinkFirma->ID_Funcionario_L )->with('Nombres', $LinkFirma->Nombres_L)->with('Apellidos', $LinkFirma->Apellidos_L)->with('Archivos', $Archivos)->with('mousePosX', $LinkFirma->mousePosX)->with('mousePosY', $LinkFirma->mousePosY)->with('Pagina', $LinkFirma->Pagina)->with('Ancho', $LinkFirma->Ancho)->with('Alto', $LinkFirma->Alto);
+
+    } 
+});  
+
+
 //Respuesta archivo firmado URL
 Route::post('/FirmarSolicitudRecibida', [FirmandoSolicitudController::class, 'index'])->name('FirmandoSolicitud');  
-
+Route::post('/FirmarSolicitudRecibida11', [FirmarSolicitudController11::class, 'index'])->name('FirmandoSolicitud11');  
 
 
 //AGREGAR DOCUMENTOS
@@ -232,6 +396,27 @@ Route::get('/AgregarDirDEP',function () {
 })->middleware('auth'); 
 //Fin   
 
+//AGREGAR AGREGAR SECRETARIA
+Route::post('/AgregarSecretaria',function () { 
+    return view('Posts/Root/AgregarSecretaria');
+})->middleware('auth')->name('AgregarSecretaria');
+ 
+Route::get('/AgregarSecretaria',function () { 
+    return view('Posts/Root/AgregarSecretaria');
+})->middleware('auth'); 
+//Fin  
+
+
+//AGREGAR DESACTIVAR USUARIO
+Route::post('/DesactivarUsuario',function () { 
+    return view('Posts/Root/DesactivarUsuario');
+})->middleware('auth')->name('DesactivarUsuario');
+ 
+Route::get('/DesactivarUsuario',function () { 
+    return view('Posts/Root/DesactivarUsuario');
+})->middleware('auth'); 
+//Fin 
+
 
 
 //MENSAJE
@@ -241,7 +426,71 @@ Route::post('/Mensaje',function () {
  
 Route::get('/Mensaje',function () { 
     return view('Posts/Root/Mensaje');
+})->middleware('auth');  
+//Fin   
+
+
+//CREAR SOLICITUDES 1 A 1
+Route::post('/CrearSolicitud',function () { 
+    return view('Posts/Solicitudes/CrearSolicitud');
+})->middleware('auth')->name('CrearSolicitud');
+ 
+Route::get('/CrearSolicitud',function () { 
+    return view('Posts/Solicitudes/CrearSolicitud');
 })->middleware('auth'); 
+
+Route::post('/Solicitudes',function () { 
+    return view('Posts/Solicitudes/Solicitudes');
+})->middleware('auth')->name('Solicitudes');
+ 
+Route::get('/Solicitudes',function () { 
+    return view('Posts/Solicitudes/Solicitudes');
+})->middleware('auth');  
+  
+
+Route::post('/SolicitarFirma11', [PosicionarFirmaController11::class, 'index'])->middleware('auth')->name('SolicitarFirma11');   
+Route::get('/SolicitarFirma11',function () { 
+    return view('Posts/Solicitudes/SolicitarFirma11');
+})->middleware('auth');  
+
+Route::post('/SolicitarFirmaFuncionario11', [SolicitarFirma11::class, 'index'])->middleware('auth')->name('SolicitarFirmaFuncionario11');  
+Route::get('/SolicitarFirmaFuncionario11',function () { 
+    return view('Posts/Solicitudes/Solicitudes');
+})->middleware('auth'); 
+
+
+
+
+Route::post('/Envio11',function () { 
+
+    if (isset($_SESSION['Ruta'])){
+        $request->session()->flush();
+    }
+  
+    if (isset($_SESSION['ID_Documento_T'])){
+        $request->session()->flush();
+    }
+
+    return view('Posts/Solicitudes/Solicitudes');
+})->middleware('auth')->name('Envio11');
+ 
+Route::get('/Envio11',function () {  
+    return view('Posts/Solicitudes/Solicitudes');
+})->middleware('auth'); 
+
+
+
+
+
+Route::post('/Firma11', [FirmarSolicitudEmisor::class, 'index'])->middleware('auth')->name('Firma11');   
+Route::get('/Firma11',function () { 
+    return view('Posts/Solicitudes/Firmar'); 
+})->middleware('auth');    
+
+
+Route::post('/FirmarSolicitud11Emisor', [FirmarSolicitudController11Emisor::class, 'index'])->middleware('auth')->name('FirmarEmisor11'); 
+
+
 //Fin   
 
 
@@ -249,10 +498,7 @@ Route::get('/Mensaje',function () {
 
 
 
-
-
-
-
+ 
 
 
 
@@ -307,6 +553,14 @@ Route::get('/Mensaje',function () {
 //FIRMAR DOCUMENTO EXT.
  
     Route::post('/SubirDocumento',function () { 
+
+        if (isset($_SESSION['cuantos'])){
+            $request->session()->flush();
+        }
+      
+        if (isset($_SESSION['nuevaHora'])){
+            $request->session()->flush();
+        }
     
         return view('Posts/Externo/SubirDocumentoExterno');
 
@@ -318,7 +572,27 @@ Route::get('/Mensaje',function () {
 
     })->middleware('auth'); 
      
+
+
+    Route::post('/FirmaMasiva2',function () { 
+
+        if (isset($_SESSION['cuantos'])){
+            $request->session()->flush();
+        }
+      
+        if (isset($_SESSION['nuevaHora'])){
+            $request->session()->flush();
+        }
     
+        return view('Posts/Externo/FirmaMasiva2');
+
+    })->middleware('auth')->name('DocumentoExt2');  
+
+    Route::get('/FirmaMasiva2',function () { 
+
+        return view('Posts/Externo/FirmaMasiva2');
+
+    })->middleware('auth'); 
 
  
 
@@ -401,7 +675,7 @@ Route::get('/ListaFuncionarios',function () {
     return view('Posts/Funcionarios/ListaFuncionarios');
 })->middleware('auth');
 //Fin envio
-  
+   
   
 
 //PORTAFOLIO PORTAFOLIO PORTAFOLIO PORTAFOLIO PORTAFOLIO PORTAFOLIO PORTAFOLIO PORTAFOLIO
@@ -411,6 +685,8 @@ Route::post('ImagenCreadaP', [ImagenCreada2::class, 'index'])->name('ImagenCread
 Route::post('ImagenCreadaP3', [ImagenCreada2::class, 'index2'])->name('ImagenCreada3');
 
 Route::post('ImagenCreadaP4', [ImagenCreada2::class, 'index4'])->name('ImagenCreada4');
+
+Route::post('ImagenCreadaP4', [ImagenCreada2::class, 'index5'])->name('ImagenCreada5');
 
 Route::get('/ImagenCreadaP4',function () { 
     return view('Posts/EncargadoODP/PortafolioDirecto');
@@ -438,9 +714,13 @@ Route::get('/CrearDocumentoODP',function () {
  
 
 //SIN FIRMAR ODP
-Route::post('/PortafolioSinFimrarODP',function () { 
+Route::post('/SolicitudSinFimrarODP',function () { 
 
     if (isset($_SESSION['Ruta'])){
+        $request->session()->flush();
+    }
+
+    if (isset($_SESSION['Nombre'])){
         $request->session()->flush();
     }
   
@@ -450,6 +730,24 @@ Route::post('/PortafolioSinFimrarODP',function () {
 
     return view('Posts/ODP/FirmarDocumentosODP');
 })->middleware('auth')->name('EnvioOficinaPartesODP');
+
+
+Route::get('/SolicitudSinFimrarODP',function () { 
+
+    if (isset($_SESSION['Ruta'])){
+        $request->session()->flush();
+    } 
+
+    if (isset($_SESSION['Nombre'])){
+        $request->session()->flush();
+    }
+  
+    if (isset($_SESSION['ID_Documento_T'])){
+        $request->session()->flush();
+    }
+
+    return view('Posts/ODP/FirmarDocumentosODP');
+})->middleware('auth');
  
 Route::get('/PortafolioSinFimrarODP',function () { 
     return view('Posts/ODP/FirmarDocumentosODP');
@@ -518,7 +816,7 @@ Route::get('/PortafoliosFinalizadosVB',function () {
 //Fin
 
 
-
+ 
 
 //PORTAFOLIOS RECIBIDOS 
 Route::post('/PortafoliosRecibidos',function () { 
@@ -638,6 +936,8 @@ Route::get('/SolicitarFirmaFuncionario',function () {
 
 
 Route::post('/Documento', [PDFGestionController::class, 'index'])->middleware('auth')->name('MostrarPDF'); 
+Route::post('/Documento11', [PDFGestionController11::class, 'index'])->middleware('auth')->name('MostrarPDF11'); 
+
 
 Route::post('/DocumentoPDF', [PDFGestionController::class, 'index'])->name('MostrarPDF2'); 
 
@@ -701,7 +1001,7 @@ Route::post('/FirmarExterno', [FirmarDocumento::class, 'index'])->middleware('au
 
 
  
-
+ 
 
 
   
@@ -741,6 +1041,17 @@ Route::get('/AgregarFirma',function () {
 })->middleware('auth');  
  
 
+
+Route::post('/Acta',function () { 
+    return view('Posts/Root/Acta');
+})->middleware('auth')->name('Acta');   
+
+Route::get('/Acta',function () { 
+    return view('Posts/Root/Acta');
+})->middleware('auth'); 
+
+
+
 Route::post('/AgregarJefes',function () { 
     return view('Posts/Root/AgregarJefes');
 })->middleware('auth')->name('AgregarJefes');   
@@ -754,14 +1065,6 @@ Route::get('/AgregarJefes',function () {
 
 
 
-//CrearDocumentos
-
-Route::post('/CrearDocumentos', [NuevoDocumentoController::class, 'index'])->middleware('auth')->name('CrearDocumentos');  
-Route::get('/CrearDocumentos', [NuevoDocumentoController::class, 'index'])->middleware('auth')->name('CrearDocumentos'); 
-
-
-Route::post('/MostrarPlantillas', [MostrarPlantillas::class, 'index'])->middleware('auth')->name('MostrarPlantillas');  
-Route::post('/GuardarPlantillas', [MostrarPlantillas::class, 'GuardarPlantillas'])->middleware('auth')->name('GuardarPlantillas');  
 
 
 Route::get('/MostrarDocumentoQR/{ID}/{Token}',function ($ID,$Token) { 
@@ -858,8 +1161,25 @@ Route::get('/IngresoPlantilla',function () {
 
 
 
+Route::post('/CambiarLugar',function () { 
 
+    $Lugares =  DB::table('DepDirecciones') 
+    ->where('EstadoDirDep', '=', 1) 
+    ->get();
+ 
+    return view('Sistema/CambiarLugar/CambiarLugar')->with('Lugares', $Lugares); 
+})->middleware('auth')->name('CambiarLugar');  
 
+Route::get('/CambiarLugar',function () { 
+
+    $Lugares =  DB::table('DepDirecciones') 
+    ->where('EstadoDirDep', '=', 1)  
+    ->get();
+ 
+    return view('Sistema/CambiarLugar/CambiarLugar')->with('Lugares', $Lugares); 
+})->middleware('auth');  
+
+Route::post('/LugarCambiado', [IngresoLugarController::class, 'index'])->middleware('auth')->name('FormLugarTrabajo');
 
  
 

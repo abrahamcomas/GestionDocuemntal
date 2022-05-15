@@ -24,8 +24,21 @@ class Recibidos extends Component
         $this->Ayuda = 0;
     }
     
+
+    public $Cambiar=0;
+ 
+    public function CambiarVB()
+    {
+      $this->Cambiar=1;  
+    }
+
+    public function CambiarFirmantes()
+    {
+      $this->Cambiar=0; 
+    }
+
     use WithPagination;  
-    use WithFileUploads;
+    use WithFileUploads; 
     public $search; 
     public $perPage = 5;
     //Pagina principal  
@@ -63,17 +76,30 @@ class Recibidos extends Component
     
     
     
-    public $ObservacionPortafolio;
+    public $ObservacionPortafolio; 
     public function RespuestaPortafolio(){
          
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
+
         $TotalArchivos =  DB::table('Portafolio')
         ->leftjoin('DestinoDocumento', 'Portafolio.ID_Documento_T', '=', 'DestinoDocumento.DOC_ID_Documento') 
         ->select('ID_DestinoDocumento') 
         ->where('ID_Documento_T', '=',  $this->ID_Documento_T)->get();
+        
+        $ID_Lugar =  DB::table('LugarDeTrabajo')
+        ->leftjoin('OficinaPartes', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'OficinaPartes.ID_OP_LDT') 
+        ->select('Id_OP')
+        ->where('ID_Funcionario_LDT', '=',$ID_Funcionario)
+        ->where('Estado_LDT', '=',1)->first();
+
+        $Id_OP  = $ID_Lugar->Id_OP;
+
+        $DocFunc                  =DocFunc::where('ID_Documento', $this->ID_Documento_T)->where('ID_OP_R', $Id_OP)->first();
+        $DocFunc->Estado          = 2;
+        $DocFunc->save();
 
         $NumeroArchivos = count($TotalArchivos);
 
-        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
 
             $InterPortaFuncionario                  =InterPortaFuncionario::find($this->IPF_ID);
             $InterPortaFuncionario->Estado          = 2;
@@ -92,10 +118,7 @@ class Recibidos extends Component
 
 
 
-    public function CambiarFirmantes()
-    {
-      $this->Cambiar=0; 
-    }
+  
 
 
 
@@ -201,6 +224,10 @@ class Recibidos extends Component
             ->select("Nombres","Apellidos")->where('ID_OP_LDT', '=',$ID_DepDir)
             ->first(),
 
+        'DestinoFirmantes' =>  DB::table('InterPortaFuncionario') 
+                ->leftjoin('Funcionarios', 'InterPortaFuncionario.IPF_ID_Funcionario', '=', 'Funcionarios.ID_Funcionario_T') 
+                ->where('IPF_Portafolio', '=',$this->ID_Documento_T)   
+                ->get(),  
 
         'VistoBueno' =>  DB::table('InterPortaFuncionarioVB') 
             ->leftjoin('Funcionarios', 'InterPortaFuncionarioVB.IPF_ID_Funcionario', '=', 'Funcionarios.ID_Funcionario_T')

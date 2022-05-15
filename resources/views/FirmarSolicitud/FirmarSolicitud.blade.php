@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="card-footer text-muted">
                                     <div class="btn-group" style=" width:100%;">
-                                        <button type="submit" id="btnEnviar1" class="btn btn-success  btn-submit active">Continuar</button>
+                                        <button type="submit" id="btnEnviar1" class="btn btn-success  btn-submit active">FIRMAR</button>
                                     </div>
                                 </div>
                             </form> 

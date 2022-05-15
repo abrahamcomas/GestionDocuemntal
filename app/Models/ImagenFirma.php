@@ -16,6 +16,7 @@ class ImagenFirma extends Model
        //pongo los caampos para permitir insert multiple
        protected $fillable=[
            "id_Funcionario_T",
+           "NombreImagen",
            "Ruta"
        ]; 
 

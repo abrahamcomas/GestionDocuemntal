@@ -45,10 +45,26 @@ return [
             'root' => public_path('PDF'),
         ],
 
+        'CKeditorImagenes' => [
+            'driver' => 'local',
+            'root' => public_path('CKeditorImagenes'),
+        ],
+
+        'PDF11' => [
+            'driver' => 'local',
+            'root' => public_path('PDF11'),
+        ],
+
         'ImagenPDF' => [
             'driver' => 'local',
             'root' => public_path('ImagenPDF'),
         ],
+
+        'ImagenPDF11' => [
+            'driver' => 'local',
+            'root' => public_path('ImagenPDF11'),
+        ],
+
 
         'QR' => [
             'driver' => 'local',

@@ -48,6 +48,7 @@ class Registrarse extends Component
     public $Email;
     public $Telefono;
     public $Cargo;
+    public $Contrato;
     public $Activo = 0;
     public $Existe = 0;
 
@@ -60,6 +61,7 @@ class Registrarse extends Component
         'Email' => 'required',
         'Telefono' => 'required',
         'Cargo' => 'required',
+        'Contrato' => 'required',
         'ID_DepDir' => 'required',
     ];
 
@@ -72,6 +74,7 @@ class Registrarse extends Component
         'Email.required' =>'El campo "Email" es obligatorio.',
         'Telefono.required' =>'El campo "Teléfono" es obligatorio.',
         'Cargo.required'=>'El campo "Cargo" es obligatorio.',
+        'Contrato.required'=>'El campo "Contrato" es obligatorio.',
         'ID_DepDir.required' =>'El campo "Departamento o dirección" es obligatorio.'
     ];
     public function Registro(){
@@ -110,11 +113,13 @@ class Registrarse extends Component
                 {
                     
                         $user = new FuncionarioModels;
+                        $user->Contrato = $this->Contrato;
                         $user->Activo = 0;
                         $user->TipoFirma = 2;
                         $user->Root = 0;
+                        $user->Acta = 0;
                         $user->Subrogante = 0;
-                        $user->Rut = $this->Rut; 
+                        $user->Rut = $this->Rut;  
                         $user->Nombres = $this->Nombres;
                         $user->Apellidos = $this->Apellidos;
                         $user->Email = $this->Email;

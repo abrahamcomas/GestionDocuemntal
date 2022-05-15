@@ -4,8 +4,10 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">  
-                    <div class="card-header">
-                        <h4><strong>AGREGAR MENSAJE PUBLICO</strong></h4>
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>AGREGAR MENSAJE PUBLICO</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body">
                         @include('messages') 

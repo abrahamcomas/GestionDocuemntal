@@ -41,9 +41,11 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header"> 
-                        <h4><strong>SOLICITUDES V°B°</strong></h4>
-                    </div> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>SOLICITUDES V°B°</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -194,7 +196,7 @@
                                             <textarea rows="3" style="width:100%;" disabled> {{$post->Observacion}} </textarea>
                                         </td>
                                         <td> 
-                                            <button class="btn btn-success" wire:click="Detalles({{ $post->ID_Documento_T }})">DETALLES</button>
+                                            <button class="btn btn-success" wire:click="Detalles({{ $post->ID_Documento_T }},{{ $post->IPF_Id_OP  }})">DETALLES</button>
                                         </td>
                                     </tr>
                                 @endforeach 
@@ -221,10 +223,12 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
-                <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
-                    </div> 
+                <div class="card bg-light mb-3"> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
                             <thead>  
@@ -260,8 +264,10 @@
                 </div>
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
-                    <div class="card-header"> 
-                        <h4><strong>FIRMANTES</strong></h4>
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>FIRMANTES</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
@@ -273,7 +279,7 @@
                                     <th>VISTO</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody>  
                                 @foreach($DestinoFirmantes as $post)
                                     <tr>
                                         @if($post->Estado==0)
@@ -415,8 +421,10 @@
                 </div>
             @else 
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>V°B°</strong></h4>
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>V°B°</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body table-responsive">
                         <table table class="table table-hover">
@@ -534,8 +542,10 @@
                 </div>
             @endif
                 <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <h4><strong>RESPUESTA</strong></h4> 
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>RESPUESTA</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body">
                         <label><strong>RESPONDER</strong></label>

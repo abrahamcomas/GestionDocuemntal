@@ -16,7 +16,7 @@
                             </center> 
                         </div>
                         <div class="card-body">
-                            <center><img src="{{URL::asset('Imagenes/Portafolio/Detenidos.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
+                            <center><img src="{{URL::asset('Imagenes/Portafolio/EnProceso.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
                         </div>
                         <div class="card-footer text-muted"> 
                             <div class="btn-group" style=" width:100%;">	
@@ -52,10 +52,12 @@
         <div class="row"> 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
                 <div class="col">
-                    <div class="card bg-light mb-3"> 
-                        <div class="card-header"> 
-                            <h4><strong>SOLICITUDES DETENIDAS</strong></h4> 
-                        </div>   
+                    <div class="card bg-light mb-3">
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>SOLICITUDES CREADAS</strong></center></h1>
+                            <hr>
+                        </div> 
                         <div class="card-body"> 
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -64,7 +66,7 @@
                                     <strong><div id="ver"></div></strong>
                                 </div> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                    <input class="form-control" type="text" placeholder="Buscar..." wire:model="search" title="Buscar por titulo,Tipo documento, Observación"/>
+                                    <input class="form-control" type="text" placeholder="Buscar..." wire:model="search" title="Buscar por titulo,Tipo documento"/>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                     <div class="row"> 
@@ -101,7 +103,7 @@
                                         <th>TIPO DOCUMENTO</th>
                                         <th>FECHA INGRESO</th>
                                         <th>DÍAS PARA TÉRMINO</th>
-                                        <th>ENVIAR</th>
+                                        <th>ADMINISTRAR</th>
                                         <th>ELIMINAR</th>
                                     </tr>
                                 </thead>   
@@ -242,7 +244,7 @@
                                                 </td>
                                         @elseif($post->Estado_T!=33) 
                                                 <td>
-                                                    <button class="btn btn-success active" wire:click="EnviarDocumento({{ $post->ID_Documento_T }},{{ $post->ID_Funcionario_T }})">ENVIAR</button>
+                                                    <button class="btn btn-success active" wire:click="EnviarDocumento({{ $post->ID_Documento_T }},{{ $post->ID_Funcionario_T }})">ADMINISTRAR</button>
                                                 </td>
                                         @endif 
                                                 <td> 
@@ -273,15 +275,16 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>SOLICITAR FIRMAS</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>SOLICITAR FIRMAS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">  
                             <table table class="table table-hover">
-                                <h5><strong>LISTA ARCHIVOS</strong></h5>
                                 <thead> 
                                     <tr>  
-                                        <th>NOMBRE</th>
+                                        <th>ARCHIVOS</th>
                                         <th>VER</th>
                                     </tr>
                                 </thead> 
@@ -321,14 +324,17 @@
                                                 <strong>{{ $post->Nombres_L }} {{ $post->Apellidos_L }}</strong>
                                             </td>
                                         @if($post->Estado==0)
-                                            <td> 
+                                            <td>  
                                                 <form method="POST" action="{{ route('SolicitarFirma') }}">
                                                     @csrf      
                                                     <input type="hidden" name="ID_Documento_T" value="{{ $ID_Documento_T }}">	
-                                                    <input type="hidden" name="ID_LinkFirma" value="{{ $post->ID_LinkFirma }}">	
+                                                    <input type="hidden" name="ID_LinkFirma" value="{{ $post->ID_LinkFirma }}">	 
                                                     <button type="submit" id="btnEnviar1" class="btn btn-info active">SOLICITAR FIRMAR</button>
                                                 </form>
                                             </td>  
+                                            <td>
+                                                <strong>{{ $post->direccionEmail }}</strong>
+                                            </td>
                                             <td>
                                                 <strong>NO DISPONIBLE</strong>
                                             </td>
@@ -341,7 +347,7 @@
                                                     <strong>{{ $post->direccionEmail }}</strong>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-warning active" wire:click="EnviarCorreo({{ $post->ID_LinkFirma }})">ENVIAR</button>
+                                                    <button class="btn btn-success active" wire:click="EnviarCorreo({{ $post->ID_LinkFirma }})">ENVIAR</button>
                                                     <br>
                                                     <div wire:loading wire:target="EnviarCorreo">
                                                         <strong>Enviando...</strong></h5>
@@ -362,6 +368,12 @@
                                         @elseif($post->Estado==2)
                                             <td> 
                                                 <button type="button" class="btn btn-success active">ACEPTADO</button>
+                                            </td>
+                                            <td>  
+                                                <strong>{{ $post->direccionEmail }}</strong> 
+                                            </td>
+                                            <td>
+                                                <strong>NO DISPONIBLE</strong>
                                             </td>
                                         @elseif($post->Estado==3)
                                             <td>
@@ -391,8 +403,10 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ELIMINAR</strong></h4>
+                        <div class="text-muted">
+                            <br> 
+                            <h1><center><strong>ELIMINAR</strong></center></h1>
+                            <hr>
                         </div> 
                         <div class="card-body">
                             <strong>Una solicitud puede ser eliminada del sistema si considera que fue ingresada incorrectamente.</strong>
