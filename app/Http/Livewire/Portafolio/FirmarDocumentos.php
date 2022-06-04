@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Portafolio;
 use Livewire\Component;
 use Livewire\WithPagination; 
 use Livewire\WithFileUploads; 
-use Illuminate\Support\Facades\DB;  
+use Illuminate\Support\Facades\DB;   
 use Illuminate\Support\Facades\Auth; 
 use App\Models\Portafolio;
 use App\Models\DocumentoFirma; 
@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailSecretaria;   
 
 use setasign\Fpdi\Fpdi;
+use Spatie\PdfToImage\pdf;
+use Org_Heigl\Ghostscript\Ghostscript;
+use Zxing\QrReader;
+use Imagick;
+
 
 
 class FirmarDocumentos extends Component
@@ -388,36 +393,54 @@ class FirmarDocumentos extends Component
             foreach ($this->PDF as $Archivos) {
                 $codificado = Storage::disk('PDF')->put('', $Archivos);
 
-                $token = md5($Archivos->getClientOriginalName());
-
-                $DestinoDocumento                    = new DestinoDocumento;
-                $DestinoDocumento->ID_FSube         = $Funcionario;
-                $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T; 
-                $DestinoDocumento->Token            = $token; 
-                $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
-                $DestinoDocumento->Ruta_T           = $codificado;   
-                $DestinoDocumento->save();
-
+                $NuevoNombre = substr($codificado, 0, -4);
             
+                $pdf = new Pdf('PDF/'.$codificado);
+                $NumeroPaginas = $pdf->getNumberOfPages('PDF/'.$codificado);
+                $pdf->setPage($NumeroPaginas)
+                ->saveImage('ImagenQRPDF/'.$NuevoNombre.'.png');
+    
+                $qrcode= new QrReader('ImagenQRPDF/'.$NuevoNombre.'.png');
+                $textQR= $qrcode->text();
+    
+                if($textQR==false){
 
-                $DocumentoFirma                  = new DocumentoFirma;
-                $DocumentoFirma->ID_Funcionario  = $Funcionario;
-                $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
-                $DocumentoFirma->Firmado         = 0;  
-                $DocumentoFirma->save(); 
+                        //Nueva Ruta
+                        $NuevaRuta = date("y");
+                        $NuevaRutaF = Storage::disk('PDF')->put($NuevaRuta, $Archivos);
+                        Storage::disk('ImagenPDF')->put($NuevaRuta, $Archivos);
+                        //FIN
+     
+                    //CREAR IMAGEN DE PDF
+                    $hoy = date("Y-m-d H:i:s"); 
+                    $token = md5($hoy);
 
-                $contenido='sgd.municipalidadcurico.cl/MostrarDocumentoQR/'.$DestinoDocumento->ID_DestinoDocumento.'/'.$token.'';
+                    $DestinoDocumento                    = new DestinoDocumento;
+                    $DestinoDocumento->ID_FSube         = $Funcionario;
+                    $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T; 
+                    $DestinoDocumento->Token            = $token; 
+                    $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
+                    $DestinoDocumento->Ruta_T           = $NuevaRutaF;   
+                    $DestinoDocumento->save();
 
-                $NuevaRuta = substr($codificado, 0, -4);
-                $NuevaRuta2 = $NuevaRuta.'.png';
+                    $DocumentoFirma                  = new DocumentoFirma;
+                    $DocumentoFirma->ID_Funcionario  = $Funcionario;
+                    $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
+                    $DocumentoFirma->Firmado         = 0;  
+                    $DocumentoFirma->save(); 
 
-                $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
-                \QRCode::url($contenido)->setOutfile($qrimage)->png();
+                    $contenido='sgd.municipalidadcurico.cl/MostrarDocumentoQR/'.$token.'';
 
-                            
-                $pdf = new FPDI(); 
-                $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
-                $UltimaPagina=$pagecount; 
+                    $NuevaRuta = substr($codificado, 0, -4);
+                    $NuevaRuta2 = $NuevaRuta.'.png';
+
+                    $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
+                    \QRCode::url($contenido)->setOutfile($qrimage)->png();
+
+                                
+                    $pdf = new FPDI(); 
+                    $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
+                    $UltimaPagina=$pagecount; 
         
                 for($i =1; $i<=$pagecount; $i++){
                     
@@ -432,19 +455,50 @@ class FirmarDocumentos extends Component
                         $pdf->setSourceFile('PDF'.'/'.$codificado);
                         $template = $pdf->importPage($i);
                         $pdf->useTemplate($template,0, 0, 215, 280, true);
-                        $pdf->Image('QR/'.$NuevaRuta2, 183, 250, 30, 30);
-                        $pdf->SetY(247);
+                        $pdf->Image('QR/'.$NuevaRuta2, 173, 240, 40, 40);
+                        $pdf->SetY(239);
                         $pdf->SetFont('Arial','B',7);
-                        $pdf->Cell(182);
+                        $pdf->Cell(172);
                         $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
                         $pdf->Ln(4);
                     }
                 } 
          
-                $pdf->Output('F', 'PDF/'.$codificado);
 
- 
+                $pdf->Output('F', 'PDF/'.date("y").'/'.$codificado);
+
+                $pdf->Output('F', 'ImagenPDF/'.date("y").'/'.$codificado);
+
                 Storage::disk('QR')->delete($NuevaRuta2);
+                Storage::disk('ImagenQRPDF')->delete($NuevoNombre.'.png');
+
+                Storage::disk('PDF')->delete($codificado);
+            //FIN CREAR IMAGEN DE PDF
+        }else{  
+                $token = substr($textQR, 53);
+
+
+                $DestinoDocumento                    = new DestinoDocumento;
+                $DestinoDocumento->ID_FSube         = $Funcionario;
+                $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T; 
+                $DestinoDocumento->Token            = $token; 
+                $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
+                $DestinoDocumento->Ruta_T           = $NuevaRutaF;   
+                $DestinoDocumento->save();
+
+                $DocumentoFirma                  = new DocumentoFirma;
+                $DocumentoFirma->ID_Funcionario  = $Funcionario;
+                $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
+                $DocumentoFirma->Firmado         = 0;   
+                $DocumentoFirma->save();
+                
+
+        }
+ 
+
+               
+
+
             }
             session()->flash('message', 'Documento agregado correctamente.');     
     }

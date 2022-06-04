@@ -236,7 +236,7 @@
                                         <td>
                                             <button class="btn btn-success active" wire:click="ConfirmarEnvioOPD({{ $post->ID_Documento_T }})">FIRMAR</button>
                                         </td>
-                                        <td> 
+                                        <td>  
                                             <strong>ESPERANDO FIRMAS</strong>
                                         </td>
                                 @elseif($post->Estado_T==22)<!--CREADO POR OPD-->
@@ -401,6 +401,12 @@
                             <button class="btn btn-primary active" wire:click="Ingresar">INGRESAR</button>
                         </div>
                         </center>
+                        <center>
+                            <div wire:loading wire:target="Ingresar">
+                                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                                <h5><strong>Verificando documentos, espere por favor...</strong></h5>                         
+                            </div>  
+                        </center> 
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
