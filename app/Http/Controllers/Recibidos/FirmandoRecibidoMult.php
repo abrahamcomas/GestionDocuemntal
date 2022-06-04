@@ -212,6 +212,7 @@ class FirmandoRecibidoMult extends Controller
                             $DocumentoFirma             =DocumentoFirma::find($ID_DocumentoF);
                             $DocumentoFirma->FechaFirma = date("Y/m/d");
                             $DocumentoFirma->Firmado    = 1;
+                            $DocumentoFirma->ObservacionFirma = $ObservacionPortafolio;
                             $DocumentoFirma->save();
  
                             //CREAR IMAGEN DE PDF
@@ -252,7 +253,7 @@ class FirmandoRecibidoMult extends Controller
 
                             $InterPortaFuncionario                  =InterPortaFuncionario::find($IPF_ID->IPF_ID);
                             $InterPortaFuncionario->Estado          = 1;
-                            $InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
+                            //$InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
                             $InterPortaFuncionario->save(); 
 
                              //INICIO NUMERO DE FIRMAS

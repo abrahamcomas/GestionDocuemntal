@@ -66,7 +66,7 @@ class DetenidosODP extends Component
         $LinkFirma =LinkFirma::find($ID_LinkFirma);
         $LinkFirma->Email = 1;
         $LinkFirma->save();  
-
+ 
     } 
 
 
@@ -166,8 +166,7 @@ class DetenidosODP extends Component
         ->select('ObservacionE')
         ->where('IPF_Portafolio', '=',$ID_Documento_T)->first();
 
-        $this->MensajeRechazo = $ObservacionE->ObservacionE;
-
+        session()->flash('message', $ObservacionE->ObservacionE);
 
         $this->Mostrar=1;
 
@@ -187,6 +186,21 @@ class DetenidosODP extends Component
 
         $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;  
 
+        $Id_OficinaParte =  DB::table('OficinaPartes')
+        ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+        ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+        ->where('ActivoODP', '=', 2)
+        ->where('Original', '=', 1)->first(); 
+
+        if(empty($Id_OficinaParte)){
+
+            $Id_OficinaParte =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)->first(); 
+
+        } 
+
         $DatosFirma =  DB::table('Funcionarios')
         ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT') 
         ->select('ID_DepDirecciones_LDT')
@@ -201,7 +215,7 @@ class DetenidosODP extends Component
 
         $Id_OP = $DatosEncargado->Id_OP;
         $this->NombreEncargado = $DatosEncargado->Nombres;
-        $this->ApellidoEncargado = $DatosEncargado->Apellidos;
+        $this->ApellidoEncargado = $DatosEncargado->Apellidos; 
 
         return view('livewire.o-d-p.detenidos-o-d-p',[
 		'posts' =>  DB::table('Portafolio') 
@@ -219,8 +233,10 @@ class DetenidosODP extends Component
                         ->orwhere('Titulo_T', 'like', "%{$this->search}%")
                         ->orwhere('Tipo_T', 'like', "%{$this->search}%") 
                         ->orwhere('Observacion_T', 'like', "%{$this->search}%");
-                })         
-            ->where('ID_OficinaP', '=', $Id_OP)->orderBy('Estado_T', 'asc')    
+                }) 
+            ->where('ODP', '=', 1)           
+            ->where('ID_OP_LDT_P', '=', $Id_OficinaParte->ID_OP_LDT) 
+            ->orderBy('Estado_T', 'asc')
             ->paginate($this->perPage),
         
             'MostrarDocumentos' =>  DB::table('DestinoDocumento') 

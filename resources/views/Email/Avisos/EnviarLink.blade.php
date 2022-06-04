@@ -31,7 +31,7 @@
                 <strong>
                     © {{ date("Y") }} Dep. de informática VERSIÓN BETA 0.5.230322<br>
                     Municipalidad de Curicó<br>
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </strong>
             <hr>
         </center>

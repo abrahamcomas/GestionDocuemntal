@@ -17,7 +17,7 @@ class SubirImagenFirma extends Component
     public function Ayuda(){
         $this->Ayuda = 1;
     }
-    public function VolverAyuda(){
+    public function VolverAyuda(){ 
         $this->Ayuda = 0;
     }
 
@@ -25,7 +25,7 @@ class SubirImagenFirma extends Component
     use WithPagination;  
     use WithFileUploads;
     public $search; 
-    public $perPage = 5;
+    public $perPage = 5; 
 
     public $Detalles=0; 
     public $NombreImagen;
@@ -35,7 +35,7 @@ class SubirImagenFirma extends Component
 
     public function clear()
     {
-      $this->search='';
+      $this->search=''; 
       $this->perPage='5';
     }
  

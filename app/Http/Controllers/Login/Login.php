@@ -32,6 +32,11 @@ class Login extends Controller
             foreach($Funci as $n){
                 $puntosFuncionario[] =['name' => $n['Nombres'], 'y'=>floatval($n['NumeroFunc'])];
             } 
+
+            if(empty($puntosFuncionario)){
+
+                $puntosFuncionario=0;
+            }
         }
 
         $FirmadosDD = FirmadosDD::where('Mes_DD', date("n"))->where('Anio_DD', date("Y"))->orderBy('Numero_DD', 'DESC')->take(10)->get();
@@ -50,6 +55,11 @@ class Login extends Controller
                 $puntos[] =['name' => $navegador['Nombre'], 'y'=>floatval($navegador['Numero_DD'])];
             }
 
+            if(empty($puntos)){
+
+                $puntos=0;
+            }
+
         }
 
         $Anio = AnioDD::where('Anio_DD', date("Y"))->orderBy('Numero_DD', 'DESC')->take(10)->get(); 
@@ -66,6 +76,11 @@ class Login extends Controller
             foreach($A as $navegador){
                 
                 $puntosAnio[] =['name' => $navegador['Nombre'], 'y'=>floatval($navegador['Numero_DD'])];
+            }
+
+            if(empty($puntosAnio)){
+
+                $puntosAnio=0;
             }
         }
 
@@ -150,8 +165,11 @@ class Login extends Controller
             }
 
             $ROOT =  DB::table('Funcionarios')  
-            ->where('Rut', '=',$RUN) 
-            ->where('Root', '=',1)
+            ->where('Rut', '=',$RUN)
+            ->where(function($query) {
+                $query->orwhere('Root', '=', 1) 
+                    ->orwhere('Root', '=', 2);  
+            })  
             ->select('Rut') 
             ->first();  
 
@@ -178,7 +196,26 @@ class Login extends Controller
                 if(Auth::attempt(['Rut' => $RUN, 'password' => $password], true))
                 {
 
-                    return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos);
+                    $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
+
+                    $OficinaPartes =  DB::table('OficinaPartes')  
+                    ->select('id_Funcionario_OP')
+                    ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+                    ->count(); 
+
+                    if($OficinaPartes>=2){
+
+                        $DatosOficinaPartes =  DB::table('OficinaPartes')  
+                            ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+                            ->select('ID_DepDir','Nombre_DepDir')
+                            ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+                            ->get();
+                    }else{
+
+                        $DatosOficinaPartes=1;
+                    }
+
+                    return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos)->with('DatosOficinaPartes', $DatosOficinaPartes);
 
                 } 
                 else
@@ -202,8 +239,25 @@ class Login extends Controller
                     ->where('ID_Jefatura', '=',$ID_Funcionario)
                     ->first(); 
 
+                    $OficinaPartes =  DB::table('OficinaPartes')  
+                                ->select('id_Funcionario_OP')
+                                ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+                                ->count(); 
+
+                                if($OficinaPartes>=2){
+
+                                    $DatosOficinaPartes =  DB::table('OficinaPartes')  
+                                        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+                                        ->select('ID_DepDir','Nombre_DepDir')
+                                        ->where('id_Funcionario_OP', '=',$ID_Funcionario->ID_Funcionario_T)
+                                        ->get();
+                                }else{
+
+                                    $DatosOficinaPartes=1;
+                                }
+
                     if(!empty($id_Funcionario_OP->id_Funcionario_OP)){
-                        return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos);
+                        return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos)->with('DatosOficinaPartes', $DatosOficinaPartes);
                     } 
                     else{
 
@@ -244,8 +298,28 @@ class Login extends Controller
 
                             if(Auth::attempt(['Rut' => $RUN, 'password' => $password], true))
                             {
+
+                                $OficinaPartes =  DB::table('OficinaPartes')  
+                                ->select('id_Funcionario_OP')
+                                ->where('id_Funcionario_OP', '=',$ID_Funcionario->ID_Funcionario_T)
+                                ->count(); 
+
+                                if($OficinaPartes>=2){
+
+                                    $DatosOficinaPartes =  DB::table('OficinaPartes')  
+                                        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+                                        ->select('ID_DepDir','Nombre_DepDir')
+                                        ->where('id_Funcionario_OP', '=',$ID_Funcionario->ID_Funcionario_T)
+                                        ->get();
+
+                          
+                                }else{
+
+                                    $DatosOficinaPartes=1;
+                                }
+
                              
-                                return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos);
+                                return view('Sistema/Principal',["DataFunc"=>json_encode($puntosFuncionario),"data"=>json_encode($puntos),"DatatAnio"=>json_encode($puntosAnio)])->with('FuncionarioTodos', $FuncionarioTodos)->with('FirmadosDDTodos', $FirmadosDDTodos)->with('AnioTodos', $AnioTodos)->with('DatosOficinaPartes', $DatosOficinaPartes);
 
                             } 
                             else

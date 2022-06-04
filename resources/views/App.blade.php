@@ -68,11 +68,10 @@
 <meta charset="utf-8">
 <title>GestionDocumental</title>
 <head>
-<meta name="description" content="SGD">
-	<meta name="viewport" content="width=device-width"/>
-    <meta name="theme-color" content="#317EFB"/>
-    <link rel="manifest" href="/manifest.json">
     <html lang="es">
+    <meta name="description" content="SGD"> 
+    <meta name="theme-color" content="#317EFB"/>
+	<meta name="viewport" content="width=device-width"/>
    
 	<link href="{{ asset ('css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset ('ManuLateral/simple-sidebar.css ') }}" rel="stylesheet">
@@ -399,6 +398,38 @@
         min-height: 100vh;
         transition: all 0.3s;
     }
+  
+
+    /*Animacion Cargar*/
+    h1 {
+    text-align: center;
+    margin: 2rem auto 2rem;
+    font-weight: normal;
+    }
+
+    .circle {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: whiteSmoke;
+    box-shadow: 4px -40px 60px 5px rgb(26, 117, 206) inset;
+    }
+
+    .bounce2 {
+    animation: bounce2 2s ease infinite;
+    }
+    @keyframes bounce2 {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-30px);}
+        60% {transform: translateY(-15px);}
+    }
+
+    /*Menu agrandar*/
+        article:hover{ 
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1)
+    }
 
 	</style> 
 
@@ -411,9 +442,9 @@
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-border-width" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M0 3.5A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-2zm0 5A.5.5 0 0 1 .5 8h15a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1zm0 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
 							</svg>
-                        </button>
-						{{ Auth::user()->Nombres}} 
-						{{ Auth::user()->Apellidos }}
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<u>{{ Auth::user()->Nombres}} 
+						{{ Auth::user()->Apellidos }}</u>
 					</strong>
 				</a>  
 			@else
@@ -443,16 +474,15 @@
 @if(Auth::guard('web')->check()) 
     <div class="d-flex" id="wrapper"> 
         <nav id="sidebar">
-            <ul class="list-unstyled">
+            <ul class="list-unstyled"> 
                 <br>
                 <div class="sidebar-heading"><strong><a href="{{ route('Principal') }}" style="color: #ffffff;"><center><h4>MENÚ</h4></center></a></strong></div>
-                <hr style="background-color: #56FF02;">
                 @if(Auth::user()->Root==1 || Auth::user()->Root==2)
+                    <hr style="height:3px;background-color: #56FF02;">
                     <li>
-                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ROOT</strong></a>
+                        <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRADOR</strong></a>
                         <ul class="collapse list-unstyled" id="homeSubmenu1">
                             <hr style="background-color: #FFFFFF;">
-                            
                             <form method="POST" action="{{ route('AgregarJefes') }}">
                                 @csrf 
                                 <button type="submit" class="btn list-group-item-action btn-link">
@@ -508,7 +538,6 @@
                                     AGREGAR DIREC. DEPT.
                                 </button>  
                             </form>
-
                             <form method="POST" action="{{ route('Mensaje') }}">
                                 @csrf
                                 <button type="submit" class="btn list-group-item-action btn-link">
@@ -516,13 +545,14 @@
                                 </button>  
                             </form>
                         @endif
-                            <hr style="background-color: #FFFFFF;"> 
                         </ul>
                     </li>
-                @endif
+                @endif 
+           
                 @if(Auth::user()->Acta==1)
+                    <hr style="height:3px;background-color: #56FF02;">
                     <li>
-                        <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">ACTA DE ENTREGA</a>
+                        <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ACTA DE ENTREGA</strong></a>
                         <ul class="collapse list-unstyled" id="homeSubmenu2">
                             <hr style="background-color: #FFFFFF;">
                             <form method="POST" action="{{ route('CrearSolicitud') }}">
@@ -543,186 +573,245 @@
                     </li>
                 @endif
                 @if(Auth::user()->Jefe==1)
+                    <hr style="height:3px;background-color: #56FF02;">
                     <li>
                         <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ENCARGADO/A ODP</strong></a>
                         <ul class="collapse list-unstyled" id="homeSubmenu3">
-                        <hr style="background-color: #FFFFFF;">
-                            <form method="POST" action="{{ route('AdministrarSecretaria') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SECRETARIA 
-                                </button> 
-                            </form>
-                         
+                            <hr style="background-color: #FFFFFF;">
+                            <li>
+                                <a href="#homeSubmenuEPD1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRAR</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuEPD1">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('AdministrarSecretaria') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SECRETARIA ODP
+                                        </button> 
+                                    </form>
+                                    <form method="POST" action="{{ route('Subrogante') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SUBROGANTE
+                                        </button>
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
+                            </li>
+                        </ul>
+                        <hr style="height:3px;background-color: #56FF02;">
+                    </li>
+                    <li>
+                        <a href="#homeSubmenuEC1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>SOLICITUDES INTERNAS</strong></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenuEC1">
+                            <hr style="background-color: #FFFFFF;">
                             <form method="POST" action="{{ route('PortafolioDirecto') }}">
                                 @csrf
                                 <button type="submit" class="btn list-group-item-action btn-link">
-                                    PORTAFOLIOS DIRECTOS
+                                    SOLICITUDES INTERNAS
                                 </button> 
                             </form>
-                            
-                            <form method="POST" action="{{ route('Subrogante') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SUBROGANTE
-                                </button>
-                            </form>
-                            <hr style="background-color: #FFFFFF;">
                         </ul>
                     </li>
                 @endif
                 @if(Auth::user()->Secretaria==1)
+                    <hr style="height:3px;background-color: #56FF02;">
                     <li>
-                        <a href="#homeSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>OFICINA DE PARTES</strong></a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu4">
+                        <a href="#homeSubmenuOPD0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP</strong></a>
+                        <ul class="collapse list-unstyled" id="homeSubmenuOPD0">
                             <hr style="background-color: #FFFFFF;">
                             <li>
-                                <center><strong>SOLICITUDES&nbsp;</strong></center>
+                                <a href="#homeSubmenuOPD1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>CREAR</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuOPD1">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('CrearDocumentoODP') }}"> 
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                        SOLIC. A FUNCIONARIO
+                                        </button> 
+                                    </form>
+                                    <form method="POST" action="{{ route('EnvioOficinaPartesODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SOLICITAR FIRMAS
+                                        </button>  
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
                             </li>
-                          
-                            <form method="POST" action="{{ route('CrearDocumentoODP') }}"> 
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    NUEVA SOLIC.
-                                </button> 
-                            </form>
-                    
-                            <form method="POST" action="{{ route('EnvioOficinaPartesODP') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SOLIC. CREADAS
-                                </button>  
-                            </form>
-                     
-                                <center><strong>ODP&nbsp;</strong></center>
-                      
-                            <form method="POST" action="{{ route('Distribuccion') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SOLIC. INTERNAS
-                                </button> 
-                            </form>
-                         
-                            <form method="POST" action="{{ route('ODPExternos') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SOLIC. EXTERNAS
-                                </button>  
-                            </form>
-                           
-                            <form method="POST" action="{{ route('ODPExternosVB') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SOLIC. EXTERNAS V°B°
-                                </button>  
-                            </form>
-                            <hr style="background-color: #FFFFFF;">
+                            <li>
+                                <a href="#homeSubmenuOPD2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP INTERNA</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuOPD2">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('Distribuccion') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SOLIC. INTERNAS
+                                        </button> 
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#homeSubmenuOPD3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP EXTERNA</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuOPD3">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('ODPExternos') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SOLIC. EXTERNAS
+                                        </button>  
+                                    </form>
+                                    <form method="POST" action="{{ route('ODPExternosVB') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            SOLIC. EXTERNAS V°B°
+                                        </button>  
+                                    </form>
+                                    <form method="POST" action="{{ route('RecibidosODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                        SOLIC. RECIBIDAS
+                                        </button> 
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#homeSubmenuOPD4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>HISTORIAL ODP</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuOPD4">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('HistorialODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            HISTORIAL ODP
+                                        </button> 
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#homeSubmenuOPD5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRAR ODP</strong></a>
+                                <ul class="collapse list-unstyled" id="homeSubmenuOPD5">
+                                    <hr style="background-color: #FFFFFF;">
+                                    <form method="POST" action="{{ route('CambiarLugarODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            CAMBIAR FUNCIONARIOS
+                                        </button>  
+                                    </form>
+                                    <form method="POST" action="{{ route('ADODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            AGREGAR FUNCIONARIO ODP 
+                                        </button>  
+                                    </form>
+                                    <!--Desabilitado por cumplir la misma funcion que ListaFuncionarios
+                                    <form method="POST" action="{{ route('AutorizarRegistro') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            NUEVOS REGISTROS
+                                        </button>   
+                                    </form>-->
+                                    <form method="POST" action="{{ route('ListaFuncionarios') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                        LISTA FUNCIONARIOS
+                                        </button> 
+                                    </form>
+                                    <hr style="background-color: #FFFFFF;">
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 @endif
-            
+                <hr style="height:3px;background-color: #56FF02;">
                 <li>
                     <a href="#homeSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>SOLICITUDES</strong></a>
                     <ul class="collapse list-unstyled" id="homeSubmenu6">
                         <hr style="background-color: #FFFFFF;">
                         @if(Auth::user()->Secretaria!=1)
-                        
-                       <!-- <form method="POST" action="{{ route('ListaPlantillas') }}">
+                            <!--<form method="POST" action="{{ route('ListaPlantillas') }}">
                                 @csrf
                                 <button type="submit" class="btn list-group-item-action btn-link">
                                     CREAR DOCUMENTO 
                                 </button> 
-                            </form> -->
- 
-                            <form method="POST" action="{{ route('CrearDocumento') }}">
+                            </form>-->  
+                        @endif
+                        <form method="POST" action="{{ route('CrearDocumento') }}">
                                 @csrf
                                 <button type="submit" class="btn list-group-item-action btn-link">
                                     NUEVA 
                                 </button> 
-                            </form>
-                        
-                            <form method="POST" action="{{ route('EnvioOficinaPartes') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    DETENIDAS
-                                </button>  
-                            </form>
-                        @endif
-                     
+                        </form>
+                        <form method="POST" action="{{ route('EnvioOficinaPartes') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                DETENIDAS
+                            </button>  
+                        </form>
                         <form method="POST" action="{{ route('PortafoliosRecibidos') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
                                 RECIBIDAS
                             </button>
                         </form>
-                    
                         <form method="POST" action="{{ route('PortafoliosRecibidosVB') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
                                 V°B°
                             </button>
-                        </form>
-                   
-                        <center><strong>HISTORIAL</strong></center>
-                        <!--<form method="POST" action="{{ route('DocumentoEnProcesoOP') }}">
-                            @csrf 
-                            <button type="submit" class="btn list-group-item-action">
-                                EN PROCESO
-                            </button> 
-                        </form>-->
-                   
-                        <form method="POST" action="{{ route('PortafoliosFinalizados') }}">
-                            @csrf
-                            <button type="submit" class="btn list-group-item-action btn-link">
-                                SOLIC. CREADAS
-                            </button>
                         </form> 
-                 
-                        <form method="POST" action="{{ route('PortafoliosFinalizadosFir') }}">
+                        <form method="POST" action="{{ route('Compartidas') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
-                                FIRMADAS
-                            </button>
-                        </form> 
-                  
-                        <form method="POST" action="{{ route('PortafoliosFinalizadosVB') }}">
-                            @csrf
-                            <button type="submit" class="btn list-group-item-action btn-link">
-                                V°B°
+                                COMPARTIDAS
                             </button>
                         </form>
                         <hr style="background-color: #FFFFFF;">
+                        <li>
+                            <a href="#homeSubmenuS1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>HISTORIAL</strong></a>
+                            <ul class="collapse list-unstyled" id="homeSubmenuS1">
+                                <hr style="background-color: #FFFFFF;">
+                                    <!--<form method="POST" action="{{ route('DocumentoEnProcesoOP') }}">
+                                    @csrf 
+                                    <button type="submit" class="btn list-group-item-action">
+                                        EN PROCESO
+                                    </button> 
+                                </form>-->
+                                <form method="POST" action="{{ route('PortafoliosFinalizados') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        SOLIC. CREADAS
+                                    </button>
+                                </form> 
+                                <form method="POST" action="{{ route('PortafoliosFinalizadosFir') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        FIRMADAS
+                                    </button>
+                                </form> 
+                                <form method="POST" action="{{ route('PortafoliosFinalizadosVB') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        V°B°
+                                    </button>
+                                </form>
+                                <hr style="background-color: #FFFFFF;">
+                            </ul>
+                        </li>
                     </ul>
-                </li> 
+                </li>
+                <hr style="height:3px;background-color: #56FF02;">
                 <li>
                     <a href="#homeSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>OPCIONES</strong></a>
                     <ul class="collapse list-unstyled" id="homeSubmenu7">
                     <hr style="background-color: #FFFFFF;">
-                        @if(Auth::user()->Secretaria==1)
-                      
-                        <form method="POST" action="{{ route('AutorizarRegistro') }}">
-                            @csrf
-                            <button type="submit" class="btn list-group-item-action btn-link">
-                                ADMINISTRAR REGISTROS
-                            </button>   
-                        </form>
-              
-                        <form method="POST" action="{{ route('ListaFuncionarios') }}">
-                            @csrf
-                            <button type="submit" class="btn list-group-item-action btn-link">
-                            LISTA FUNCIONARIOS
-                            </button> 
-                        </form>
-                        @endif
-                      
                         <form method="POST" action="{{ route('CambiarLugar') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
-                            CAMBIAR LUGAR DE TRABAJO
+                                LUGAR DE TRABAJO
                             </button>  
                         </form>
-
-
                         <form method="POST" action="{{ route('CambiarCorreo') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
@@ -748,16 +837,15 @@
                                 DISP. VINCULADOS
                             </button>
                         </form>
-                        <hr style="background-color: #FFFFFF;">
                     </ul>
                 </li>
+                <hr style="height:3px;background-color: #56FF02;">
                 @if(Auth::user()->FirmaMasiva==1)
-                    <hr style="background-color: #56FF02;">
                     <li>
                         <form method="POST" action="{{ route('DocumentoExt') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
-                                FIRMA MASIVA
+                                <h5><strong>FIRMA MASIVA</strong></h5>
                             </button> 
                         </form> 
                          <!--<form method="POST" action="{{ route('DocumentoExt2') }}">
@@ -767,7 +855,6 @@
                             </button>
                         </form>-->
                     </li>
-                    <hr style="background-color: #56FF02;">
                 @endif
             </ul>
             <ul class="list-unstyled CTAs">
@@ -778,7 +865,6 @@
             <ul class="list-unstyled">
                 <center>
                     INFORMÁTICA {{ date("Y") }}<br>
-                    <strong>VERSIÓN BETA 0.6.120422</strong><br>
                     @if(Auth::user()->Subrogante==1)
                         <a class="navbar-brand" href="#" style="color: red; font-size:13px;"><strong>IMPORTANTE<br>SUBROGANTE HABILITADO</strong></a>
                     @endif
@@ -803,7 +889,7 @@
                     <marquee><h5><strong>{{ $Mensaje }}</strong></h5></marquee> 
                 </li>
             </ul>
-            <center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="88" height="88" alt="Curicó"/></center>
+            <h1 style="color: #FFFFFF;"><strong>SGD</strong></h1>
         </nav>
 @endif	
         <div id="page-content-wrapper">
@@ -828,20 +914,18 @@
         		<h5 class="modal-title" id="exampleModalLabel">¿Cerrar Sesión?</h5>
 		        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 		          	<span aria-hidden="true">X</span>
-		        </button>
+		        </button> 
       		</div>
-      		<div class="modal-body"><center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120" alt="Curicó"/></center></div>
-                <center>
-                    © {{ date("Y") }} DEP. DE INFORMÁTICA<br>
-                    MUNICIPALIDAD DE CURICÓ<br>
-                    <hr>
-                    <strong>VERSIÓN BETA 0.6.120422</strong><br>
-                    <hr>
-				</center>
-			<br>
+            <br><br>
+            <center>          
+                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                <hr>
+                <h5><strong>Sistema Gestión Documental (SGD)</strong></h5>             
+                <hr>                      
+            </center> 
 			<div class="btn-group">
-				<button class="btn btn-danger active" type="button" data-dismiss="modal">Cancelar</button>
-        		<a class="btn btn-primary active" href="{{ route('CerrarSesion') }}">Aceptar</a>
+				<button class="btn btn-danger active" type="button" data-dismiss="modal">CANCELAR</button>
+        		<a class="btn btn-primary active" href="{{ route('CerrarSesion') }}">ACEPTAR</a>
       		</div>
     	</div>
  	</div>

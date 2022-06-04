@@ -5,27 +5,82 @@ namespace App\Http\Livewire\Principal;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Auth;
- 
+use App\Models\OficinaPartes;
 
 class Principal extends Component
-{
+{ 
+
+    public $OPD; 
+    public function CambiarOPD()
+    {
+        
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
+
+        $ListaODP =  DB::table('OficinaPartes')
+        ->select('Id_OP','ActivoODP')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->get();
+        
+        foreach ($ListaODP as $OPD) {  
+            
+            $DesactivarODP             =OficinaPartes::find($OPD->Id_OP);
+            $DesactivarODP->ActivoODP = 1;
+            $DesactivarODP->save();
+
+        }
+    
+        $DocumentoFirma             =OficinaPartes::find($this->OPD);
+        $DocumentoFirma->ActivoODP = 2;
+        $DocumentoFirma->save();
+    }
+   
+
  
     public $PortafoliosDetenidos; 
     public $PortafoliosEnProceso;
     public $PortafoliosFinalizados;
     public $PortafoliosRecibidos; 
-    public $PortafolioRecibidosVB;
-
+    public $PortafolioRecibidosVB; 
+ 
     public $PortafolioExterno;
     public $PortafolioInterno; 
     public $PortafolioExternosVB; 
  
     public $PortafolioDirecto;
 
-    public $Firmados;
+    public $Firmados; 
+    public $ListaODP; 
+    public $OPDSelectNombre; 
     public function render()
     {
         $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
+
+        $OPDSelect =  DB::table('OficinaPartes')
+        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+        ->select('Nombre_DepDir')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->where('ActivoODP', '=',2)
+        ->first();
+        
+        if(!empty($OPDSelect->Nombre_DepDir)){
+
+            $this->OPDSelectNombre = $OPDSelect->Nombre_DepDir;
+
+        }
+        
+        $this->ListaODP =  DB::table('OficinaPartes')
+        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+        ->select('Id_OP','Nombre_DepDir')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->where(function($query){  
+            $query->orwhere('ActivoODP', '!=', 3)
+                    ->orwhere('Original', '=', 1);
+        })
+        ->get();
+
+
+      
+
 
         $OficinaPartes =  DB::table('Funcionarios')
         ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
@@ -92,7 +147,7 @@ class Principal extends Component
         })
         ->where('IPF_ID_Funcionario', '=', $ID_Funcionario)     
         ->where('Estado', '=', 0)     
-        ->count();
+        ->count(); 
  
 
         if(!empty($OficinaPartes->Id_OP)){
@@ -140,7 +195,7 @@ class Principal extends Component
 
 
         }
-
+ 
       
 
      

@@ -97,7 +97,7 @@ class FirmarSolicitudController11Emisor extends Controller
                                         
             $Ruta = $datos->Ruta_T;  
                                                                
-            $PDF = Storage::disk('PDF11')->get($Ruta); 
+            $PDF = Storage::disk('PDF')->get($Ruta); 
 
             $codificado = base64_encode($PDF); 
         
@@ -176,7 +176,7 @@ class FirmarSolicitudController11Emisor extends Controller
                         $image = str_replace('data:pdf;base64,', '', $decoded);
                         $image = str_replace(' ', '+', $image);
                         
-                        Storage::disk('PDF11')->put($Ruta, $decoded);        
+                        Storage::disk('PDF')->put($Ruta, $decoded);        
                                     
                         if (file_exists($Ruta)){
                             header("Content-Description: File Transfer");
@@ -221,26 +221,26 @@ class FirmarSolicitudController11Emisor extends Controller
                          $mousePosYF2 = number_format(($mousePosYF*280)/100);
                          
                          $pdf = new FPDI(); 
-                         $pagecount =  $pdf->setSourceFile('PDF11'.'/'.$Ruta);
+                         $pagecount =  $pdf->setSourceFile('PDF'.'/'.$Ruta);
                          for($i =1; $i<=$pagecount; $i++){
                      
                              if($i!=$Pagina){
                                  $pdf->AddPage();
-                                 $pdf->setSourceFile('PDF11'.'/'.$Ruta);
+                                 $pdf->setSourceFile('PDF'.'/'.$Ruta);
                                  $template = $pdf->importPage($i);
                                  $pdf->useTemplate($template,0, 0, 215, 280, true);
                              }
                              else{ 
                                  
                                  $pdf->AddPage();
-                                 $pdf->setSourceFile('PDF11'.'/'.$Ruta);   
+                                 $pdf->setSourceFile('PDF'.'/'.$Ruta);   
                                  $template = $pdf->importPage($i);
                                  $pdf->useTemplate($template,0, 0, 215, 280, true);
                                  $pdf->Image('FirmaGeneral/Firma.JPG', $mousePosXF2, $mousePosYF2, 68, 54);
                              }
                          }
 
-                         $pdf->Output('F', 'ImagenPDF11/'.$Ruta);
+                         $pdf->Output('F', 'ImagenPDF/'.$Ruta);
                          //FIN CREAR IMAGEN DE PDF
 
 

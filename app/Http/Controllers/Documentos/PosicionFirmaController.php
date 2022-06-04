@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Documentos;
 use App\Http\Controllers\Controller;  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
- 
+use Illuminate\Support\Facades\Auth; 
+
 class PosicionFirmaController extends Controller
 { 
     public function FirmaDetenidoIndividual(Request $request)
@@ -17,11 +18,53 @@ class PosicionFirmaController extends Controller
         $Ruta = $datos->Ruta_T; 
         $ID_Documento_T  = $datos->DOC_ID_Documento;
 
+
+        //Ver disponibilidad de firmas
+        $Funcionario  =  Auth::user()->ID_Funcionario_T;
+        $Numero =  DB::table('ImagenFirma') 
+            ->where('id_Funcionario_T', '=',$Funcionario)
+            ->count();
+        $ImagenFirma =  DB::table('ImagenFirma') 
+            ->where('id_Funcionario_T', '=',$Funcionario)
+            ->get();
+        session(['Numero' => $Numero]); 
+        session(['ImagenFirma' => $ImagenFirma]);  
+        //Fin disponibilidad de firmas.
+
+        session(['Ruta' => $Ruta]); 
+        session(['ID_Documento_T' => $ID_Documento_T]);  
+            
+        return view('Posts/Portafolio/FirmaDetenidoIndividual'); 
+    }
+
+
+    public function FirmaSubidoRecibido(Request $request)
+    {   
+        $ID_DestinoDocumento = $request->input('ID_DestinoDocumento');  
+
+        $datos=DB::table('DestinoDocumento')->Select('Ruta_T','DOC_ID_Documento')->where('ID_DestinoDocumento', '=', $ID_DestinoDocumento)->first();
+	   
+        $Ruta = $datos->Ruta_T; 
+        $ID_Documento_T  = $datos->DOC_ID_Documento;
+
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
+
         session(['Ruta' => $Ruta]); 
         session(['ID_Documento_T' => $ID_Documento_T]);  
            
-        return view('Posts/Portafolio/FirmaDetenidoIndividual'); 
+        return view('Posts/Portafolio/FirmarSubidoRecibido'); 
     }
+
 
     public function FirmaDetenidoMasiva(Request $request)
     {   
@@ -43,6 +86,18 @@ class PosicionFirmaController extends Controller
         ->select('Ruta_T')->where('ID_Documento_T', '=',$ID_Documento_T)->first();
 	   
         $Ruta = $Documento->Ruta_T;
+
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
  
         session(['Ruta' => $Ruta]);  
            
@@ -62,6 +117,18 @@ class PosicionFirmaController extends Controller
         $Ruta = $datos->Ruta_T;
         $ID_Documento_T  = $datos->DOC_ID_Documento;
 
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
+
         session(['Ruta' => $Ruta]);  
         session(['ID_DestinoDocumento' => $ID_DestinoDocumento]);   
         session(['ID_Documento_T' => $ID_Documento_T]);    
@@ -79,6 +146,18 @@ class PosicionFirmaController extends Controller
 	   
         $Ruta = $datos->Ruta_T;
 
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
+
         session(['Ruta' => $Ruta]); 
         session(['ID_Documento_T' => $ID_Documento_T]);   
            
@@ -86,7 +165,7 @@ class PosicionFirmaController extends Controller
         return view('Posts/Portafolio/FirmaMasivaRec'); 
     }
 
-    public function FirmarIndividualDirecto(Request $request)
+    public function FirmarIndividualDirecto(Request $request) 
     {    
 
         $ID_DestinoDocumento = $request->input('ID_DestinoDocumento');  
@@ -94,6 +173,18 @@ class PosicionFirmaController extends Controller
         $datos=DB::table('DestinoDocumento')->Select('Ruta_T')->where('ID_DestinoDocumento', '=', $ID_DestinoDocumento)->first();
 	   
         $Ruta = $datos->Ruta_T; 
+
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
  
         session(['Ruta' => $Ruta]);   
            
@@ -108,6 +199,18 @@ class PosicionFirmaController extends Controller
         $datos=DB::table('DestinoDocumento')->Select('Ruta_T')->where('DOC_ID_Documento', '=', $ID_Documento_T)->first();
 	   
         $Ruta = $datos->Ruta_T;
+
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
 
         session(['Ruta' => $Ruta]);   
         session(['ID_Documento_T' => $ID_Documento_T]);   
@@ -126,6 +229,18 @@ class PosicionFirmaController extends Controller
         $Nombre = $datosLinkFirma->Nombres_L.' '.$datosLinkFirma->Apellidos_L;
 
         $Ruta = $datos->Ruta_T; 
+
+         //Ver disponibilidad de firmas
+         $Funcionario  =  Auth::user()->ID_Funcionario_T;
+         $Numero =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->count();
+         $ImagenFirma =  DB::table('ImagenFirma') 
+             ->where('id_Funcionario_T', '=',$Funcionario)
+             ->get();
+         session(['Numero' => $Numero]); 
+         session(['ImagenFirma' => $ImagenFirma]);  
+         //Fin disponibilidad de firmas.
  
         session(['Nombre' => $Nombre]);  
         session(['Ruta' => $Ruta]);  

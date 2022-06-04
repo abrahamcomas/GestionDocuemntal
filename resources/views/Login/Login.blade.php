@@ -12,8 +12,9 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <section>
             <div class="form-login">
-                <center><h2><strong>GESTIÓN DOCUMENTAL</strong></h2></center>  
+                <center><h2><strong>SISTEMA GESTIÓN DOCUMENTAL (SGD)</strong></h2></center>  
                 <div class="card-body">
                 <h4><strong>INICIAR SESIÓN</strong></h4>
                     <form method="POST" action="{{ route('Login') }}">  
@@ -46,9 +47,10 @@
                     <center><p style="color: #FFFFFF;">Proyecto Desarrollado por el Departamento de Informática 2021-2022</p></center>
                     <center><p style="color: #FFFFFF;">ILUSTRE MUNICIPALIDAD DE CURICÓ</p></center> 
                 </div>
+                <br>
+                <center><strong style="color: #56FF02;">VERSIÓN 1.1</strong></center>
             </div>
-            <br>
-            <center><strong style="color: red;">VERSIÓN BETA 0.6.120422</strong></center>
+            </section>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
     </div>

@@ -25,7 +25,7 @@
             zoom: 1
         }
             
-        pdfjsLib.getDocument('{{ 'PDF11/'.session('Ruta') }}').then((pdf) => {
+        pdfjsLib.getDocument('{{ 'PDF/'.session('Ruta') }}').then((pdf) => {
 
             myState.pdf = pdf;
             render();

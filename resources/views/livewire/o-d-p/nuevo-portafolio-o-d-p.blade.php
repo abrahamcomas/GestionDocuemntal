@@ -69,10 +69,8 @@
                             <hr>
                         </div>
                         <div class="card-body">	 
-                            <div id="Imagen" class="specific" style="height:30vh;width:35vw;"> 
-                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="260" height="260"/>
-                                    <h2><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></h2>
-                                </p>
+                            <div id="Imagen" class="specific"> 
+                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} <br>{{$Cargo}}</strong></p>
                             </div>
                             <form method="POST" action="{{ route('ImagenCreada2') }}"> 
                                 @csrf  
@@ -93,8 +91,7 @@
                             </form>
                         </div> 
                         <div class="card-footer text-muted">  
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>
                 </div> 
@@ -122,16 +119,16 @@
                             <div class="text-muted" >
                                 <br> 
                                 <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
-                                <hr>
+                                <hr> 
                             </div>
                             <div class="card-body"> 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1">
-                                        <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
-                                        <strong><div id="ver"></div></strong>
+                                      <!--  <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                        <strong><div id="ver"></div></strong>-->
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
-                                        <strong>IMPORTANTE <br> El sistema ingresara de forma automática un código QR en cada archivo subido en la parte inferior derecha de dicho archivo.</strong>
+                                        <!--<strong>IMPORTANTE <br> El sistema ingresara de forma automática un código QR en cada archivo subido en la parte inferior derecha de dicho archivo.</strong>-->
                                     </div> 
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
                                         <h6>CREAR SOLICITUD A*</h6>
@@ -235,12 +232,11 @@
                             <div class="card-footer text-muted">
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL <br>
-                                SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                SGD
                             </div>
                         </div>
                     </div> 
-                </div>		 
+                </div>		  
             </div> 
             @else
             <div class="row">
@@ -270,8 +266,7 @@
                                 <div class="card-footer text-muted">
                                 </div>
                                 <div class="card-footer text-muted">
-                                    GESTIÓN DOCUMENTAL <br>
-                                    SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                   SGD
                                 </div>
                             </div>
                         </div>	

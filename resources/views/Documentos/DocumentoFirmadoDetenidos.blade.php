@@ -6,7 +6,11 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
         <div class="col">
             <div class="card bg-light mb-3" > 
-            <div class="card-header">ARCHIVO</div>  
+                <div class="text-muted" >
+                    <br> 
+                    <h1><center><strong>ARCHIVO</strong></center></h1>
+                    <hr>
+                </div>
                 @if($status=='OK')
                     <div class="card-body">
                         <h5><strong><center>Archivo/s firmado/s correctamente.</center></strong></h5>
@@ -49,7 +53,7 @@
                     </div>
                 @endif
                 <div class="card-footer text-muted">
-                    GESTION DOCUMENTAL
+                    SGD
                 </div>
             </div>
         </div>	

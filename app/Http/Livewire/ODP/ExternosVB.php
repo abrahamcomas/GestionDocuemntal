@@ -27,7 +27,7 @@ class ExternosVB extends Component
     public $perPage = 5;
 
     public function clear()
-    {
+    { 
       $this->search='';
       $this->perPage='5'; 
     }
@@ -110,20 +110,30 @@ class ExternosVB extends Component
     public function EnviarPortafolio(){
 
         $this->validate($this->rulesEnviarPortafolio,$this->messEnviarPortafolio); 
-
-              
+   
         $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
 
-        $OficinaPartes =  DB::table('Funcionarios')
-        ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-        ->select('Id_OP')  
-        ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first();
+        $OficinaPartes =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)
+            ->where('Original', '=', 1)->first(); 
+    
+            if(empty($OficinaPartes)){
+    
+                $OficinaPartes =  DB::table('OficinaPartes')
+                ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+                ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+                ->where('ActivoODP', '=', 2)->first(); 
+    
+            } 
  
     
         $InterPortaFuncionarioVB                      = new InterPortaFuncionarioVB;
         $InterPortaFuncionarioVB->IPF_ID_Funcionario  = $this->DestinoFuncionario;
         $InterPortaFuncionarioVB->IPF_Portafolio      = $this->ID_Documento_T;  
         $InterPortaFuncionarioVB->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+        $InterPortaFuncionarioVB->ID_OP_LDT_P_IPV     = $OficinaPartes->ID_OP_LDT;   
         $InterPortaFuncionarioVB->FechaR              = date("Y/m/d");  
         $InterPortaFuncionarioVB->Visto               = 0;  
         $InterPortaFuncionarioVB->Estado              = 0;  
@@ -262,6 +272,7 @@ class ExternosVB extends Component
     protected $paginationTheme = 'bootstrap'; 
     
     public $Orden;
+    public $OPDSelectNombre; 
     public function render()
     {
 
@@ -271,15 +282,38 @@ class ExternosVB extends Component
         }else{
             $Orden='DESC';
         }
-
+ 
 
         $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
-        $OficinaPartes =  DB::table('Funcionarios')
-        ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-        ->select('Id_OP','ID_OP_LDT')  
-        ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first();
 
-        return view('livewire.o-d-p.externos-v-b',[  
+        $OPDSelect =  DB::table('OficinaPartes')
+        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+        ->select('Nombre_DepDir')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->where('ActivoODP', '=',2)
+        ->first();
+
+        $this->OPDSelectNombre = $OPDSelect->Nombre_DepDir;
+
+
+
+        $OficinaPartes =  DB::table('OficinaPartes')
+        ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+        ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+        ->where('ActivoODP', '=', 2)
+        ->where('Original', '=', 1)->first(); 
+
+        if(empty($OficinaPartes)){
+
+            $OficinaPartes =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)->first(); 
+
+        }  
+
+
+        return view('livewire.o-d-p.externos-v-b',[   
 			'posts' =>  DB::table('Portafolio') 
             ->leftjoin('Funcionarios', 'Portafolio.ID_Funcionario_Sol', '=', 'Funcionarios.ID_Funcionario_T')
             ->leftjoin('OficinaPartes', 'Portafolio.ID_OficinaP', '=', 'OficinaPartes.Id_OP')
@@ -293,7 +327,7 @@ class ExternosVB extends Component
                         ->orwhere('Observacion_T', 'like', "%{$this->search}%");
             })  
             ->where('Estado', '=', 0) 
-            ->where('ID_OP_R', '=', $OficinaPartes->Id_OP)
+            ->where('ID_OP_LDT_P_VR', '=', $OficinaPartes->ID_OP_LDT)
             ->orderBy('Fecha_T', $Orden)
             ->paginate($this->perPage), 
  

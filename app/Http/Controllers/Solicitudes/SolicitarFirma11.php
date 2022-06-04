@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Solicitudes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;  
 use App\Models\Portafolio11;   
 use App\Models\LinkFirma11;
 
@@ -12,25 +12,17 @@ class SolicitarFirma11 extends Controller
 {
     public function index(Request $request)  
     {
-        $mousePosX = $request->input('mousePosX'); 
-        $mousePosY = $request->input('mousePosY'); 
-        $Pagina = $request->input('Pagina');  
 
-        $Ancho = $request->input('Ancho'); 
-        $Alto = $request->input('Alto'); 
-
-        $rules = [
-            'Ancho' => 'required',
-        ]; 
-     
-        $messages = [ 
-            'Ancho.required' =>'Por favor seleccione el lugar en donde ira la firma digital.'
-        ]; 
-    
-        $this->validate($request, $rules, $messages);
+        $ID_Documento_T = $request->input('ID_Documento_T');  
+        $ID_LinkFirma = $request->input('ID_LinkFirma');  
 
 
-        $ID_LinkFirma = $request->input('ID_LinkFirma');
+        $mousePosX = 35; 
+        $mousePosY = 465; 
+        $Pagina = 1;    
+
+        $Ancho = 609; 
+        $Alto = 793; 
 
         $Observacion = $request->input('ObservacionPortafolio');
 
@@ -41,7 +33,7 @@ class SolicitarFirma11 extends Controller
  
         $token = md5($mousePosX);   
   
-        if(empty($Pagina)){  
+        if(empty($Pagina)){   
             $Pagina = 1;
         }     
    

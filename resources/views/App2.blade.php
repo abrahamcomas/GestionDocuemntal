@@ -55,7 +55,7 @@
         } 
 
         .container {
-            padding-top: 20px;
+            padding-top: 5px;
         }
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: #ffffff!important;
@@ -68,7 +68,7 @@
             padding-bottom: 20px;
             padding-left: 20px;
             padding-right: 20px;
-            border-radius: 70px;
+            border-radius: 20px;
             border-color:#d2d2d2;
             border-width: 5px;
             color:white;
@@ -95,9 +95,9 @@
         
         }
 
-        /* ANIMATIONS */
+        /* ANIMATIONS 
 
-        /* Simple CSS3 Fade-in-down Animation */
+
         .fadeInDown {
         -webkit-animation-name: fadeInDown;
         animation-name: fadeInDown;
@@ -106,7 +106,7 @@
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
         }
-
+*/
         @keyframes fadeInDown {
             0% {
                 opacity: 0;
@@ -115,9 +115,27 @@
             }
         }
 
+
+        /*Fondo animado*/
+		section{
+			width: 100%;
+			color: #fff;
+			background: linear-gradient(45deg,red,blue,green,black);
+			background-size: 400% 400%;
+			position: relative;
+			animation: cambiar 7s ease-in-out infinite;
+            border-radius: 20px;
+            opacity: 0.9;
+		}
+
+		@keyframes cambiar{
+			0%{background-position: 0 50%;}
+			50%{background-position: 100% 50%;}
+			100%{background-position: 0 50%;}
+		}
     </style> 
 		@livewireStyles  
-        @laravelPWA
+        @laravelPWA 
 </head> 
 <body> 	
     <div id="page-content-wrapper">

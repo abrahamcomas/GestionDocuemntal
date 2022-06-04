@@ -12,5 +12,14 @@
             document.getElementById("PDF").value = "";
         }
     });
+
+    $(document).ready(function(){
+            $("#boton").click(function(event){
+                event.preventDefault();
+            $("#boton").prop('disabled',true)
+             
+            return false;
+            })
+        })
 </script>   
-@endsection  
+@endsection   

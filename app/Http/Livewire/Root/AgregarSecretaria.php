@@ -20,7 +20,7 @@ class AgregarSecretaria extends Component
         $this->Ayuda = 1;
     }
     public function VolverAyuda(){
-        $this->Ayuda = 0;
+        $this->Ayuda = 0; 
     }
 
 
@@ -122,12 +122,14 @@ class AgregarSecretaria extends Component
 
         $OficinaPartes                      = OficinaPartes::find($Id_OP);
         $OficinaPartes->id_Funcionario_OP   = $ID_Funcionario_T; 
+        $OficinaPartes->ActivoODP           = 2; 
         $OficinaPartes->save();
 
         $HistorialOficinaPartes                     = new HistorialOficinaPartes;
         $HistorialOficinaPartes->Id_OP              = $Id_OP;
         $HistorialOficinaPartes->ID_OP_LDT          = $ID_OP_LDT;
         $HistorialOficinaPartes->id_Funcionario_OP  = $ID_Funcionario_T;
+        $HistorialOficinaPartes->Fecha      = date("Y/m/d"); 
         $HistorialOficinaPartes->save();
 
         $this->mostrar=2;
@@ -177,6 +179,7 @@ class AgregarSecretaria extends Component
         $this->OficinaPartes =  DB::table('DepDirecciones')
         ->leftjoin('OficinaPartes', 'DepDirecciones.ID_DepDir', '=', 'OficinaPartes.ID_OP_LDT')
         ->leftjoin('Funcionarios', 'OficinaPartes.id_Funcionario_OP', '=', 'Funcionarios.ID_Funcionario_T')
+        ->where('Original', '=', 1)
         ->where('Nombre_DepDir', 'like', "%{$this->BuscarOficinaPartes}%")->take(3)->get();
 
         $this->BFuncionarios =  DB::table('Funcionarios')

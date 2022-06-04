@@ -31,7 +31,9 @@ class FirmarArchivoDirectoMasiva extends Controller
 
         $ID_Documento_T  = $request->input('ID_Documento_T');
         $Contrasenia = $request->input('Contrasenia'); 
- 
+        $ObservacionPortafolio = $request->input('ObservacionPortafolio'); 
+        $RutaImagenFirma  = $request->input('RutaImagenFirma');
+        
         $ID_OficinaPartes =  DB::table('DestinoDocumento') 
         ->select('Ruta_T')
         ->where('DOC_ID_Documento', '=',$ID_Documento_T)
@@ -109,8 +111,17 @@ class FirmarArchivoDirectoMasiva extends Controller
                 $Sha256 = hash('sha256', $PDF);
 
                 $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
-                $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
-                $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+                if($RutaImagenFirma==null){
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+    
+
+                }else{
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('Ruta', '=', $RutaImagenFirma)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+                }
 
                 $contenidoBinario = file_get_contents($rutaImagen2);
                 $imagenComoBase64 = base64_encode($contenidoBinario);
@@ -215,6 +226,7 @@ class FirmarArchivoDirectoMasiva extends Controller
                                 $DocumentoFirma             =DocumentoFirma::find($ID_DocumentoF);
                                 $DocumentoFirma->FechaFirma = date("Y/m/d");
                                 $DocumentoFirma->Firmado    = 1;
+                                $DocumentoFirma->ObservacionFirma    = $ObservacionPortafolio;
                                 $DocumentoFirma->save();
 
                                 //CREAR IMAGEN DE PDF
@@ -283,6 +295,7 @@ class FirmarArchivoDirectoMasiva extends Controller
 
                                         $InterPortaFuncionario                  =InterPortaFuncionario::find($IPF_ID->IPF_ID);
                                         $InterPortaFuncionario->Estado          = 22;
+                                        //$InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
                                         $InterPortaFuncionario->save(); 
                                 }
 

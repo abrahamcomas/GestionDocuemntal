@@ -10,10 +10,11 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                <section>
                 <div class="form-login">
-                    <center><h2><strong>GESTIÓN DOCUMENTAL</strong></h2></center>  
+                    <center><h2><strong>SISTEMA GESTIÓN DOCUMENTAL (SGD)</strong></h2></center>  
                     @if($Estado==1)
-                    <div class="card-body"> 
+                    <div class="card-body">   
                         <h4><strong>REGISTRO</strong></h4>
                         <div class="input-group mb-3">
                             <div class="input-group-append">
@@ -134,6 +135,7 @@
                         <center><p style="color: #FFFFFF;">ILUSTRE MUNICIPALIDAD DE CURICÓ</p></center> 
                     </div>
                 </div> 	
+                <section>
             </div> 	
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>	
         </div> 	

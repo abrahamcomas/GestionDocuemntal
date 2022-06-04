@@ -55,13 +55,13 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>SOLICITUDES CREADAS</strong></center></h1>
+                            <h1><center><strong>SOLICITAR FIRMAS</strong></center></h1>
                             <hr>
                         </div> 
                         <div class="card-body"> 
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                    <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                    <!--<button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>-->
                                     <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                     <strong><div id="ver"></div></strong>
                                 </div> 
@@ -99,9 +99,9 @@
                                         <th>FUNCIONARIO</th>
                                         <th>N° INTERNO</th>
                                         <th>N° FOLIO</th>
-                                        <th>TÍTULO DOCUMENTO</th>
-                                        <th>TIPO DOCUMENTO</th>
-                                        <th>FECHA INGRESO</th>
+                                        <th>TÍTULO</th>
+                                        <th>DOCUMENTO</th>
+                                        <th>INGRESO</th>
                                         <th>DÍAS PARA TÉRMINO</th>
                                         <th>ADMINISTRAR</th>
                                         <th>ELIMINAR</th>
@@ -240,7 +240,7 @@
                                         @endif  
                                         @if($post->Estado_T==33)
                                                 <td>
-                                                    <button class="btn btn-danger active"  id="MostrarMensaje" wire:click="MensajeRechazo({{ $post->ID_Documento_T }})">VER MOTIVO</button>
+                                                    <button class="btn btn-danger active" wire:click="MensajeRechazo({{ $post->ID_Documento_T }})">VER MOTIVO</button>
                                                 </td>
                                         @elseif($post->Estado_T!=33) 
                                                 <td>
@@ -264,7 +264,7 @@
                             {{ $posts->links() }}
                         </div>	
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -387,11 +387,13 @@
                             </table> 
                         @endif
                         </div>
-                        <div class="btn-group" style=" width:100%;">
+                        <center>
+                        <div class="btn-group" style=" width:80%;">
                             <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                         </div> 
+                        </center>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -409,20 +411,22 @@
                             <hr>
                         </div> 
                         <div class="card-body">
-                            <strong>Una solicitud puede ser eliminada del sistema si considera que fue ingresada incorrectamente.</strong>
+                            <strong>Una solicitud puede ser eliminada si considera que fue ingresada incorrectamente.</strong>
                             <br><br>
                             <strong>Por favor, Confirme su contraseña de usuario.</strong>
                             <div class="form-label-group">
                                 <input type="password" class="form-control" wire:model="ContraseniaPortafolio"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
                             </div>
                         </div> 
-                        <div class="btn-group" style=" width:100%;">
+                        <center>
+                        <div class="btn-group" style=" width:80%;">
                             <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                             <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="EliminarPortafolioConf">CONFIRMAR</button>
                         </div> 
+                        </center>
                         <br>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div> 
                 </div>

@@ -7,8 +7,10 @@
         <br>
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVO</center></strong></h4>
+                <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>ARCHIVO</strong></center></h1>
+                         <hr>
                     </div>
                     <div class="card-body"> 
                         @if($status=='OK') 

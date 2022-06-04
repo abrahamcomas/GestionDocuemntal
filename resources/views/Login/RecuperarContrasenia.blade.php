@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <section>
             <div class="form-login">
                 <center><h2><strong>GESTIÓN DOCUMENTAL</strong></h2></center>  
                 <div class="card-body">
@@ -37,6 +38,7 @@
                     <center><p style="color: #FFFFFF;">ILUSTRE MUNICIPALIDAD DE CURICÓ</p></center> 
                 </div>
             </div>
+            <section>
             <br>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"> </div>

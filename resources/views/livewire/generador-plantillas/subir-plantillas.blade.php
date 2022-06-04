@@ -39,7 +39,7 @@
                                 </center>
                             </div>
                             <div class="card-footer text-muted">
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>   
                         </div>     
                     </div>

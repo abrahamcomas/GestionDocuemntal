@@ -1,36 +1,5 @@
 <div>
-<br>     
-@if($Ayuda==1)    
-    <div class="container-fluid">  
-        <div class="row">  
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col">
-                    <div class="card bg-light mb-3">  
-                        <div class="card-header"> 
-                        <center>
-                                <h5> 
-                                    <strong>
-                                        INFORMACIÓN
-                                    </strong>
-                                </h5>
-                            </center> 
-                        </div>
-                        <div class="card-body">
-                            <center><img src="{{URL::asset('Imagenes/ROOT/AgregarJefe.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
-                        </div>
-                        <div class="card-footer text-muted"> 
-                            <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-danger active" wire:click="VolverAyuda">
-                                    VOLVER
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@else
+<br>
     <div class="container-fluid">   
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -40,13 +9,6 @@
                             <br> 
                             <h1><center><strong>AGREGAR SECRETARIA (ODP)</strong></center></h1>
                             <hr>
-                        </div>
-                        <div class="row">  
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-                                <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-                            </div>
                         </div>
                         @if($CambiarBusqueda==0)
                             @if($ID_DepDir==0)
@@ -73,7 +35,7 @@
                             @endif
                             @if($BuscarOficinaPartes!="")
                                 <div class="card-body table-responsive">
-                                    <table table class="table table-hover">
+                                    <table table class="table table-hover table-sm"> 
                                         <thead>
                                             <tr> 
                                                 <th>NOMBRE</th>
@@ -124,7 +86,7 @@
                             @endif
                             @if($BuscarNombre!="")
                                 <div class="card-body table-responsive">
-                                    <table table class="table table-hover">
+                                    <table table class="table table-hover table-sm"> 
                                         <thead>
                                             <tr> 
                                                 <th>NOMBRE</th>
@@ -192,13 +154,12 @@
                             <br>
                         @endif
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div> 
                 </div>
             </div> 
         </div>
     </div> 
-</div> 
-@endif
+</div>
  

@@ -76,7 +76,7 @@
                     </div>
                 @endif
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -88,9 +88,7 @@
         <div>
             <center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="90" height="90"/></center>
             <center>
-                © {{ date("Y") }} Dep. de informática V0.1<br>
-                Municipalidad de Curicó<br>
-                VERSIÓN BETA 0.5.230322
+                SGD
             </center>
         </div>
     </div> 

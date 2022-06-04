@@ -4,10 +4,14 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
+                    </center>
                     <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>
-
                         <h5><strong> 
                             Ingresando firma masiva.<br>
                             Cantidad de archivos a firmar {{ $cuantos}}. <br>
@@ -17,7 +21,7 @@
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div>  
         </div>  
@@ -26,7 +30,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">  
             <div class="col"> 
-            @include('messages')  
+            @include('messages')   
                 <div class="card bg-light mb-3">
                         <div class="text-muted" >
                             <br> 
@@ -34,7 +38,14 @@
                             <hr>
                         </div>
                         <div class="card-body">
-                            <h5 style="color: #FF0C00;"><strong> La posición de la firma aquí seleccionada quedara en la misma posición en todos los archivos a firmar.</strong></h5>
+                            <h5 style="color: #FF0C00;"><strong>Advertencia, las firmas electrónica agregadas anteriormente en este archivo, pueden no verse reflejadas en este visualizador, en caso de que dicho archivo contenga firmas electrónicas se recomienda hacer clic en.</strong></h5>
+                            <form method="POST" action="{{ route('VisualizarPDFExterno') }}">   
+                                    @csrf             
+                                    <input type="hidden" name="Ruta" value="{{ session('Ruta') }}">
+                                    <div class="btn-group" style=" width:100%;">	
+                                        <button type="submit" class="btn btn-warning active" formtarget="_blank">VISUALIZAR PDF</button>
+                                    </div>
+                                </form> 
                             <hr>
                             <strong>Por favor, haz click sobre el PDF para posicionar la firma electrónica.</strong>
                             <center> 
@@ -68,6 +79,21 @@
                                 <input type="hidden" id="Ancho" name="Ancho">
                                 <input type="hidden" id="Alto" name="Alto">
                                 <br> 
+                                @if(session('Numero')>1)
+                                    <div class="row"> 
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h6>TIPO DE IMAGEN DE FIRMA*</h6>
+                                            <div class="form-label-group">  
+                                                <select name="RutaImagenFirma" class="form-control" >
+                                                    <option value="0" selected>---SELECCIONAR---</option>
+                                                    @foreach(session('ImagenFirma') as $post)
+                                                        <option value="{{ $post->Ruta }}">{{ $post->NombreImagen }}</option>
+                                                    @endforeach
+                                                </select> 
+                                            </div> 	 
+                                        </div>  
+                                    </div> 
+                                @endif
                                 <strong>Por favor, Confirme su contraseña de usuario.</strong>
                                 <div class="form-label-group">
                                     <input type="password" class="form-control" name="Contrasenia"  placeholder="Confirme Contraseña Usuario" autocomplete="off">

@@ -99,6 +99,7 @@ class AgregarJefes extends Component
             $OficinaPartes                  = new OficinaPartes;
             $OficinaPartes->ID_OP_LDT       = $this->ID_DepDir;
             $OficinaPartes->ID_Jefatura     = $ID_Funcionario_T;
+            $OficinaPartes->Original        = 1;
             $OficinaPartes->save();
 
             $Id_OP = $OficinaPartes->Id_OP;
@@ -107,7 +108,8 @@ class AgregarJefes extends Component
             $HistorialOficinaPartes->Id_OP      = $Id_OP;
             $HistorialOficinaPartes->ID_OP_LDT  = $this->ID_DepDir;
             $HistorialOficinaPartes->ID_Jefatura= $ID_Funcionario_T;
-            $HistorialOficinaPartes->save();
+            $HistorialOficinaPartes->Fecha      = date("Y/m/d"); 
+            $HistorialOficinaPartes->save(); 
 
             $LugarDeTrabajo =  DB::table('LugarDeTrabajo')->select('ID_LugarDeTrabajo')->where('ID_Funcionario_LDT', '=', $ID_Funcionario_T)->first();
 
@@ -158,7 +160,7 @@ class AgregarJefes extends Component
         }
     }
  
-    public $OficinaPartes;
+    public $OficinaPartes; 
     public $JefeNombre;
     public $JefeApellido;
     public $ListaFuncionariosOP;
@@ -200,6 +202,7 @@ class AgregarJefes extends Component
         $this->OficinaPartes =  DB::table('DepDirecciones')
         ->leftjoin('OficinaPartes', 'DepDirecciones.ID_DepDir', '=', 'OficinaPartes.ID_OP_LDT')
         ->leftjoin('Funcionarios', 'OficinaPartes.ID_Jefatura', '=', 'Funcionarios.ID_Funcionario_T')
+        ->where('Original', '=', 1)
         ->where('Nombre_DepDir', 'like', "%{$this->BuscarOficinaPartes}%")->take(3)->get();
 
         $this->BFuncionarios =  DB::table('Funcionarios')

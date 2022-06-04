@@ -52,10 +52,12 @@
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
                 <div class="col">
-                    <div class="card bg-light mb-3"> 
-                        <div class="card-header"> 
-                            <h4><strong>ACTA DE ENTREGA</strong></h4> 
-                        </div>   
+                    <div class="card bg-light mb-3">
+                        <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>ACTA</strong></center></h1>
+                                <hr>
+                            </div>
                         <div class="card-body"> 
                             <div class="row">  
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
@@ -90,7 +92,7 @@
                                             </center>
                                         </div>
                                     </div> 
-                                </div>
+                                </div> 
                             </div>  
                         </div> 
                     @if($posts->count())
@@ -102,7 +104,8 @@
                                         <th>ESTADO</th>
                                         <th>TÍTULO DOCUMENTO</th>
                                         <th>FECHA</th>
-                                        <th>OPCIONES</th>
+                                        <th>PDF</th>
+                                        <th>SOLICITUD</th>
                                         <th>ELIMINAR</th>
                                     </tr>
                                 </thead>   
@@ -147,7 +150,7 @@
                                                     <strong>{{$newDate}}</strong>
                                                 </td>
                                         @if($post->Estado_T==0)
-                                                <td>       
+                                                <td colspan="2">       
                                                     <form method="POST" action="{{ route('Firma11') }}">
                                                         @csrf      
                                                         <input type="hidden" name="ID_Documento_T" value="{{ $post->ID_Documento_T}}">	
@@ -161,21 +164,61 @@
                                                 </td>
                                         @elseif($post->Estado_T==1)
                                                 <td>
+                                                    <form method="POST" action="{{ route('MostrarPDF11') }}">   
+                                                        @csrf             
+                                                        <input type="hidden" name="ID_Documento_T" value="{{ $post->ID_Documento_T }}">
+                                                        <input type="hidden" name="ID_Funcionario_T" value="{{ $post->ID_Funcionario_T }}">
+                                                        <div class="btn-group" style=" width:50%;">	
+                                                            <button type="submit" class="btn btn-success active">PDF</button>
+                                                        </div>
+                                                    </form> 
+                                                </td>  
+                                                <td>
                                                     <button class="btn btn-warning active" wire:click="EnviarDocumento({{ $post->ID_Documento_T }},{{ $post->ID_Funcionario_T }})">ENVIAR</button>
                                                 </td>
                                                 <td> 
                                                     <button class="btn btn-danger active" wire:click="EliminarPortafolio({{$post->ID_Documento_T }})">ELIMINAR</button>
                                                 </td>
                                         @else
-                                                <td> 
-                                                    <button class="btn btn-success active" wire:click="EnviarDocumento({{ $post->ID_Documento_T }},{{ $post->ID_Funcionario_T }})">DETALLES</button>
+
+                                            @if($post->Solicitud==0) 
+                                                <td>
+                                                    <form method="POST" action="{{ route('MostrarPDF11') }}">   
+                                                        @csrf             
+                                                        <input type="hidden" name="ID_Documento_T" value="{{ $post->ID_Documento_T }}">
+                                                        <input type="hidden" name="ID_Funcionario_T" value="{{ $post->ID_Funcionario_T }}">
+                                                        <div class="btn-group" style=" width:50%;">	
+                                                            <button type="submit" class="btn btn-success active">PDF</button>
+                                                        </div>
+                                                    </form> 
                                                 </td>
                                                 <td> 
-                                                    <button class="btn btn-danger active">NO DISPONIBLE</button> 
+                                                    <button class="btn btn-warning active" wire:click="CrearSolicitud({{ $post->ID_Documento_T }},{{ $post->ID_Funcionario_T }})">CREAR</button>
                                                 </td>
-                                        @endif
+                                                <td> 
+                                                    <button class="btn btn-warning active">X</button> 
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <form method="POST" action="{{ route('MostrarPDF11') }}">   
+                                                        @csrf             
+                                                        <input type="hidden" name="ID_Documento_T" value="{{ $post->ID_Documento_T }}">
+                                                        <input type="hidden" name="ID_Funcionario_T" value="{{ $post->ID_Funcionario_T }}">
+                                                        <div class="btn-group" style=" width:50%;">	
+                                                            <button type="submit" class="btn btn-success active">PDF</button>
+                                                        </div>
+                                                    </form> 
+                                                </td>
+                                                <td> 
+                                                    <button class="btn btn-primary active">CREADA</button>
+                                                </td>
+                                                <td> 
+                                                    <button class="btn btn-warning active">X</button> 
+                                                </td>
+                                            @endif 
+                                        @endif 
                                             </tr>
-                                    @endforeach   
+                                    @endforeach    
                                 </tbody> 
                             </table>
                         </div>
@@ -190,7 +233,7 @@
                         <div class="card-footer text-muted"> 
                             GESTIÓN DOCUMENTAL
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div> 
@@ -202,34 +245,7 @@
                         <div class="card-header">
                             <h4><strong>SOLICITAR FIRMAS</strong></h4>
                         </div> 
-                        <div class="card-body table-responsive">  
-                            <table table class="table table-hover">
-                                <h5><strong>LISTA ARCHIVOS</strong></h5>
-                                <thead> 
-                                    <tr>  
-                                        <th>NOMBRE</th>
-                                        <th>VER</th>
-                                    </tr>
-                                </thead> 
-                                <tbody>
-                                    @foreach($MostrarDocumentos as $post) 
-                                        <tr> 
-                                            <td>
-                                                <strong>{{ $post->NombreDocumento }}</strong>
-                                            </td>   
-                                            <td>  
-                                                <form method="POST" action="{{ route('MostrarPDF11') }}">   
-                                                    @csrf             
-                                                    <input type="hidden" name="ID_DestinoDocumento" value="{{ $post->ID_DestinoDocumento }}">
-                                                    <div class="btn-group" style=" width:50%;">	
-                                                        <button type="submit" class="btn btn-primary active" formtarget="_blank">PDF</button>
-                                                    </div>
-                                                </form> 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>    
-                            </table>
+                        <div class="card-body table-responsive">
                         @if($LinkFirma->count())
                             <table table class="table table-hover">
                                 <thead> 
@@ -247,15 +263,16 @@
                                                 <strong>{{ $post->Nombres_L }} {{ $post->Apellidos_L }}</strong>
                                             </td>
                                         @if($post->Estado==0) 
-                                            <td> 
-                                                <form method="POST" action="{{ route('SolicitarFirma11') }}">
+                                            <td>  
+                                            <!--<form method="POST" action="{{ route('SolicitarFirma11') }}">-->
+                                                <form method="POST" action="{{ route('SolicitarFirmaFuncionario11') }}">
                                                     @csrf      
                                                     <input type="hidden" name="ID_Documento_T" value="{{ $ID_Documento_T }}">	
                                                     <input type="hidden" name="ID_LinkFirma" value="{{ $post->ID_LinkFirma }}">	
                                                     <button type="submit" id="btnEnviar1" class="btn btn-info active">SOLICITAR FIRMAR</button>
                                                 </form>
                                             </td>
-                                            <td>
+                                            <td> 
                                                 <strong>{{ $post->direccionEmail }}</strong>
                                             </td>  
                                             <td>
@@ -348,11 +365,124 @@
                         <div class="card-footer text-muted"> 
                             GESTIÓN DOCUMENTAL
                         </div>
-                    </div> 
+                    </div>  
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
         </div>
-    @endif 
-</div>
+    </div>
+
+
+
+
+
+    @elseif($Detalles==4)
+
+
+
+<div> 
+<br>                                  
+    @if($Pagina==0) 
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col">   
+                    @include('messages')  
+                    <div class="card bg-light mb-3"> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>SOLICITUD  "{{ $TituloSolicitud}}"</strong></center></h1>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                    <h6>NÚMERO FOLIO (OPCIONAL)</h6>
+                                    <div class="form-label-group"> 
+                                        <div class="form-label-group"> 
+                                            <input type="text" class="form-control" wire:model="Folio">
+                                        </div>		
+                                    </div> 	 
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                                    <h6>DÍAS PARA FINALIZAR*</h6>
+                                    <div class="form-label-group"> 
+                                        <input type="number" class="form-control" wire:model="Fecha_T">
+                                    </div>		
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                    <h6>OBSERVACIÓN (OPCIONAL)</h6>
+                                    <div class="form-label-group"> 
+                                    <textarea class=" form-control" wire:model="Materia_T"></textarea>
+                                    </div>		
+                                </div>
+                            </div>
+                            <br>
+                            <div class="btn-group" style=" width:100%;">
+                            <button type="button" class="btn btn-danger active" wire:click="VolverPrincipal">VOLVER</button>
+                            <button class="btn btn-success" wire:click="Ingresar">INGRESAR</button>
+                        </div> 
+                        </div> 
+                        <div class=" text-muted">
+                            <strong>(*)OBLIGATORIO</strong>
+                        </div>
+                        <div class="card-footer text-muted">
+                        </div>
+                        <div class="card-footer text-muted"> 
+                            GESTIÓN DOCUMENTAL <br>
+                        </div>
+                    </div>
+                </div> 
+            </div>		
+        </div> 
+        @else
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col">
+                    <div class="card bg-light mb-3">
+                            <div class="text-muted">
+                                <br> 
+                                <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></center></h1>
+                                <hr>
+                            </div> 
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <h5>NUEVA SOLICITUD INGRESADA.</h5>
+                                </div> 
+                            </div>   
+                            <form method="POST" action="{{ route('PortafoliosFinalizados') }}">
+                                @csrf
+                                <center> 
+                                    <div class="btn-group" style=" width:50%;">
+                                        <button type="submit" class="btn btn-primary active">
+                                            CONTINUAR
+                                        </button> 
+                                    </div>
+                                </center> 
+                            </form> 
+                            <br> 
+                            <div class="card-footer text-muted">
+                            </div>
+                            <div class="card-footer text-muted">
+                                GESTIÓN DOCUMENTAL <br>
+                            </div>
+                        </div>
+                    </div>	
+                </div>
+            </div>			
+        </div>
+    @endif             
+
+
+
+
+    
 @endif 
+ 
+@endif 
+
+
+
+
+
+
+

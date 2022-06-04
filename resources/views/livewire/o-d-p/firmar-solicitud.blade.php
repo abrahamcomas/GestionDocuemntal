@@ -4,14 +4,17 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
-                    <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivo, espere por favor...</strong></h5>
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
-                </div>
+                    SGD
+                </div> 
             </div> 
         </div>  
     </div> 
@@ -77,7 +80,7 @@
                                 </div>
                             </form> 
                         <div class="card-footer text-muted">
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>    
                     </div>      
                 </div>

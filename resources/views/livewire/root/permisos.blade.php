@@ -42,10 +42,10 @@
                     <div class="table-responsive">
                         <div class="card-body">
                             @if($Lista->count())
-                                <table table class="table table-hover">
+                                <table table class="table table-hover table-sm"> 
                                     <thead>
                                         <tr> 
-                                            <th>RUN</th>
+                                            <th>RUT</th>
                                             <th>NOMBRE</th>
                                             <th>APELLIDO</th>
                                             <th>ADMINISTRAR</th>
@@ -72,8 +72,8 @@
                             {{ $Lista->links() }}
                         </div>	
                         <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
-                            </div>
+                            SGD
+                        </div>
                     </div> 
                 </div> 
             </div>
@@ -95,7 +95,7 @@
                             <center><h5><strong>LISTA PERMISOS</strong></h5></center>
                         <div class="table-responsive">
                             <div class="card-body">
-                                <table table class="table table-hover">
+                                <table table class="table table-hover table-sm"> 
                                     <thead>
                                         <tr> 
                                             <th>PERMISOS</th>
@@ -118,7 +118,7 @@
                                 {{ $Menu->links() }}
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                     </div>
@@ -132,7 +132,7 @@
                         <div class="table-responsive">
                             <div class="card-body">
                                 @if($Roles->count())
-                                    <table table class="table table-hover">
+                                    <table table class="table table-hover table-sm"> 
                                         <thead>
                                             <tr>
                                                 <th>PERMISOS</th>
@@ -156,7 +156,7 @@
                                 {{ $Roles->links() }}
                             </div>	
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                     </div>

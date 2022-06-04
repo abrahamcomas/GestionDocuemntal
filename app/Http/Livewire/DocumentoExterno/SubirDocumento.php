@@ -9,6 +9,8 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DocumentosExterno;  
 use App\Models\DocumentosZip;  
+use App\Models\DocumentoFirma;  
+use setasign\Fpdi\Fpdi;
 
 class SubirDocumento extends Component
 {
@@ -18,7 +20,7 @@ class SubirDocumento extends Component
  
     //Crear imagen firma
     public $Nombres;
-    public $Apellidos;
+    public $Apellidos; 
     public $Rut;
     public $Oficina;
     public $Cargo;
@@ -74,7 +76,12 @@ class SubirDocumento extends Component
 
         foreach ($this->PDF as $Archivos) {  
 
-            $codificado = Storage::disk('PDF')->put('', $Archivos);
+            
+            //Nueva Ruta
+            $NuevaRuta = date("y");
+            $RutaBase = Storage::disk('ImagenPDF')->put($NuevaRuta, $Archivos);
+            $codificado = Storage::disk('PDF')->put($NuevaRuta, $Archivos);
+            //FIN
 
             $DIA=date("d");
 
@@ -106,9 +113,52 @@ class SubirDocumento extends Component
             $DocumentosExterno->NombreZip        = $NombreZip;
             $DocumentosExterno->Firmado          = 0;
             $DocumentosExterno->NombreDocumento  = $Archivos->getClientOriginalName(); 
-            $DocumentosExterno->Ruta_T           = $codificado;   
+            $DocumentosExterno->Ruta_T           = $RutaBase;   
             $DocumentosExterno->DIA              = $DIA;   
             $DocumentosExterno->save();   
+
+
+
+            //CREAR IMAGEN DE PDF
+            $contenido='sgd.municipalidadcurico.cl';
+
+            $NuevaRuta = substr($codificado, 3, -4);
+            $NuevaRuta2 = $NuevaRuta.'.png';
+
+            $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
+            \QRCode::url($contenido)->setOutfile($qrimage)->png();
+
+   
+            $pdf = new FPDI(); 
+            $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
+            $UltimaPagina=$pagecount;
+     
+            for($i =1; $i<=$pagecount; $i++){
+                
+                if($i!=$UltimaPagina){
+                    $pdf->AddPage();
+                    $pdf->setSourceFile('PDF'.'/'.$codificado);
+                    $template = $pdf->importPage($i);
+                    $pdf->useTemplate($template,0, 0, 215, 280, true);
+                }
+                else{ 
+                    $pdf->AddPage();
+                    $pdf->setSourceFile('PDF'.'/'.$codificado);
+                    $template = $pdf->importPage($i);
+                    $pdf->useTemplate($template,0, 0, 215, 280, true);
+                    $pdf->Image('QR/'.$NuevaRuta2, 173, 240, 40, 40);
+                    $pdf->SetY(239);
+                    $pdf->SetFont('Arial','B',7);
+                    $pdf->Cell(172);
+                    $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
+                    $pdf->Ln(4);
+                }
+            }
+
+            $pdf->Output('F', 'ImagenPDF/'.$codificado);
+            Storage::disk('QR')->delete($NuevaRuta2);
+            //FIN CREAR IMAGEN DE PDF
+
 
             $this->Subido = 1;   
             $this->Ruta = $DocumentosExterno->Ruta_T; 

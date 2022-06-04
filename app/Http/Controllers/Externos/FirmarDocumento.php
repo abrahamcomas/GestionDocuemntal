@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Externos;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User; 
 use App\Models\DocumentosExterno; 
@@ -19,9 +19,16 @@ use App\Models\solofirma;
 use App\Models\FirmadosDD;
 use App\Models\FirmadosFunc;
 use App\Models\AnioDD;
+use App\Models\DestinoDocumento2;
+use App\Models\DocumentoFirma;
 use Response;
 use Illuminate\Support\Facades\DB;  
 use ZipArchive;
+use Spatie\PdfToImage\pdf;
+use Org_Heigl\Ghostscript\Ghostscript;
+use Zxing\QrReader;
+use Imagick;
+use setasign\Fpdi\Fpdi;
 
 class FirmarDocumento extends Controller
 {
@@ -35,11 +42,77 @@ class FirmarDocumento extends Controller
         $NombreZip = $NombreZip->NombreZip;
         
         $Archivos =  DB::table('DocumentosExterno') 
-        ->select('Ruta_T')
+        ->select('NombreDocumento','Ruta_T')
         ->where('NombreZip', '=',$NombreZip )
         ->get();
 
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
+
         foreach ($Archivos as $Ruta_T) {  
+            
+            $NuevoNombre = substr($Ruta_T->Ruta_T, 3, -4);
+            
+            $pdf = new Pdf('PDF/'.$Ruta_T->Ruta_T);
+            $NumeroPaginas = $pdf->getNumberOfPages('PDF/'.$Ruta_T->Ruta_T);
+            $pdf->setPage($NumeroPaginas)
+            ->saveImage('ImagenQRPDF/'.$NuevoNombre.'.png');
+
+            $qrcode= new QrReader('ImagenQRPDF/'.$NuevoNombre.'.png');
+            $textQR= $qrcode->text();
+
+
+            $Ruta = $Ruta_T->Ruta_T; 
+
+            $RutaFinal = date("y").'/'.$Ruta;
+
+            $hoy = date("Y-m-d H:i:s"); 
+            $tokenQR = md5($hoy);
+
+            if($textQR==false){
+ 
+                //CREAR IMAGEN DE PDF 
+                    $contenido='sgd.municipalidadcurico.cl/MostrarDocumentoQR/'.$Ruta.'';
+
+                    $RutaQR =  substr($Ruta, 4);     // bcdef
+    
+                    $NuevaRuta = substr($RutaQR, 0, -4);
+                    $NuevaRuta2 = $NuevaRuta.'.png';
+
+                    $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
+                    \QRCode::url($contenido)->setOutfile($qrimage)->png();
+
+                            
+                    $pdf = new FPDI(); 
+                    $pagecount =  $pdf->setSourceFile('PDF'.'/'.$Ruta);
+                    $UltimaPagina=$pagecount;
+
+                    for($i =1; $i<=$pagecount; $i++){
+                        
+                        if($i!=$UltimaPagina){
+                            $pdf->AddPage();
+                            $pdf->setSourceFile('PDF'.'/'.$Ruta);
+                            $template = $pdf->importPage($i);
+                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                        }
+                        else{ 
+                            $pdf->AddPage();
+                            $pdf->setSourceFile('PDF'.'/'.$Ruta);
+                            $template = $pdf->importPage($i);
+                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                            $pdf->Image('QR/'.$NuevaRuta2, 173, 240, 40, 40);
+                            $pdf->SetY(239);
+                            $pdf->SetFont('Arial','B',7);
+                            $pdf->Cell(172);
+                            $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
+                            $pdf->Ln(4);
+                        }
+                    }
+
+                    $pdf->Output('F', 'PDF/'.$Ruta);
+        
+                    Storage::disk('QR')->delete($NuevaRuta2);
+                //FIN CREAR IMAGEN DE PDF
+            }
 
             $Contrasenia = $request->input('Contrasenia'); 
             $mousePosX = $request->input('mousePosX'); 
@@ -106,16 +179,13 @@ class FirmarDocumento extends Controller
             
                 $datos=DB::table('DocumentosExterno')->Select('Ruta_T')->where('Ruta_T', '=', $Ruta)->first();
                                             
-                $Ruta = $Ruta_T->Ruta_T; 
+ 
                                                 
                 $PDF = Storage::disk('PDF')->get($Ruta); 
 
                 $codificado = base64_encode($PDF); 
             
                 $Sha256 = hash('sha256', $PDF);
-
-                $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
-
 
                 if($RutaImagenFirma==null){
 
@@ -202,12 +272,7 @@ class FirmarDocumento extends Controller
                                 $image = str_replace(' ', '+', $image);
                                 
                                 Storage::disk('PDF')->put($Ruta, $decoded);        
-                        
-                   
-        
-
-                           
-
+   
                             $ID   =  DB::table('DocumentosExterno')->where('Ruta_T', '=',$Ruta)->first();
                             
                             $NombreDocumento = substr($ID->NombreDocumento, 0, -4); 
@@ -264,10 +329,105 @@ class FirmarDocumento extends Controller
                             $DocumentoFirma->Firmado    = 1;
                             $DocumentoFirma->NombreDocumento    = $NombreFinal;
                             $DocumentoFirma->save();
+
+                            if($textQR==false){
+ 
+                                    $DestinoDocumento2                   = new DestinoDocumento2;
+                                    $DestinoDocumento2->ID_FSube         = $ID_Funcionario;
+                                    $DestinoDocumento2->Token            = $Ruta; 
+                                    $DestinoDocumento2->FechaFirma       = date("Y/m/d");
+                                    $DestinoDocumento2->save(); 
+                            
+                            
+                                    //CREAR IMAGEN DE PDF
+                                    $mousePosXF = number_format(($mousePosX*100)/$Ancho);
+                                    $mousePosXF2 = number_format(($mousePosXF*215)/100);
+                                    
+                                    $mousePosYF = number_format(($mousePosY*100)/$Alto);
+                                    $mousePosYF2 = number_format(($mousePosYF*280)/100);
+                                    
+                                    $pdf = new FPDI();  
+                                    $pagecount =  $pdf->setSourceFile('ImagenPDF'.'/'.$Ruta);
+                                    for($i =1; $i<=$pagecount; $i++){
+                                
+                                        if($i!=$Pagina){
+                                            $pdf->AddPage();
+                                            $pdf->setSourceFile('ImagenPDF'.'/'.$Ruta);
+                                            $template = $pdf->importPage($i);
+                                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                                        }
+                                        else{ 
+                                            
+                                            $pdf->AddPage();
+                                            $pdf->setSourceFile('ImagenPDF'.'/'.$Ruta);   
+                                            $template = $pdf->importPage($i);
+                                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                                            $pdf->Image('FirmaGeneral/Firma.JPG', $mousePosXF2, $mousePosYF2, 68, 54);
+                                        }
+                                    }
+        
+                            
+                                    $pdf->Output('F', 'ImagenPDF/'.$Ruta);
+                                    //FIN CREAR IMAGEN DE PDF
+                            
+                            
+                            
+                            
+                            
+                                }                
+
+                            if($textQR!=false){  
+
+                                $DestinoDocumento = substr($textQR, 53);
+                                
+                                $DestinoDocumento2                   = new DestinoDocumento2;
+                                $DestinoDocumento2->ID_FSube         = $ID_Funcionario;
+                                $DestinoDocumento2->Token            = $DestinoDocumento; 
+                                $DestinoDocumento2->FechaFirma       = date("Y/m/d");
+                                $DestinoDocumento2->save(); 
+
+
+                                 //CREAR IMAGEN DE PDF
+                                    $mousePosXF = number_format(($mousePosX*100)/$Ancho);
+                                    $mousePosXF2 = number_format(($mousePosXF*215)/100);
+                                    
+                                    $mousePosYF = number_format(($mousePosY*100)/$Alto);
+                                    $mousePosYF2 = number_format(($mousePosYF*280)/100);
+                                    
+                                    $pdf = new FPDI();  
+                                    $pagecount =  $pdf->setSourceFile('ImagenPDF'.'/'.$DestinoDocumento);
+                                    for($i =1; $i<=$pagecount; $i++){
+                                
+                                        if($i!=$Pagina){
+                                            $pdf->AddPage();
+                                            $pdf->setSourceFile('ImagenPDF'.'/'.$DestinoDocumento);
+                                            $template = $pdf->importPage($i);
+                                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                                        }
+                                        else{ 
+                                            
+                                            $pdf->AddPage();
+                                            $pdf->setSourceFile('ImagenPDF'.'/'.$DestinoDocumento);   
+                                            $template = $pdf->importPage($i);
+                                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                                            $pdf->Image('FirmaGeneral/Firma.JPG', $mousePosXF2, $mousePosYF2, 68, 54);
+                                        }
+                                    }
+        
+                            
+                                    $pdf->Output('F', 'ImagenPDF/'.$DestinoDocumento);
+                                //FIN CREAR IMAGEN DE PDF
+                                Storage::disk('ImagenPDF')->delete($Ruta);
+                
+                            }
+
+
+                            Storage::disk('ImagenQRPDF')->delete($NuevoNombre.'.png');
+                          
                                 
                         } 
                         else 
-                        {
+                        { 
                             
                         }
 

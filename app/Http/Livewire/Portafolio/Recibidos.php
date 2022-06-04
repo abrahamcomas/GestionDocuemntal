@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Portafolio;
+namespace App\Http\Livewire\Portafolio; 
 
 use Livewire\Component;
 use Livewire\WithPagination;  
@@ -12,6 +12,14 @@ use App\Models\CreDocFunc;
 use App\Models\DocumentoFirma;
 use App\Models\InterPortaFuncionario;
 use App\Models\Portafolio;
+use App\Models\DestinoDocumento;
+use Illuminate\Support\Facades\Storage;
+use setasign\Fpdi\Fpdi;
+use Spatie\PdfToImage\pdf;
+use Org_Heigl\Ghostscript\Ghostscript;
+use Zxing\QrReader;
+use Imagick;
+
 
 class Recibidos extends Component
 {
@@ -24,7 +32,7 @@ class Recibidos extends Component
         $this->Ayuda = 0;
     }
     
-
+ 
     public $Cambiar=0;
  
     public function CambiarVB()
@@ -124,6 +132,255 @@ class Recibidos extends Component
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public $PDF= [];
+    protected $rules3 = ['PDF' => 'required'];
+    protected $messages3 = ['PDF.required' =>'El campo ARCHIVO/S es obligatorio.'];
+    public function Ingresar(){ 
+        
+        $this->validate($this->rules3,$this->messages3); 
+        $Funcionario  =  Auth::user()->ID_Funcionario_T;
+             
+             
+  
+            foreach ($this->PDF as $Archivos) {
+                
+                $codificado = Storage::disk('PDF')->put('', $Archivos);
+
+                $NuevoNombre = substr($codificado, 0, -4);
+            
+                $pdf = new Pdf('PDF/'.$codificado);
+
+                $NumeroPaginas = $pdf->getNumberOfPages('PDF/'.$codificado);
+                $pdf->setPage($NumeroPaginas)
+                ->saveImage('ImagenQRPDF/'.$NuevoNombre.'.png');
+    
+                $qrcode= new QrReader('ImagenQRPDF/'.$NuevoNombre.'.png');
+                $textQR= $qrcode->text();
+    
+                if($textQR==false){
+
+                    //Nueva Ruta
+                    $NuevaRuta = date("y");
+                    $NuevaRutaF = Storage::disk('PDF')->put($NuevaRuta, $Archivos);
+                    Storage::disk('ImagenPDF')->put($NuevaRuta, $Archivos);
+                    //FIN
+
+                    //CREAR IMAGEN DE PDF
+                    $hoy = date("Y-m-d H:i:s"); 
+                    $token = md5($hoy);
+
+                    $DestinoDocumento                    = new DestinoDocumento;
+                    $DestinoDocumento->ID_FSube         = $Funcionario;
+                    $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T;
+                    $DestinoDocumento->Token            = $token; 
+                    $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
+                    $DestinoDocumento->Ruta_T           = $NuevaRutaF;   
+                    $DestinoDocumento->save();
+
+            
+                    $DocumentoFirma                  = new DocumentoFirma;
+                    $DocumentoFirma->ID_Funcionario  = $Funcionario;
+                    $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
+                    $DocumentoFirma->Firmado         = 0;  
+                    $DocumentoFirma->save(); 
+
+                    $contenido='sgd.municipalidadcurico.cl/MostrarDocumentoQR/'.$token.'';
+
+                    $NuevaRuta = substr($codificado, 0, -4);
+                    $NuevaRuta2 = $NuevaRuta.'.png';
+
+                    $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
+                    \QRCode::url($contenido)->setOutfile($qrimage)->png();
+
+                                
+                    $pdf = new FPDI(); 
+                    $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
+                    $UltimaPagina=$pagecount; 
+            
+                    for($i =1; $i<=$pagecount; $i++){
+                        
+                        if($i!=$UltimaPagina){
+                            $pdf->AddPage();
+                            $pdf->setSourceFile('PDF'.'/'.$codificado);
+                            $template = $pdf->importPage($i);
+                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                        }
+                        else{  
+                            $pdf->AddPage();
+                            $pdf->setSourceFile('PDF'.'/'.$codificado);
+                            $template = $pdf->importPage($i);
+                            $pdf->useTemplate($template,0, 0, 215, 280, true);
+                            $pdf->Image('QR/'.$NuevaRuta2, 183, 250, 30, 30);
+                            $pdf->SetY(247);
+                            $pdf->SetFont('Arial','B',7);
+                            $pdf->Cell(182);
+                            $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
+                            $pdf->Ln(4);
+                        }
+                    } 
+         
+                    $pdf->Output('F', 'PDF/'.date("y").'/'.$codificado);
+
+                    $pdf->Output('F', 'ImagenPDF/'.date("y").'/'.$codificado);
+    
+                    Storage::disk('QR')->delete($NuevaRuta2);
+                    Storage::disk('ImagenQRPDF')->delete($NuevoNombre.'.png');
+    
+                    Storage::disk('PDF')->delete($codificado);
+
+                $this->PDF=[];
+
+                }else{  
+ 
+                    $token = substr($textQR, 53);
+
+                    $DestinoDocumento                   = new DestinoDocumento;
+                    $DestinoDocumento->ID_FSube         = $Funcionario;
+                    $DestinoDocumento->DOC_ID_Documento = $ID_Documento_T;
+                    $DestinoDocumento->Token            = $token; 
+                    $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
+                    $DestinoDocumento->Ruta_T           = $token;   
+                    $DestinoDocumento->save(); 
+
+                    $DocumentoFirma                  = new DocumentoFirma;
+                    $DocumentoFirma->ID_Funcionario  = $Funcionario;
+                    $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
+                    $DocumentoFirma->Firmado         = 0;   
+                    $DocumentoFirma->save();
+
+                }
+            }
+            session()->flash('message', 'Documento agregado correctamente.');     
+    }
+ 
+
+
+
+
+    
+    public function EliminarArchivo($ID_DestinoDocumento){ 
+
+            $VistoBueno =  DB::table('DestinoDocumento')->select('Ruta_T') 
+            ->where('ID_DestinoDocumento', '=',$ID_DestinoDocumento)->first();
+
+
+            $codificado = Storage::disk('PDF')->delete($VistoBueno->Ruta_T);
+                
+            $DestinoDocumento                   = DestinoDocumento::find($ID_DestinoDocumento);
+            $DestinoDocumento->delete();
+     
+
+    }
+
+
+
+
+
+
+
+
+    public $DocumentoFirmado;
+ 
+    public function ConfirmarFirma($ID_DestinoDocumento){ 
+
+        $this->DocumentoFirmado =  $ID_DestinoDocumento;
+
+        $this->Detalles=5;
+
+    }
+
+
+
+    public $ContraseniaFirmado; 
+    
+    protected $Eliminar = ['ContraseniaFirmado' => 'required'];
+    protected $MensajeEliminar = ['ContraseniaFirmado.required' =>'El campo "Confirme Contraseña Usuario" es obligatorio.'];
+    
+    public function Firmado(){ 
+        
+    $this->validate($this->Eliminar,$this->MensajeEliminar);  
+
+        $RUNInspector=Auth::guard('web')->user()->Rut;
+        if(Auth::attempt(['Rut' => $RUNInspector, 'password' => $this->ContraseniaFirmado], true)){ 
+            
+            $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
+
+            
+            $ID_OficinaPartes =  DB::table('DocumentoFirma') 
+            ->select('ID_DocumentoFirma')
+            ->where('ID_Funcionario', '=',$ID_Funcionario)
+            ->where('ID_Documento', '=',$this->DocumentoFirmado)
+            ->first(); 
+ 
+            $DocumentoFirma             =DocumentoFirma::find($ID_OficinaPartes->ID_DocumentoFirma);
+            $DocumentoFirma->FechaFirma = date("Y/m/d");
+            $DocumentoFirma->Firmado    = 4;//OMITIR FIRMA
+            $DocumentoFirma->save(); 
+
+            $CountFinalizarSolicitud  =  DB::table('DocumentoFirma') 
+                                    ->leftjoin('DestinoDocumento', 'DocumentoFirma.ID_Documento', '=', 'DestinoDocumento.ID_DestinoDocumento')
+                                    ->where('Firmado', '=',0)
+                                    ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)
+                                    ->where('ID_Funcionario', '=',$ID_Funcionario)->count();
+
+                                    if($CountFinalizarSolicitud==0){
+
+                                        $InterPortaFuncionario                  =InterPortaFuncionario::find($this->IPF_ID);
+                                        $InterPortaFuncionario->Estado          = 1;
+                                        //$InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
+                                        $InterPortaFuncionario->save(); 
+                                    }
+
+
+            $this->Detalles=0;
+        }
+        else{
+            session()->flash('message2', 'Contraseña incorrecta.');  
+        }
+
+        $this->ContraseniaFirmado='';   
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public $Funcionarios; 
     protected $paginationTheme = 'bootstrap'; 
 
@@ -197,18 +454,25 @@ class Recibidos extends Component
             ->where('Estado', '=', 0)             
             ->where('IPF_ID_Funcionario', '=', $ID_Funcionario)->orderBy('IPF_ID', 'asc')   
             ->paginate($this->perPage), 
-        
          
-        
+         
+         
         
         'MostrarDocumentos' =>  DB::table('DestinoDocumento') 
             ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
             ->leftjoin('Funcionarios', 'DestinoDocumento.ID_FSube', '=', 'Funcionarios.ID_Funcionario_T')
             ->select('ID_FSube','NombreDocumento','ID_DestinoDocumento','ID_DocumentoFirma','ID_Funcionario','ID_Documento','FechaFirma','Firmado','Nombres','Apellidos')
             ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)
+            ->where('ID_FSube', '!=',$ID_Funcionario)
             ->where('ID_Funcionario', '=',$ID_Funcionario)->paginate(4),
         
-        
+        'MostrarDocumentosSubidos' =>  DB::table('DestinoDocumento') 
+            ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
+            ->leftjoin('Funcionarios', 'DestinoDocumento.ID_FSube', '=', 'Funcionarios.ID_Funcionario_T')
+            ->select('ID_FSube','NombreDocumento','ID_DestinoDocumento','ID_DocumentoFirma','ID_Funcionario','ID_Documento','FechaFirma','Firmado','Nombres','Apellidos')
+            ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)
+            ->where('ID_FSube', '=',$ID_Funcionario)
+            ->where('ID_Funcionario', '=',$ID_Funcionario)->paginate(4),
         
         
         'FuncionariosAsig' =>  DB::table('DocFunc') 

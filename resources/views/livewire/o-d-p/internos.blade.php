@@ -1,36 +1,5 @@
 <div> 
-    <br>    
-@if($Ayuda==1)    
-    <div class="container-fluid">  
-        <div class="row">  
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col">
-                    <div class="card bg-light mb-3">  
-                        <div class="card-header"> 
-                        <center>
-                                <h5> 
-                                    <strong>
-                                        INFORMACIÓN
-                                    </strong>
-                                </h5>
-                            </center> 
-                        </div>
-                        <div class="card-body">
-                            <center><img src="{{URL::asset('Imagenes/ODP/Internos.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
-                        </div>
-                        <div class="card-footer text-muted"> 
-                            <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-danger active" wire:click="VolverAyuda">
-                                    VOLVER
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@else  
+    <br>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
@@ -55,13 +24,13 @@
                 <div class="card bg-light mb-3"> 
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>SOLICITUDES INTERNAS</strong></center></h1>
+                        <h1><center>SOLICITUDES INTERNAS <strong> {{ $OPDSelectNombre}}</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body"> 
                         <div class="row">   
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-                                <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                <!--<button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>-->
                                 <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                 <strong><div id="ver"></div></strong>
                             </div>
@@ -94,10 +63,10 @@
                                 </div>
                             </div>
                         </div>  
-                    </div> 
+                    </div>  
                     @if($posts->count())
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm"> 
                                 <thead>  
                                     <tr>  
                                         <th>ESTADO</th>
@@ -264,8 +233,7 @@
                             {{ $posts->links() }}
                         </div>	
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                 </div>
             </div>
@@ -279,27 +247,28 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ELIMINAR SOLICITUD</strong></center></h1>
+                        <h2><center><strong>ELIMINAR SOLICITUD</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
                         <h6>Si considera que la solicitud ingresada por<strong> {{ $NombreEliminar }} {{ $ApellidoEliminar }} </strong>fue ingresado de manera incorrecta, puede eliminar dicha solicitud.</h6>
                         <br>
-                        <strong>Por favor, Ingrese la contraseña que utiliza para ingresar al sistema de gestión documental.</strong>
+                        <strong>Por favor, Confirme su contraseña de usuario.</strong>
                         <div class="form-label-group">
                             <input type="password" class="form-control" wire:model="Contrasenia"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
                         </div>
                     </div> 
-                    <div class="btn-group" style=" width:100%;">
+                    <center>
+                    <div class="btn-group" style=" width:80%;">
                         <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                         <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="CancelarPortafolio">ELIMINAR</button>
                     </div> 
+                    </center>
                     <br>
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>
                 </div>
             </div> 
@@ -313,18 +282,18 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <h2><center><strong>ARCHIVOS</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
-                        <table table class="table table-hover">
+                        <table table class="table table-sm table-bordered">
                             <thead>  
                                 <tr>  
                                     <th>SUBIDO POR</th>
                                     <th>NOMBRE ARCHIVO</th>
                                     <th>VER</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody> 
                                 @foreach($MostrarDocumentos as $post)
                                     @if($post->Privado==0)
@@ -333,7 +302,7 @@
                                                 {{ $post->Nombres  }} {{ $post->Apellidos }} 
                                             </td>
                                             <td>
-                                                <textarea rows="3" style="width:100%;" disabled>   {{ $post->NombreDocumento }} </textarea>
+                                                {{ $post->NombreDocumento }}
                                             </td>
                                             <td> 
                                                 <form method="POST" action="{{ route('MostrarPDF') }}">   
@@ -358,15 +327,44 @@
                         </table> 
                     </div> 
                 </div>
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h2><center><strong>COMENTARIO POR ARCHIVO</strong></center></h2>
+                        <hr>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table table class="table table-sm table-bordered">
+                            <thead>  
+                                <tr>  
+                                    <th>NOMBRE ARCHIVO</th>
+                                    <th>COMENTARIO DE ENCARGADO/A ODP</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach($MostrarDocumentosComentarios as $post)
+                                        <tr>  
+                                            <td>
+                                                {{ $post->NombreDocumento  }}
+                                            </td>
+                                            <td>
+                                                {{ $post->ObservacionFirma }}
+                                            </td>
+                                        </tr>
+                                @endforeach 
+                            </tbody> 
+                        </table> 
+                    </div> 
+                </div>
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ODP FIRMANTES</strong></center></h1>
+                        <h2><center><strong>ODP FIRMANTES</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
-                        <table table class="table table-hover">
+                        <table table class="table table-sm table-bordered"> 
                             <thead>  
                                 <tr> 
                                     <th>ESTADO</th>
@@ -481,22 +479,23 @@
                                 @endforeach 
                             <tbody> 
                         </table> 
+                        <hr>
+                        <center>
+                            <div class="btn-group" style=" width:80%;">	
+                                <button class="btn btn-warning active" wire:click="CambiarVB">CAMBIAR</button>
+                            </div> 
+                        </center>
                     </div>
                 </div> 
-                <hr>
-                <div class="btn-group" style=" width:100%;">	
-                    <button class="btn btn-warning active" wire:click="CambiarVB">MOSTRAR ODP V°B°</button>
-                </div> 
-                <hr>
-            @else 
+            @elseif($Cambiar==1)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ODP V°B°</strong></center></h1>
+                        <h2><center><strong>ODP V°B°</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
-                        <table table class="table table-hover">
+                        <table table class="table table-sm table-bordered"> 
                             <thead>  
                                 <tr>
                                     <th>ESTADO</th>
@@ -611,13 +610,141 @@
                                 @endforeach 
                             <tbody> 
                         </table> 
+                        <hr>
+                        <center>
+                            <div class="btn-group" style=" width:80%;">	
+                                <button class="btn btn-warning active" wire:click="CambiarEnviado">CAMBIAR</button>
+                            </div> 
+                        </center>
                     </div>
                 </div>
-                <hr>
-                <div class="btn-group" style=" width:100%;">	
-                    <button class="btn btn-warning active" wire:click="CambiarFirmantes">MOSTRAR ODP FIRMANTES</button>
-                </div> 
-                <hr>
+            @else 
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h2><center><strong>ODP ENVIADO</strong></center></h2>
+                        <hr>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table table class="table table-sm table-bordered"> 
+                            <thead>  
+                                <tr>
+                                    <th>ESTADO</th>
+                                    <th>ODP</th>
+                                    <th>OBSERVACIÓN ENVIADA</th>
+                                    <th>RECIBIDO</th>
+                                    <th>VISTO</th>
+                                    <th>ELIMINAR</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                @foreach($Recibidos as $post)
+                                    <tr>
+                                        @if($post->R_Estado==0)
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        PENDIENTE
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @elseif($post->R_Estado==1)
+                                            <td> 
+                                               <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        CONFIRMADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @else
+                                            <td> 
+                                                <div class="progress" style="height: 33px;">
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                                        RECHAZADO
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @endif
+                                        <td>
+                                            {{$post->Nombre_DepDir}}
+                                        </td> 
+                                        <td>
+                                            {{$post->R_ObservacionE}}
+                                        </td>
+                                        @php
+                                            $numeroDiaV = date('d', strtotime($post->R_Fecha));
+                                            $mesV = date('F', strtotime($post->R_Fecha));
+
+                                            if($mesV=='January'){
+                                            $mesV= 'Enero';
+                                            }
+                                            elseif($mesV=='February'){   
+                                            $mesV= 'Febrero';
+                                            }
+                                            elseif($mesV=='March'){  
+                                            $mesV= 'Marzo';
+                                            }
+                                            elseif($mesV=='April'){
+                                                $mesV= 'Abril';
+                                            }
+                                            elseif($mesV=='May'){
+                                                $mesV= 'Mayo';
+                                            }
+                                            elseif($mesV=='June'){
+                                                $mesV= 'Junio';
+                                            }
+                                            elseif($mesV=='July'){ 
+                                                $mesV= 'Julio';
+                                            }
+                                            elseif($mesV=='August'){  
+                                                $mesV= 'Agosto';
+                                            }
+                                            elseif($mesV=='September'){  
+                                                $mesV= 'Septiembre';
+                                            }
+                                            elseif($mesV=='October'){  
+                                                $mesV= 'Octubre';
+                                            }
+                                            elseif($mesV=='November'){  
+                                                $mesV= 'Noviembre';
+                                            }
+                                            else{  
+                                                $mesV= 'Diciembre';
+                                            }
+                                        @endphp 
+                                        <td>
+                                            {{$numeroDiaV}} de {{$mesV}}
+                                        </td> 
+                                        @if($post->R_Visto==0)
+                                            <td> 
+                                                <button class="btn btn-danger active">NO</button>
+                                            </td>
+                                        @else
+                                            <td> 
+                                                {{$post->R_FechaVisto}}
+                                            </td> 
+                                        @endif
+                                        @if($post->R_FechaVisto==NULL)
+                                            <td> 
+                                                <button class="btn btn-danger" wire:click="AnularEnvio({{ $post->ID_Ricibidos }})">ELIMINAR</button>
+                                            </td>
+                                        @else
+                                            <td> 
+                                                {{$post->R_FechaVisto}}
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach 
+                            <tbody> 
+                        </table> 
+                        <hr>
+                        <center>
+                            <div class="btn-group" style=" width:80%;">	
+                                <button class="btn btn-warning active" wire:click="CambiarFirmantes">CAMBIAR</button>
+                            </div> 
+                        </center>
+                    </div>
+                </div>
             @endif
                 @if (session()->has('message3'))
                     <div class="alert alert-danger">
@@ -632,21 +759,22 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ENVIAR</strong></center></h1>
+                        <h2><center><strong>ENVIAR</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
-                        <table table class="table table-hover">
+                        <table table class="table table-hover table-sm"> 
                             <label><strong>TIPO DE ENVIO</strong></label>
                             <select wire:model="TipoEnvio" class="form-control" >
                                 <option value="" selected>---SELECCIONAR---</option>
                                 <option value="1">SOLICITAR FIRMA</option>
-                                <option value="2">V°B°</option>
+                                <option value="2">SOLICITAR V°B°</option> 
+                                <option value="3">SOLO ENVIAR</option>
                             </select>
                             <label><strong>SELECCIONAR OFICINA DE PARTES</strong></label>
                             <input class="form-control" type="text" placeholder="{{$NombreOficinaParte}}" wire:model="BuscarOficinaPartes"/>
                             @if($BuscarOficinaPartes!="")
-                                <table table class="table table-hover">
+                                <table table class="table table-hover table-sm"> 
                                     @foreach($OficinaPartes as $post)
                                         <tr>
                                             <td>
@@ -679,20 +807,21 @@
                     <div class="card-body">
                         <h5>Si la solicitud ha sido confirmada por todas las ODP seleccionadas, puede finalizadar dicha solicitud.</h5>
                     </div>
+                    <center>
                     <div class="card-footer text-muted">  
-                        <div class="btn-group" style=" width:100%;">	 
+                        <div class="btn-group" style=" width:80%;">	 
                             <button class="btn btn-success active" wire:click="ConfirmarFinalizarPortafolio">FINALIZAR SOLICITUD</button>
                         </div> 
                     </div>
+                    </center>
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD 
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 @elseif($Detalles==3) <!--ELIMINAR VB-->
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
@@ -701,7 +830,7 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ELIMINAR V°B°</strong></center></h1>
+                        <h2><center><strong>ELIMINAR V°B°</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -712,16 +841,17 @@
                             <input type="password" class="form-control" wire:model="ContraseniaVB"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
                         </div>
                     </div> 
-                    <div class="btn-group" style=" width:100%;">
+                    <center>
+                    <div class="btn-group" style=" width:80%;">
                         <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                         <button type="button" class="btn btn-DANGER active" data-dismiss="modal" wire:click="CancelarVB">CONFIRMAR</button>
-                    </div> 
+                    </div>
+                    </center> 
                     <br>
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>
                 </div>
             </div>
@@ -736,7 +866,7 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>ELIMINAR FIRMANTE</strong></center></h1>
+                        <h2><center><strong>ELIMINAR FIRMANTE</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -747,17 +877,18 @@
                             <input type="password" class="form-control" wire:model="ContraseniaFirmante"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
                         </div>
                     </div> 
-                    <div class="btn-group" style=" width:100%;">
+                    <center>
+                    <div class="btn-group" style=" width:80%;">
                         <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                         <button type="button" class="btn btn-DANGER active" data-dismiss="modal" wire:click="CancelarFirmante">CONFIRMAR</button>
                     </div> 
+                    </center>
                     <br>
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL <br>
-                                SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
-                            </div>
+                       SGD
+                    </div>
                 </div>
             </div>
         </div>
@@ -774,15 +905,17 @@
                         </div> 
                     @endif
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>FINALIZAR SOLICITUD</strong></h4>
-                        </div> 
+                        <div class="text-muted">
+                            <br> 
+                            <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
+                            <hr>
+                        </div>
                         <div class="card-body">
-                            <h6>¿Desea finalizar solicitud?</h6>
+                            <h5>¿Desea finalizar solicitud?</h5>
                             <br>
                         </div> 
                         <center>
-                        <div class="btn-group" style=" width:100%;">
+                        <div class="btn-group" style=" width:80%;">
                             <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
                             <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="FinalizarPortafolio">CONFIRMAR</button>
                         </div> 
@@ -791,14 +924,48 @@
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
-        </div> 
+        </div>
+@elseif($Detalles==6) <!--ELIMINAR VB-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+            <div class="col">
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>ELIMINAR ENVIO</strong></center></h1>
+                        <hr>
+                    </div>
+                    <div class="card-body">
+                        <h6>Si considera que la solicitud enviada a<strong> {{ $NombreAnularFirmante }} </strong>fue enviado por error, puede eliminar dicho firmante.</h6>
+                        <br>
+                        <strong>Por favor, Confirme su contraseña de usuario.</strong>
+                        <div class="form-label-group">
+                            <input type="password" class="form-control" wire:model="ContraseniaFirmanteEnvio"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
+                        </div>
+                    </div> 
+                    <center>
+                    <div class="btn-group" style=" width:80%;">
+                        <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
+                        <button type="button" class="btn btn-DANGER active" data-dismiss="modal" wire:click="CancelarEnvio">CONFIRMAR</button>
+                    </div> 
+                    </center>
+                    <br>
+                    <div class="card-footer text-muted"> 
+                    </div>
+                    <div class="card-footer text-muted"> 
+                        SGD
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+    </div> 
 @endif 
 </div>
-@endif

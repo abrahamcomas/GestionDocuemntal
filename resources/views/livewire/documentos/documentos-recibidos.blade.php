@@ -183,7 +183,7 @@
                                 {{ $posts->links() }}
                             </div>	
                             <div class="card-footer text-muted">
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                  
                     </div>
@@ -222,7 +222,7 @@
                         </div> 
                     </div> 
                     <div class="card-footer text-muted">
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div>
             </div> 
@@ -240,7 +240,7 @@
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div>
         </div>
@@ -291,7 +291,7 @@
                             </div>
                     </div> 
                     <div class="card-footer text-muted">
-                        GESTIÓN DOCUMENTAL 
+                        SGD 
                     </div>
                 </div>
             </div>

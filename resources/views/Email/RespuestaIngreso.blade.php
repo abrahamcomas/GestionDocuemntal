@@ -126,7 +126,7 @@
 		<br>
   		<center>
   			<p><a style="color: green">© {{ date("Y") }} Departamento de informática<br>
-			Municipalidad de Curicó </a></p>
+              SGD</a></p>
 		</center>
 	</footer>
 </div>

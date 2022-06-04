@@ -4,13 +4,16 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
-                    <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivo, espere por favor...</strong></h5>
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL 
+                    SGD 
                 </div>
             </div> 
         </div>  
@@ -21,13 +24,24 @@
             <div class="col"> 
             @include('messages')  
                 <div class="card bg-light mb-3"> 
-                    <div class="card-header"> <h4><strong>FIRMAR ARCHIVOS</strong></h4></div>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>FIRMAR ARCHIVO</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">  
-                            <strong> La posición de la firma aquí seleccionada quedara en la misma posición en todos los archivos a firmar.</strong>
+                            <h5 style="color: #FF0C00;"><strong>Advertencia, las firmas electrónica agregadas anteriormente en este archivo, pueden no verse reflejadas en este visualizador, en caso de que dicho archivo contenga firmas electrónicas se recomienda hacer clic en.</strong></h5>
+                            <form method="POST" action="{{ route('VisualizarPDFExterno') }}">   
+                                    @csrf             
+                                    <input type="hidden" name="Ruta" value="{{ session('Ruta') }}">
+                                    <div class="btn-group" style=" width:100%;">	
+                                        <button type="submit" class="btn btn-warning active" formtarget="_blank">VISUALIZAR PDF</button>
+                                    </div>
+                                </form> 
                             <hr>
                             <strong>Por favor, haz click sobre el PDF para posicionar la firma electrónica.</strong>
                             <center>
-                                <div id="coords"> 
+                                <div id="coords">  
                                     <div id="canvas_container">
                                         <canvas id="pdf_renderer"></canvas>
                                     </div> 
@@ -44,7 +58,7 @@
                                                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                                             </svg>
                                         </button>
-                                    </div>   
+                                    </div>    
                                     <hr>  
                                 </div>     
                             </center>  
@@ -56,7 +70,26 @@
                                 <input type="hidden" id="Pagina" name="Pagina">
                                 <input type="hidden" id="Ancho" name="Ancho">
                                 <input type="hidden" id="Alto" name="Alto">
-                                <br>
+                                <br> 
+                                @if(session('Numero')>1)
+                                    <div class="row"> 
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h6>TIPO DE IMAGEN DE FIRMA*</h6>
+                                            <div class="form-label-group">  
+                                                <select name="RutaImagenFirma" class="form-control" >
+                                                    <option value="0" selected>---SELECCIONAR---</option>
+                                                    @foreach(session('ImagenFirma') as $post)
+                                                        <option value="{{ $post->Ruta }}">{{ $post->NombreImagen }}</option>
+                                                    @endforeach
+                                                </select> 
+                                            </div> 	 
+                                        </div>  
+                                    </div> 
+                                @endif
+                                <label><strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong></label> 
+                                <div class="form-label-group"> 
+                                    <textarea class=" form-control" name="ObservacionPortafolio"></textarea>
+                                </div>
                                 <strong>Por favor, Confirme su contraseña de usuario.</strong>
                                 <div class="form-label-group">
                                     <input type="password" class="form-control" name="Contrasenia"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
@@ -69,7 +102,7 @@
                                 </div>
                             </form> 
                         <div class="card-footer text-muted">
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>   
                     </div>      
                 </div>

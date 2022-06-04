@@ -15,7 +15,7 @@
                         <h5><strong><center>{{ $resultado }}</center></strong></h5>
                     </div>
                 <div class="card-footer text-muted">
-                    GESTION DOCUMENTAL
+                    SGD
                 </div>
             </div>
         </div>	

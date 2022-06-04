@@ -212,6 +212,7 @@ class FirmandoRecibidoIndiv extends Controller
                                     $DocumentoFirma             =DocumentoFirma::find($ID_DocumentoF);
                                     $DocumentoFirma->FechaFirma = date("Y/m/d");
                                     $DocumentoFirma->Firmado    = 1;
+                                    $DocumentoFirma->ObservacionFirma = $ObservacionPortafolio;
                                     $DocumentoFirma->save();
 
                                     //CREAR IMAGEN DE PDF
@@ -247,151 +248,162 @@ class FirmandoRecibidoIndiv extends Controller
 
                                     $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
 
-                                    $InterPortaFuncionario                  =InterPortaFuncionario::find($IPF_ID);
-                                    $InterPortaFuncionario->Estado          = 1;
-                                    $InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
-                                    $InterPortaFuncionario->save(); 
+                                    $CountFinalizarSolicitud  =  DB::table('DocumentoFirma') 
+                                    ->leftjoin('DestinoDocumento', 'DocumentoFirma.ID_Documento', '=', 'DestinoDocumento.ID_DestinoDocumento')
+                                    ->where('Firmado', '=',0)
+                                    ->where('DOC_ID_Documento', '=',$ID_Documento_T)
+                                    ->where('ID_Funcionario', '=',$ID_Funcionario)->count();
+
+                                    if($CountFinalizarSolicitud==0){
+
+                                        $InterPortaFuncionario                  =InterPortaFuncionario::find($IPF_ID);
+                                        $InterPortaFuncionario->Estado          = 1;
+                                        //$InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
+                                        $InterPortaFuncionario->save(); 
+                                    }
+
+                                
 
                                      //INICIO NUMERO DE FIRMAS
-        $ID_Funcionario  = Auth::user()->ID_Funcionario_T;
-        $Mes=date("m");
-        $Anio=date("Y");  
+                                    $ID_Funcionario  = Auth::user()->ID_Funcionario_T;
+                                    $Mes=date("m");
+                                    $Anio=date("Y");  
 
 
-        $Funcionario  =  DB::table('Funcionarios') 
-        ->select('Nombres','Apellidos')
-        ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
+                                    $Funcionario  =  DB::table('Funcionarios') 
+                                    ->select('Nombres','Apellidos')
+                                    ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
 
-        $Nombre = $Funcionario->Nombres.' '.$Funcionario->Apellidos;
+                                    $Nombre = $Funcionario->Nombres.' '.$Funcionario->Apellidos;
 
-        $DatosFunc =  DB::table('FirmadosFunc') 
-        ->where('ID_Func', '=',$ID_Funcionario)
-        ->orderBy('ID_FirmadosFunc', 'desc')->first();
-
-
-        if(!empty($DatosFunc)){
-            $DatosFunc1 =  DB::table('FirmadosFunc') 
-            ->where('Mes_Func', '=',$Mes)
-            ->where('Anio_Func', '=',$Anio)
-            ->where('ID_Func', '=',$ID_Funcionario)
-            ->first();
-
-            if(!empty($DatosFunc1)){
-                $FirmadosFunc             =FirmadosFunc::find($DatosFunc1->ID_FirmadosFunc);
-                $FirmadosFunc->NumeroFunc = $DatosFunc1->NumeroFunc+1;
-                $FirmadosFunc->save(); 
-            }
-            else{
-
-                $FirmadosFunc             =new FirmadosFunc;
-                $FirmadosFunc->Mes_Func   = $Mes;
-                $FirmadosFunc->Anio_Func  = $Anio;  
-                $FirmadosFunc->ID_Func    = $ID_Funcionario;
-                $FirmadosFunc->Nombres    = $Nombre;
-                $FirmadosFunc->NumeroFunc = 1;
-                $FirmadosFunc->save();  
-            }
-        }
-        else{
-            $FirmadosFunc             =new FirmadosFunc;
-            $FirmadosFunc->Mes_Func   = $Mes;
-            $FirmadosFunc->Anio_Func  = $Anio;  
-            $FirmadosFunc->ID_Func    = $ID_Funcionario;
-            $FirmadosFunc->Nombres    = $Nombre;
-            $FirmadosFunc->NumeroFunc = 1;
-            $FirmadosFunc->save();  
-        }
-        
+                                    $DatosFunc =  DB::table('FirmadosFunc') 
+                                    ->where('ID_Func', '=',$ID_Funcionario)
+                                    ->orderBy('ID_FirmadosFunc', 'desc')->first();
 
 
-        $Nombre_DepDir  =  DB::table('Funcionarios') 
-        ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
-        ->leftjoin('DepDirecciones', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'DepDirecciones.ID_DepDir')
-        ->select('Nombre_DepDir')
-        ->where('Estado_LDT', '=',1)
-        ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
+                                    if(!empty($DatosFunc)){
+                                        $DatosFunc1 =  DB::table('FirmadosFunc') 
+                                        ->where('Mes_Func', '=',$Mes)
+                                        ->where('Anio_Func', '=',$Anio)
+                                        ->where('ID_Func', '=',$ID_Funcionario)
+                                        ->first();
 
-        $ID_DD =  DB::table('LugarDeTrabajo')
-        ->select('ID_DepDirecciones_LDT') 
-        ->where('Estado_LDT', '=', 1)         
-        ->where('ID_Funcionario_LDT', '=', $ID_Funcionario)
-        ->first();
+                                        if(!empty($DatosFunc1)){
+                                            $FirmadosFunc             =FirmadosFunc::find($DatosFunc1->ID_FirmadosFunc);
+                                            $FirmadosFunc->NumeroFunc = $DatosFunc1->NumeroFunc+1;
+                                            $FirmadosFunc->save(); 
+                                        }
+                                        else{
 
-       
+                                            $FirmadosFunc             =new FirmadosFunc;
+                                            $FirmadosFunc->Mes_Func   = $Mes;
+                                            $FirmadosFunc->Anio_Func  = $Anio;  
+                                            $FirmadosFunc->ID_Func    = $ID_Funcionario;
+                                            $FirmadosFunc->Nombres    = $Nombre;
+                                            $FirmadosFunc->NumeroFunc = 1;
+                                            $FirmadosFunc->save();  
+                                        }
+                                    }
+                                    else{
+                                        $FirmadosFunc             =new FirmadosFunc;
+                                        $FirmadosFunc->Mes_Func   = $Mes;
+                                        $FirmadosFunc->Anio_Func  = $Anio;  
+                                        $FirmadosFunc->ID_Func    = $ID_Funcionario;
+                                        $FirmadosFunc->Nombres    = $Nombre;
+                                        $FirmadosFunc->NumeroFunc = 1;
+                                        $FirmadosFunc->save();  
+                                    }
+                                    
 
-        $DatosDD =  DB::table('FirmadosDD')
-        ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
-        ->orderBy('ID_FIRMADOSDD', 'desc')->first();
 
+                                    $Nombre_DepDir  =  DB::table('Funcionarios') 
+                                    ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
+                                    ->leftjoin('DepDirecciones', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'DepDirecciones.ID_DepDir')
+                                    ->select('Nombre_DepDir')
+                                    ->where('Estado_LDT', '=',1)
+                                    ->where('ID_Funcionario_T', '=',$ID_Funcionario)->first();
 
-        if(!empty($DatosDD)){
-            $DatosDD1 =  DB::table('FirmadosDD') 
-            ->where('Mes_DD', '=',$Mes)
-            ->where('Anio_DD', '=',$Anio)
-            ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
-            ->first();
+                                    $ID_DD =  DB::table('LugarDeTrabajo')
+                                    ->select('ID_DepDirecciones_LDT') 
+                                    ->where('Estado_LDT', '=', 1)         
+                                    ->where('ID_Funcionario_LDT', '=', $ID_Funcionario)
+                                    ->first();
 
-            if(!empty($DatosDD1)){
-                $FirmadosDD             =FirmadosDD::find($DatosDD1->ID_FIRMADOSDD);
-                $FirmadosDD->Numero_DD = $DatosDD1->Numero_DD+1;
-                $FirmadosDD->save(); 
-            }
-            else{
+                                
 
-                $FirmadosDD             =new FirmadosDD;
-                $FirmadosDD->Mes_DD   = $Mes;
-                $FirmadosDD->Anio_DD  = $Anio;  
-                $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
-                $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
-                $FirmadosDD->Numero_DD= 1;
-                $FirmadosDD->save();  
-            }
-        }
-        else{
-            $FirmadosDD             =new FirmadosDD;
-            $FirmadosDD->Mes_DD   = $Mes;
-            $FirmadosDD->Anio_DD  = $Anio;  
-            $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
-            $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
-            $FirmadosDD->Numero_DD= 1;
-            $FirmadosDD->save();  
-        }
-
-        $DatosAnioDD =  DB::table('AnioDD')
+                                    $DatosDD =  DB::table('FirmadosDD')
                                     ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
-                                    ->orderBy('ID_Anio', 'desc')->first();
+                                    ->orderBy('ID_FIRMADOSDD', 'desc')->first();
 
 
-                                    if(!empty($DatosAnioDD)){
-                                        $DatosDD1 =  DB::table('AnioDD') 
+                                    if(!empty($DatosDD)){
+                                        $DatosDD1 =  DB::table('FirmadosDD') 
+                                        ->where('Mes_DD', '=',$Mes)
                                         ->where('Anio_DD', '=',$Anio)
                                         ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
                                         ->first();
 
                                         if(!empty($DatosDD1)){
-                                            $AnioDD             =AnioDD::find($DatosDD1->ID_Anio);
-                                            $AnioDD->Numero_DD = $DatosDD1->Numero_DD+1;
-                                            $AnioDD->save(); 
+                                            $FirmadosDD             =FirmadosDD::find($DatosDD1->ID_FIRMADOSDD);
+                                            $FirmadosDD->Numero_DD = $DatosDD1->Numero_DD+1;
+                                            $FirmadosDD->save(); 
                                         }
                                         else{
 
-                                            $AnioDD             =new AnioDD;
-                                            $AnioDD->Anio_DD  = $Anio;  
-                                            $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
-                                            $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
-                                            $AnioDD->Numero_DD= 1;
-                                            $AnioDD->save();  
+                                            $FirmadosDD             =new FirmadosDD;
+                                            $FirmadosDD->Mes_DD   = $Mes;
+                                            $FirmadosDD->Anio_DD  = $Anio;  
+                                            $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                            $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                            $FirmadosDD->Numero_DD= 1;
+                                            $FirmadosDD->save();  
                                         }
                                     }
                                     else{
-                                        $AnioDD             =new AnioDD;
-                                        $AnioDD->Anio_DD  = $Anio;  
-                                        $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
-                                        $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
-                                        $AnioDD->Numero_DD= 1;
-                                        $AnioDD->save();  
+                                        $FirmadosDD             =new FirmadosDD;
+                                        $FirmadosDD->Mes_DD   = $Mes;
+                                        $FirmadosDD->Anio_DD  = $Anio;  
+                                        $FirmadosDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                        $FirmadosDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                        $FirmadosDD->Numero_DD= 1;
+                                        $FirmadosDD->save();  
                                     }
-        //FIN NUMERO DE FIRMAS
+
+                                    $DatosAnioDD =  DB::table('AnioDD')
+                                                                ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+                                                                ->orderBy('ID_Anio', 'desc')->first();
+
+
+                                                                if(!empty($DatosAnioDD)){
+                                                                    $DatosDD1 =  DB::table('AnioDD') 
+                                                                    ->where('Anio_DD', '=',$Anio)
+                                                                    ->where('ID_DD', '=',$ID_DD->ID_DepDirecciones_LDT)
+                                                                    ->first();
+
+                                                                    if(!empty($DatosDD1)){
+                                                                        $AnioDD             =AnioDD::find($DatosDD1->ID_Anio);
+                                                                        $AnioDD->Numero_DD = $DatosDD1->Numero_DD+1;
+                                                                        $AnioDD->save(); 
+                                                                    }
+                                                                    else{
+
+                                                                        $AnioDD             =new AnioDD;
+                                                                        $AnioDD->Anio_DD  = $Anio;  
+                                                                        $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                                                        $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                                                        $AnioDD->Numero_DD= 1;
+                                                                        $AnioDD->save();  
+                                                                    }
+                                                                }
+                                                                else{
+                                                                    $AnioDD             =new AnioDD;
+                                                                    $AnioDD->Anio_DD  = $Anio;  
+                                                                    $AnioDD->ID_DD    = $ID_DD->ID_DepDirecciones_LDT;
+                                                                    $AnioDD->Nombre   = $Nombre_DepDir->Nombre_DepDir;
+                                                                    $AnioDD->Numero_DD= 1;
+                                                                    $AnioDD->save();  
+                                                                }
+                                    //FIN NUMERO DE FIRMAS
                                 
                                 }
                            

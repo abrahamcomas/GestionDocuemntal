@@ -18,6 +18,7 @@ class InterPortaFuncionarioVB extends Model
          "IPF_ID_Funcionario",
          "IPF_Portafolio",
          "IPF_Id_OP",
+         "ID_OP_LDT_P_IPV",
          "FechaR",
          "Visto",
          "Estado",

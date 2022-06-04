@@ -12,12 +12,13 @@ use App\Models\VistoBueno;
 use App\Models\DestinoDocumento;
 use App\Models\Portafolio;
 use App\Models\InterPortaFuncionario;
+use App\Models\RecibidosModels;
 use App\Models\LinkFirma;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads; 
 class Internos extends Component 
 {
-    public $Ayuda=0; 
+    public $Ayuda=0;  
     
     public function Ayuda(){
         $this->Ayuda = 1;
@@ -171,58 +172,146 @@ class Internos extends Component
         if(!empty($Activado->id_Funcionario_OP) || !empty($Activado->ID_Jefatura)){
 
             $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
-    
-            $OficinaPartes =  DB::table('Funcionarios')
-            ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-            ->select('Id_OP')  
-            ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first();
+
+            $OficinaPartes =  DB::table('OficinaPartes')
+                ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+                ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+                ->where('ActivoODP', '=', 2)
+                ->where('Original', '=', 1)->first(); 
+
+                if(empty($OficinaPartes)){
+
+                    $OficinaPartes =  DB::table('OficinaPartes')
+                    ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+                    ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+                    ->where('ActivoODP', '=', 2)->first(); 
+
+                } 
 
             $Seleccionado =  DB::table('DepDirecciones')
             ->leftjoin('OficinaPartes', 'DepDirecciones.ID_DepDir', '=', 'OficinaPartes.ID_OP_LDT')
-            ->select('Id_OP')
+            ->select('Id_OP','ID_OP_LDT')
             ->where('ID_DepDir', '=', $this->ID_DepDir)->first();
     
             $Id_OP_Receptor=$Seleccionado->Id_OP;
+            
+            $ODPNombreReceptor =  DB::table('OficinaPartes')
+            ->select('ID_OP_LDT')  
+            ->where('Id_OP', '=', $Id_OP_Receptor)->first(); 
+
+
      
             if($this->TipoEnvio==1){
-        
-                $DocFunc                    = new DocFunc;
-                $DocFunc->ID_OP_E           = $OficinaPartes->Id_OP; 
-                $DocFunc->ID_OP_R           = $Id_OP_Receptor; 
-                $DocFunc->ID_Documento      = $this->ID_Documento_T;
-                $DocFunc->ActivoEnvio       = 1;
-                $DocFunc->FechaR            = date("Y/m/d"); 
-                $DocFunc->Estado            = 0;
-                $DocFunc->Visto             = 0;
-                $DocFunc->Mensaje_E         =$this->ObservacionPortafolio;
-                $DocFunc->save();
-        
-        
-                
-                $Portafolio =Portafolio::find($this->ID_Portafolio);
-                $Portafolio->Estado_T  =  2;
-                $Portafolio->save(); 
-        
-        
-        
-                $this->Destinatarios="";
-                $this->ObservacionE="";
-                session()->flash('message4', 'Envio agregado correctamente.');
-        
-                $this->Detalles=2;
-    
+
+                $DocFunc =  DB::table('DocFunc')
+                ->select('ID_OP_E')  
+                ->where('ID_OP_E', '=', $OficinaPartes->Id_OP)
+                ->where('ID_OP_R', '=', $Id_OP_Receptor)
+                ->where('ID_Documento', '=', $this->ID_Documento_T)->count();
+         
+                if($DocFunc==0){
+
+                    $DocFunc                    = new DocFunc;
+                    $DocFunc->Anio              = date("Y"); 
+                    $DocFunc->ID_OP_E           = $OficinaPartes->Id_OP; 
+                    $DocFunc->ID_OP_LDT_P_DE    = $OficinaPartes->ID_OP_LDT; 
+                    $DocFunc->ID_OP_R           = $Id_OP_Receptor;
+                    $DocFunc->ID_OP_LDT_P_DR    = $ODPNombreReceptor->ID_OP_LDT;  
+                    $DocFunc->ID_Documento      = $this->ID_Documento_T;
+                    $DocFunc->ActivoEnvio       = 1;
+                    $DocFunc->FechaR            = date("Y/m/d"); 
+                    $DocFunc->Estado            = 0;
+                    $DocFunc->Visto             = 0;
+                    $DocFunc->Mensaje_E         =$this->ObservacionPortafolio;
+                    $DocFunc->save();
+            
+                    $Portafolio =Portafolio::find($this->ID_Portafolio);
+                    $Portafolio->Estado_T  =  2;
+                    $Portafolio->save(); 
+            
+                    $this->Destinatarios=""; 
+                    $this->ObservacionE="";
+   
+                    session()->flash('message4', 'Enviado correctamente.');  
+                    
+                    $this->Detalles=2; 
+                }else{
+                    session()->flash('message3', 'Enviado anteriormente.');  
+                }
             }
+            elseif($this->TipoEnvio==2){
+        
+                $VistoBuenoC =  DB::table('VistoBueno')
+                ->select('ID_OP_E')  
+                ->where('ID_OP_E', '=', $OficinaPartes->Id_OP)
+                ->where('ID_OP_R', '=', $Id_OP_Receptor)
+                ->where('ID_Documento', '=', $this->ID_Documento_T)->count();
+        
+                if($VistoBuenoC==0){
+
+                    $VistoBueno                      = new VistoBueno;
+                    $VistoBueno->Anio                = date("Y");  
+                    $VistoBueno->ID_OP_E             = $OficinaPartes->Id_OP;
+                    $VistoBueno->ID_OP_LDT_P_VE      = $OficinaPartes->ID_OP_LDT; 
+                    $VistoBueno->ID_OP_R             = $Id_OP_Receptor; 
+                    $VistoBueno->ID_OP_LDT_P_VR      = $ODPNombreReceptor->ID_OP_LDT; 
+                    $VistoBueno->ID_Documento        = $this->ID_Documento_T;
+                    $VistoBueno->Estado              = 0;
+                    $VistoBueno->Visto               = 0;  
+                    $VistoBueno->Fecha               = date("Y/m/d");  
+                    $VistoBueno->ObservacionE        = $this->ObservacionPortafolio;  
+                    $VistoBueno->save(); 
+                    
+                    $Portafolio =Portafolio::find($this->ID_Portafolio);
+                    $Portafolio->Estado_T  =  2;
+                    $Portafolio->save(); 
+            
+                    $this->Destinatarios=""; 
+                    $this->ObservacionE="";
+
+                    session()->flash('message4', 'Enviado correctamente.');  
+                    
+                    $this->Detalles=2;
+                }else{
+                    session()->flash('message3', 'Enviado anteriormente.');  
+                }
+            } 
             else{
         
-                $VistoBueno                      = new VistoBueno;
-                $VistoBueno->ID_OP_E             = $OficinaPartes->Id_OP;
-                $VistoBueno->ID_OP_R             = $Id_OP_Receptor; 
-                $VistoBueno->ID_Documento        = $this->ID_Documento_T;
-                $VistoBueno->Estado              = 0;
-                $VistoBueno->Visto               = 0;  
-                $VistoBueno->Fecha               = date("Y/m/d");  
-                $VistoBueno->ObservacionE        = $this->ObservacionPortafolio;  
-                $VistoBueno->save(); 
+                $Recibidos =  DB::table('Recibidos')
+                ->select('R_ID_ODPE')  
+                ->where('R_ID_ODPE', '=', $OficinaPartes->Id_OP) 
+                ->where('R_ID_ODPR', '=', $Id_OP_Receptor)
+                ->where('R_ID_Documento', '=', $this->ID_Documento_T)->count();
+        
+                if($Recibidos==0){
+
+                    $RecibidosModels                        = new RecibidosModels;
+                    $RecibidosModels->Anio                  = date("Y");  
+                    $RecibidosModels->R_ID_ODPE             = $OficinaPartes->Id_OP;
+                    $RecibidosModels->ID_OP_LDT_P_RE        = $OficinaPartes->ID_OP_LDT;
+                    $RecibidosModels->R_ID_ODPR             = $Id_OP_Receptor; 
+                    $RecibidosModels->ID_OP_LDT_P_RR        = $ODPNombreReceptor->ID_OP_LDT;
+                    $RecibidosModels->R_ID_Documento        = $this->ID_Documento_T;
+                    $RecibidosModels->R_Estado              = 0;
+                    $RecibidosModels->R_Visto               = 0;  
+                    $RecibidosModels->R_Fecha               = date("Y/m/d");  
+                    $RecibidosModels->R_ObservacionE        = $this->ObservacionPortafolio;  
+                    $RecibidosModels->save(); 
+                    
+                    $Portafolio =Portafolio::find($this->ID_Portafolio);
+                    $Portafolio->Estado_T  =  2;
+                    $Portafolio->save(); 
+            
+                    $this->Destinatarios=""; 
+                    $this->ObservacionE="";
+
+                    session()->flash('message4', 'Enviado correctamente.');  
+                    
+                    $this->Detalles=2;
+                }else{
+                    session()->flash('message3', 'Enviado anteriormente.');  
+                }
             } 
     
             $this->TipoEnvio="";
@@ -230,7 +319,7 @@ class Internos extends Component
             $this->ObservacionPortafolio="";
             $this->NombreOficinaParte="";
     
-            session()->flash('message4', 'Enviado correctamente.');  
+  
 
         }
         else{
@@ -266,6 +355,49 @@ class Internos extends Component
 
     }
 
+
+
+
+    public $ID_Ricibidos;
+    public function AnularEnvio($ID_Ricibidos){ 
+
+        $this->ID_Ricibidos = $ID_Ricibidos;
+
+        $Recibidos =  DB::table('Recibidos') 
+        ->leftjoin('OficinaPartes','Recibidos.R_ID_ODPR','=','OficinaPartes.Id_OP')
+        ->leftjoin('DepDirecciones','OficinaPartes.ID_OP_LDT','=','DepDirecciones.ID_DepDir')
+        ->select('Nombre_DepDir')
+        ->where('ID_Ricibidos', '=',$ID_Ricibidos)->first();
+
+        $this->Nombre_DepDir  = $Recibidos->Nombre_DepDir;
+        
+        $this->Detalles=6;
+
+    }
+
+    public $ContraseniaFirmanteEnvio;
+    protected $EliminarEnvio = ['ContraseniaFirmanteEnvio' => 'required'];
+    protected $MensajeEliminarEnvio = ['ContraseniaFirmanteEnvio.required' =>'El campo "Confirme Contraseña Usuario" es obligatorio.'];
+    public function CancelarEnvio(){
+
+        $this->validate($this->EliminarEnvio,$this->MensajeEliminarEnvio); 
+
+        $RUN=Auth::guard('web')->user()->Rut;
+        if(Auth::attempt(['Rut' => $RUN, 'password' => $this->ContraseniaFirmanteEnvio], true)){ 
+
+            $RecibidosModels =RecibidosModels::find($this->ID_Ricibidos);
+            $RecibidosModels->delete(); 
+            session()->flash('message', 'Enviado eliminado correctamente.');
+            $this->Detalles=2;
+
+            $this->ContraseniaFirmanteEnvio="";
+        }
+        else{
+            $this->ContraseniaFirmanteEnvio="";
+            session()->flash('message2', 'Contraseña incorrecta.');  
+        }
+
+    }
 
     public $ContraseniaVB;
     protected $EliminarVB = ['ContraseniaVB' => 'required'];
@@ -443,6 +575,21 @@ class Internos extends Component
     public $IDAnular;
     public $Nombre_DepDirAnular;
     
+    public function VerObservacionJefe($ID_Documento_T){
+
+        $Mensaje =  DB::table('InterPortaFuncionario') 
+        ->select('ObservacionE')
+        ->where('IPF_Portafolio', '=',$ID_Documento_T)->first();
+
+        if($Mensaje->ObservacionE==""){
+            $Mensaje->ObservacionE = "Sin observación.";
+        } 
+         
+        session()->flash('message', $Mensaje->ObservacionE);  
+    
+    }    
+
+
     public function AsignarIDAnular($ID_IntDocFunc){
 
         $this->IDAnular=$ID_IntDocFunc;
@@ -459,24 +606,46 @@ class Internos extends Component
           $this->Detalles=5; 
     
     }    
+
+
      
     public $Cambiar=0;
-
-    public function CambiarVB()
-    {
-      $this->Cambiar=1; 
-    }
 
     public function CambiarFirmantes()
     {
       $this->Cambiar=0; 
     }
 
+    public function CambiarVB()
+    {
+      $this->Cambiar=1; 
+    }
+
+    public function CambiarEnviado()
+    {
+      $this->Cambiar=2; 
+    }
+
+
     protected $paginationTheme = 'bootstrap';  
     public $Orden;
-
+    public $OPDSelectNombre; 
     public function render() 
-    {
+    { 
+
+
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
+
+        $OPDSelect =  DB::table('OficinaPartes')
+        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+        ->select('Nombre_DepDir')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->where('ActivoODP', '=',2)
+        ->first();
+
+        $this->OPDSelectNombre = $OPDSelect->Nombre_DepDir;
+
+
         if($this->Orden==1){
             $Orden='ASC';
         }else{
@@ -485,16 +654,26 @@ class Internos extends Component
 
 
         $this->OficinaPartes =  DB::table('DepDirecciones')
-        ->leftjoin('OficinaPartes', 'DepDirecciones.ID_DepDir', '=', 'OficinaPartes.ID_OP_LDT')
         ->where('Nombre_DepDir', 'like', "%{$this->BuscarOficinaPartes}%")->take(3)->get();
        
 
-        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
         
      
         $Id_OficinaParte =  DB::table('OficinaPartes')
-        ->select('Id_OP')
-        ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first(); 
+        ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+        ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+        ->where('ActivoODP', '=', 2)
+        ->where('Original', '=', 1)->first(); 
+
+        if(empty($Id_OficinaParte)){
+
+            $Id_OficinaParte =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)->first(); 
+
+        } 
 
         $OficinaPartes =  DB::table('Funcionarios')
         ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
@@ -510,14 +689,14 @@ class Internos extends Component
                     $query->orwhere('Estado_T', '=', 1)
                         ->orwhere('Estado_T', '=', 2);
                 })       
-                ->where(function($query) {  
+                ->where(function($query) {   
                     $query->orwhere('NumeroInterno', 'like', "%{$this->search}%")
                         ->orwhere('Folio', 'like', "%{$this->search}%")
                         ->orwhere('Titulo_T', 'like', "%{$this->search}%")
                         ->orwhere('Tipo_T', 'like', "%{$this->search}%")
                         ->orwhere('Observacion_T', 'like', "%{$this->search}%");
                 })  
-                ->where('ID_OficinaP', '=', $Id_OficinaParte->Id_OP)     
+                ->where('ID_OP_LDT_P', '=', $Id_OficinaParte->ID_OP_LDT)     
                 ->orderBy('Fecha_T', $Orden)
                 ->paginate($this->perPage),  
 
@@ -527,6 +706,14 @@ class Internos extends Component
                 ->select('Privado','ID_FSube','NombreDocumento','ID_DestinoDocumento','Nombres','Apellidos')
                 ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)->get(),
                 
+                'MostrarDocumentosComentarios' =>  DB::table('DestinoDocumento')  
+                ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
+                ->select('NombreDocumento','ObservacionFirma')
+                ->where('ID_Funcionario', '=',$Id_OficinaParte->ID_Jefatura)
+                ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)->get(),
+                
+
+
                 'DestinoFirmantes' =>  DB::table('DocFunc') 
                 ->leftjoin('OficinaPartes', 'DocFunc.ID_OP_R', '=', 'OficinaPartes.Id_OP')
                 ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir')
@@ -539,16 +726,20 @@ class Internos extends Component
                 ->where('ID_Documento', '=',$this->ID_Documento_T) 
                 ->get(),
 
+                'Recibidos' =>  DB::table('Recibidos') 
+                ->leftjoin('OficinaPartes', 'Recibidos.R_ID_ODPR', '=', 'OficinaPartes.Id_OP')
+                ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir')
+                ->where('R_ID_Documento', '=',$this->ID_Documento_T) 
+                ->get(),
+
+
                 'MostrarDocumentos2' =>  DB::table('DestinoDocumento') 
                 ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
                 ->select('ID_DocumentoFirma')
                 ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)
                 ->where('ID_Funcionario', '=',$ID_Funcionario)->get(),
 
-                'DatosOficinaPartes' =>  DB::table('OficinaPartes') 
-                ->leftjoin('Funcionarios', 'OficinaPartes.id_Funcionario_OP', '=', 'Funcionarios.ID_Funcionario_T') 
-                ->select("Nombres","Apellidos")
-                ->first(),
+    
         ]);
     }
 }

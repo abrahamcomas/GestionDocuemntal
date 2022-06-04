@@ -4,13 +4,16 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
-                    <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivo, espere por favor...</strong></h5>
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div> 
         </div>  
@@ -60,6 +63,21 @@
                                 <input type="hidden" id="Ancho" name="Ancho">
                                 <input type="hidden" id="Alto" name="Alto">
                                 <br>
+                                @if(session('Numero')>1)
+                                    <div class="row"> 
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h6>TIPO DE IMAGEN DE FIRMA*</h6>
+                                            <div class="form-label-group">  
+                                                <select name="RutaImagenFirma" class="form-control" >
+                                                    <option value="0" selected>---SELECCIONAR---</option>
+                                                    @foreach(session('ImagenFirma') as $post)
+                                                        <option value="{{ $post->Ruta }}">{{ $post->NombreImagen }}</option>
+                                                    @endforeach
+                                                </select> 
+                                            </div> 	 
+                                        </div>  
+                                    </div> 
+                                @endif
                                 <strong>Por favor, Confirme su contraseña de usuario.</strong>
                                 <div class="form-label-group">
                                     <input type="password" class="form-control" name="Contrasenia"  placeholder="Confirme Contraseña Usuario" autocomplete="off">

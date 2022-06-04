@@ -1,41 +1,10 @@
 <div> 
-<br>    
-@if($Ayuda==1)    
-    <div class="container-fluid">  
-        <div class="row">  
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col">
-                    <div class="card bg-light mb-3">  
-                        <div class="card-header"> 
-                        <center>
-                                <h5> 
-                                    <strong>
-                                        INFORMACIÓN
-                                    </strong>
-                                </h5>
-                            </center> 
-                        </div>
-                        <div class="card-body">
-                            <center><img src="{{URL::asset('Imagenes/Portafolio/Recibidos.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
-                        </div>
-                        <div class="card-footer text-muted"> 
-                            <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-danger active" wire:click="VolverAyuda">
-                                    VOLVER
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@else   
+<br>      
 @if($Existe==0) 
         <style>
                 #Imagen {
                     font-size: 18px;
-                    width: 700px;
+                    width: 700px; 
                     height: 150px;
                 }
                 img.izquierda { 
@@ -45,7 +14,7 @@
                     float: right; 
                 }
                 p {
-                font: oblique bold 120% cursive;
+                font: oblique bold 120%;
                 }  
             </style>
         <script type="text/javascript">
@@ -72,7 +41,6 @@
                             <div id="Imagen" class="specific"> 
                                 <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} <br>{{$Cargo}}</strong></p>
                             </div>
-                            <br><br><br>  
                             <form method="POST" action="{{ route('ImagenCreada3') }}"> 
                                 @csrf  
                                 <div style="display: none">   
@@ -118,7 +86,7 @@
                             <div class="card-body">  
                                 <div class="row">  
                                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                        <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                        <!--<button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>-->
                                         <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                         <strong><div id="ver"></div></strong>
                                     </div>
@@ -305,6 +273,7 @@
                                             <th>SUBIDO POR</th>
                                             <th>NOMBRE ARCHIVO</th>
                                             <th>VER</th> 
+                                            <th>FIRMA NO REQUERIDA</th>
                                             <th>FIRMAR</th>
                                         </tr>
                                     </thead> 
@@ -327,6 +296,9 @@
                                                     </form> 
                                                 </td>    
                                                 @if($post->Firmado==0)    
+                                                <td>    
+                                                        <button class="btn btn-warning active" wire:click="ConfirmarFirma({{ $post->ID_DestinoDocumento  }})">OMITIR FIRMA</button>
+                                                    </td>
                                                             <td>      
                                                                 <form method="POST" action="{{ route('FirmaIndRec') }}">
                                                                     @csrf      
@@ -337,6 +309,14 @@
                                                                     </div>
                                                                 </form> 
                                                             </td>  
+                                                            @elseif($post->Firmado==4)   
+                                                            <td colspan="2">
+                                                                @php 
+                                                                    $FechaFirma = $post->FechaFirma;
+                                                                    $MostrarFecha = date("d-m-Y", strtotime($FechaFirma));
+                                                                @endphp
+                                                                <strong>FIRMA NO REQUERIDA {{$MostrarFecha}}</strong>
+                                                            </td>
                                                     @else        
                                                             <td colspan="2">
                                                                 @php 
@@ -364,6 +344,160 @@
                     </div>
                 </div> 
             </div>
+
+
+
+
+
+
+ 
+ 
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col">
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>AGREGAR ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div> 
+                    <div class="card-body">
+                        <div class="table-responsive"> 
+                            <table table class="table table-hover">
+                                <thead> 
+                                    <tr>  
+                                        <th>NOMBRE</th>
+                                        <th>FIRMA NO REQUERIDA</th>
+                                        <th>FIRMAR</th>
+                                        <th>ELIMINAR</th>
+                                        <th>VER</th>
+                                    </tr>
+                                </thead> 
+                                <tbody>
+                                        @foreach($MostrarDocumentosSubidos as $post) 
+                                            <tr> 
+                                                   <td>
+                                                        <div style="width:200px;">
+                                                            <strong>{{ $post->NombreDocumento }}</strong>
+                                                        </div>
+                                                    </td>   
+                                            @if($post->Firmado==0)    
+                                                    <td>    
+                                                        <button class="btn btn-warning active" wire:click="ConfirmarFirma({{ $post->ID_DestinoDocumento  }})">OMITIR FIRMA</button>
+                                                    </td>
+                                                    <td>     
+                                                        <form method="POST" action="{{ route('FirmaSubidoRecibido') }}">
+                                                            @csrf      
+                                                            <input type="hidden" name="ID_DestinoDocumento" value="{{ $post->ID_DestinoDocumento  }}">	
+                                                            <div class="btn-group" style=" width:50%;">	
+                                                                <button type="submit" id="btnEnviar1" class="btn btn-success active">FIRMAR</button>
+                                                            </div> 
+                                                        </form> 
+                                                    </td> 
+                                                    @if($post->ID_FSube==Auth::user()->ID_Funcionario_T)
+                                                        <td>
+                                                            <div class="btn-group" style=" width:50%;">	
+                                                                <button class="btn btn-danger active" wire:click="EliminarArchivo({{ $post->ID_DestinoDocumento  }})">ELIMINAR</button>
+                                                            </div>
+                                                        </td>
+                                                    @endif 
+                                            @elseif($post->Firmado==4)     
+                                                    <td colspan="3">
+                                                       <center> <strong>FIRMA NO REQUERIDA</strong></center>
+                                                    </td>
+                                            @else        
+                                                    <td colspan="2">
+                                                        @php 
+                                                            $FechaFirma = $post->FechaFirma;
+                                                            $MostrarFecha = date("d-m-Y", strtotime($FechaFirma));
+                                                        @endphp
+                                                        <strong>FIRMADO EL {{$MostrarFecha   }}</strong>
+                                                    </td>
+                                            @endif
+                                                    <td> 
+                                                        <form method="POST" action="{{ route('MostrarPDF') }}">   
+                                                            @csrf             
+                                                            <input type="hidden" name="ID_DestinoDocumento" value="{{ $post->ID_DestinoDocumento }}">
+                                                            <div class="btn-group" style=" width:50%;">	
+                                                                <button type="submit" class="btn btn-primary active" formtarget="_blank">PDF</button>
+                                                            </div>
+                                                        </form> 
+                                                    </td>
+                                            </tr>
+                                        @endforeach 
+                                </tbody>    
+                            </table> 
+                        </div>	
+                        <br> 
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <h6>AGREGAR ARCHIVO/S* <strong>PDF</strong></h6>
+                                    <input type="file" class="form-control" wire:model="PDF" multiple accept="application/pdf">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
+                            </div> 
+                        </div>
+                        <div wire:loading wire:target="PDF"> 
+                            <center> 
+                                <h5><strong>Subiendo documentos, espere por favor...</strong></h5>
+                            </center>
+                        </div>
+                        <center>
+                        <div class="btn-group" style=" width:80%;">
+                            <button class="btn btn-primary active" wire:click="Ingresar" id="boton">INGRESAR</button>
+                        </div> 
+                        </center>
+                        <br>
+                        <center>
+                            <div wire:loading wire:target="Ingresar">
+                                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                                <h5><strong>Verificando documentos, espere por favor...</strong></h5>                         
+                            </div>  
+                        </center> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
@@ -641,7 +775,7 @@
                             <button class="btn btn-warning active" wire:click="CambiarFirmantes">MOSTRAR FIRMANTES</button>
                         </div> 
                     </div>
-                </div>
+                </div> 
             @endif
             
             <div class="row">
@@ -671,14 +805,46 @@
                                 </div> 
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTION DOCUMENTAL <br>
-                                SECRETARIA OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                               SGD
                             </div>
                         </div>	
                     </div>	
                 </div>			
             </div>
-        @endif
+     
+
+@elseif($Detalles==5)
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+            <div class="col">
+                <div class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h4><strong>FIRMA NO REQUERIDA</strong></h4>
+                    </div> 
+                    <div class="card-body">
+                        <strong>¿Desea omitir firma?</strong>
+                        <br><br>
+                        <strong>Por favor, Confirme su contraseña de usuario.</strong>
+                        <div class="form-label-group">
+                            <input type="password" class="form-control" wire:model="ContraseniaFirmado"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
+                        </div>
+                    </div> 
+                    <center> 
+                    <div class="btn-group" style=" width:80%;">
+                        <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
+                        <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="Firmado">CONFIRMAR</button>
+                    </div> 
+                    </center>
+                    <br>
+                    <div class="card-footer text-muted">
+                        SGD
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+    </div>
+    @endif 
 @endif 
 </div>
-@endif

@@ -132,19 +132,9 @@ class Registrarse extends Component
                         $LugarDeTrabajo->ID_DepDirecciones_LDT   =  $this->ID_DepDir;
                         $LugarDeTrabajo->ID_Funcionario_LDT = $user->ID_Funcionario_T;
                         $LugarDeTrabajo->Estado_LDT = 0;
-                        $LugarDeTrabajo->save();  
-
-                        $Roles1 = new Roles;
-                        $Roles1->id_Funcionario_Roles  = $user->ID_Funcionario_T;
-                        $Roles1->Navegador  =  3;
-                        $Roles1->save();  
-
-                        $Roles2 = new Roles;
-                        $Roles2->id_Funcionario_Roles  = $user->ID_Funcionario_T;
-                        $Roles2->Navegador  =  4;
-                        $Roles2->save(); 
+                        $LugarDeTrabajo->save();
                 
-                        $this->Resultado='Registro Realizado Correctamente, en espera de confirmación de ingreso por la oficina de partes';
+                        $this->Resultado='Registro Realizado Correctamente, en espera de confirmación de ingreso por la ODP';
                   
                 }
                 else

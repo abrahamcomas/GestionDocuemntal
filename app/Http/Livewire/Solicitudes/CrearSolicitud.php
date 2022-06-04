@@ -38,7 +38,7 @@ class CrearSolicitud extends Component
     public function SeleccionarFunc($ID_Funcionario_T){
 
         $Datos  =  DB::table('Funcionarios') 
-        ->select('Nombres','Apellidos','Email')
+        ->select('ID_Funcionario_T','Nombres','Apellidos','Email')
         ->where('ID_Funcionario_T', '=',$ID_Funcionario_T)
         ->first();
 
@@ -48,16 +48,16 @@ class CrearSolicitud extends Component
         $this->SelecID_Funcionario_T = $ID_Funcionario_T;
     }
 
-    public $Titulo_T;
+    public $SoloTitulo;
     public $PDF= [];
     public $Pagina=0; 
 
     protected $rules = ['SelecID_Funcionario_T' => 'required',
-                        'Titulo_T' => 'required',   
+                        'SoloTitulo' => 'required',   
                         'PDF' => 'required']; 
 
 	protected $messages = [ 'SelecID_Funcionario_T.required' =>'El campo "CREAR SOLICITUD A" es obligatorio.',
-                            'Titulo_T.required' =>'El campo "TÍTULO" es obligatorio.',
+                            'SoloTitulo.required' =>'El campo "TÍTULO" es obligatorio.',
                             'PDF.required' =>'El campo "Archivo" es obligatorio.'];
 
     public function Ingresar()
@@ -69,14 +69,14 @@ class CrearSolicitud extends Component
         $Portafolio11                    = new Portafolio11;
         $Portafolio11->ID_Funcionario_Sol= $ID_Funcionario;
         $Portafolio11->Estado_T          = 0;
-        $Portafolio11->Titulo_T          = $this->Titulo_T;
+        $Portafolio11->Titulo_T          = $this->SoloTitulo;
         $Portafolio11->Fecha_T           = date("Y/m/d"); 
         $Portafolio11->Anio              = date("y"); 
         $Portafolio11->save();  
        
         $LinkFirma11                   = new LinkFirma11;
         $LinkFirma11->ID_Documento_L   = $Portafolio11->ID_Documento_T; 
-        $LinkFirma11->Titulo_T         = $this->Titulo_T; 
+        $LinkFirma11->Titulo_T         = $this->SoloTitulo; 
         $LinkFirma11->ID_Funcionario_L = $this->SelecID_Funcionario_T;   
         $LinkFirma11->Nombres_L        = $this->SelecNombres; 
         $LinkFirma11->Apellidos_L      = $this->SelecApellidos; 
@@ -89,7 +89,7 @@ class CrearSolicitud extends Component
      
         foreach ($this->PDF as $Archivos) {  
     
-            $codificado = Storage::disk('PDF11')->put('', $Archivos);
+            $codificado = Storage::disk('PDF')->put('', $Archivos);
 
             $token = md5($Archivos->getClientOriginalName());
     
@@ -123,20 +123,20 @@ class CrearSolicitud extends Component
 
                         
             $pdf = new FPDI(); 
-            $pagecount =  $pdf->setSourceFile('PDF11'.'/'.$codificado);
+            $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
             $UltimaPagina=$pagecount;
     
             for($i =1; $i<=$pagecount; $i++){
                 
                 if($i!=$UltimaPagina){
                     $pdf->AddPage();
-                    $pdf->setSourceFile('PDF11'.'/'.$codificado);
+                    $pdf->setSourceFile('PDF'.'/'.$codificado);
                     $template = $pdf->importPage($i);
                     $pdf->useTemplate($template,0, 0, 215, 280, true);
                 }
                 else{ 
                     $pdf->AddPage();
-                    $pdf->setSourceFile('PDF11'.'/'.$codificado);
+                    $pdf->setSourceFile('PDF'.'/'.$codificado);
                     $template = $pdf->importPage($i);
                     $pdf->useTemplate($template,0, 0, 215, 280, true);
                     $pdf->Image('QR/'.$NuevaRuta2, 183, 250, 30, 30);
@@ -148,19 +148,15 @@ class CrearSolicitud extends Component
                 }
             }
              
-            $pdf->Output('F', 'PDF11/'.$codificado);
+            $pdf->Output('F', 'PDF/'.$codificado);
 
             Storage::disk('QR')->delete($NuevaRuta2);
                 
         }
     
-      
-
         $this->Pagina = 1;      
 
-        session()->flash('message', 'Nueva solicitud 1A1 ingresada correctamente..');  
-            
-            
+        session()->flash('message', 'Nueva solicitud 1A1 ingresada correctamente..');      
           
     }
 
@@ -178,7 +174,84 @@ class CrearSolicitud extends Component
         $this->Creado = 0;  
 
     }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+    public $Materia;
+
+    public $Titulo_T;
+    public $Acta;
+
+
+
+    public $Equipo1;
+    public $Equipo2;
+    public $Equipo3;
+    public $Equipo4;
+    public $Equipo5;
+    public $Equipo6;
+    public $Equipo7;
+    public $Equipo8;
+
+    public $Equipo=2;
+    public function AgregarEquipo(){
+
+        $this->Equipo += 1;  
+
+    }
+
+    public function RestarEquipo(){
+
+        $this->Equipo -= 1;  
+
+    }
+
+
+    public $Correo1;
+    public $Correo2;
+    public $Correo3;
+    public $Correo4;
+    public $Correo5;
+    public $Correo6;
+    public $Correo7;
+    public $Correo8;
+    public $Correo9;
+
+    public $Correo=2;
+    public function AgregarCorreo(){
+
+        $this->Correo += 1;  
+
+    }
+
+    public function RestarCorreo(){
+
+        $this->Correo -= 1;  
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function render()
     {
         $Funcionario  =  Auth::user()->ID_Funcionario_T; 
@@ -205,7 +278,7 @@ class CrearSolicitud extends Component
                 }
         }
  
- 
+  
         return view('livewire.solicitudes.crear-solicitud',[
             'plantillas' =>  DB::table('plantillas')->get(), 
             

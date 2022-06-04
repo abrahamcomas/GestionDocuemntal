@@ -35,12 +35,11 @@ use App\Http\Controllers\ODP\SolicitarFirma;
 use App\Http\Controllers\ODP\FirmandoSolicitudController;
 
 
-
 use App\Http\Controllers\Sessiones\SessionesController;
 use App\Http\Controllers\Sessiones\EliminarVinculo; 
 
 use App\Http\Controllers\Root\ImagenCreada;
-use App\Http\Controllers\Portafolio\ImagenCreada2;
+use App\Http\Controllers\Portafolio\ImagenCreada2; 
  
 use App\Http\Controllers\CrearDocumento\NuevoDocumentoController;
 use App\Http\Controllers\CrearDocumento\MostrarPlantillas;
@@ -60,7 +59,7 @@ use App\Http\Controllers\EncargadoODP\FirmarArchivoDirectoMasiva;
 
 use App\Http\Controllers\Recibidos\FirmandoRecibidoIndiv;
 use App\Http\Controllers\Recibidos\FirmandoRecibidoMult;
-
+use App\Http\Controllers\Recibidos\FirmandoSubidoRecibido;
 
 use App\Http\Controllers\Detenidos\FirmandoDetenidas;
 use App\Http\Controllers\Detenidos\FirmandoDetenidasMasivo;
@@ -81,6 +80,16 @@ use App\Http\Controllers\Colores\ColoresController;
 use App\Http\Controllers\Colores\BuscarColoresController;
 
 use App\Http\Controllers\CKeditor\ImagenController;
+
+
+
+
+
+
+////GENERADOR DOCUMENTOS
+
+use App\Http\Controllers\DocumentosPDF\ActaPrestamoController;
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -170,7 +179,7 @@ Route::post('/BorrarColores', [ColoresController::class, 'Borrar'])->middleware(
 
 
 
-
+ 
 
 
 
@@ -276,13 +285,50 @@ Route::get('/FirmaMasivaRec',function () {
 
 Route::post('/FirmandoRecibidoIndiv', [FirmandoRecibidoIndiv::class, 'index'])->middleware('auth')->name('FirmandoRecibidoIndiv'); 
 Route::post('/FirmandoRecibidoMult', [FirmandoRecibidoMult::class, 'index'])->middleware('auth')->name('FirmandoRecibidoMult'); 
+ 
+
+
+
+
+ 
+
+// App\Http\Controllers\Documentos\PosicionFirmaController;
+Route::post('/FirmaSubidoRecibido', [PosicionFirmaController::class, 'FirmaSubidoRecibido'])->middleware('auth')->name('FirmaSubidoRecibido');   
+Route::get('/FirmaSubidoRecibido',function () { 
+    return view('Posts/Portafolio/FirmaSubidoRecibido'); 
+})->middleware('auth'); 
+
+ 
+Route::post('/FirmandoSubido', [FirmandoSubidoRecibido::class, 'index'])->middleware('auth')->name('FirmandoSubido');   
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //PORTAFOLIO DIRECTO 
 Route::post('/CoordenadasFirma3', [PosicionFirmaController::class, 'FirmarIndividualDirecto'])->middleware('auth')->name('FirmarIndividualDirecto');   
 Route::get('/CoordenadasFirma3',function () { 
-    return view('Posts/Portafolio/FirmandoDocumentoDirecto'); 
+    return view('Posts/EncargadoODP/FirmaIndividual'); 
 })->middleware('auth');   
+
  
 Route::post('/FirmaMasivaPortDirecto', [PosicionFirmaController::class, 'FirmaMasivaDirecto'])->middleware('auth')->name('FirmaMasivaDirecto');   
 Route::get('/FirmaMasivaPortDirecto',function () { 
@@ -815,7 +861,15 @@ Route::get('/PortafoliosFinalizadosVB',function () {
 })->middleware('auth');
 //Fin
 
-
+//PORTAFOLIOS Compartidas 
+Route::post('/Compartidas',function () { 
+    return view('Posts/Portafolio/Compartidas');
+})->middleware('auth')->name('Compartidas');
+ 
+Route::get('/Compartidas',function () { 
+    return view('Posts/Portafolio/Compartidas');
+})->middleware('auth'); 
+//Fin
  
 
 //PORTAFOLIOS RECIBIDOS 
@@ -859,7 +913,7 @@ Route::post('/ODPExternos',function () {
     return view('Posts/ODP/ODPExternos');
 })->middleware('auth')->name('ODPExternos');
  
-Route::get('/ODPExternos',function () { 
+Route::get('/ODPExternos',function () {  
     return view('Posts/ODP/ODPExternos');
 })->middleware('auth');
 //Fin
@@ -874,11 +928,64 @@ Route::get('/ODPExternosVB',function () {
 //Fin
 
 
+Route::post('/RecibidosODP',function () { 
+    return view('Posts/ODP/Recibidos');
+})->middleware('auth')->name('RecibidosODP');
+ 
+Route::get('/RecibidosODP',function () { 
+    return view('Posts/ODP/Recibidos');
+})->middleware('auth');
+//Fin
 
+Route::post('/HistorialODP',function () { 
+    return view('Posts/ODP/Historial');
+})->middleware('auth')->name('HistorialODP');
+ 
+Route::get('/HistorialODP',function () { 
+    return view('Posts/ODP/Historial');
+})->middleware('auth');
+//Fin
 
-
+Route::post('/CambiarLugarODP',function () { 
+    return view('Posts/ODP/CambiarLugar');
+})->middleware('auth')->name('CambiarLugarODP');
+ 
+Route::get('/CambiarLugarODP',function () { 
+    return view('Posts/ODP/CambiarLugar');
+})->middleware('auth');
+//Fin
 
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::post('/ADODP',function () { 
+    return view('Posts/ODP/ADODP');
+})->middleware('auth')->name('ADODP');
+ 
+Route::get('/ADODP',function () { 
+    return view('Posts/ODP/ADODP');
+})->middleware('auth');
+//Fin
+
+
 //Imagen creada de firma
 //ODPExternos
 Route::post('/ImagenCreada',function () { 
@@ -937,7 +1044,7 @@ Route::get('/SolicitarFirmaFuncionario',function () {
 
 Route::post('/Documento', [PDFGestionController::class, 'index'])->middleware('auth')->name('MostrarPDF'); 
 Route::post('/Documento11', [PDFGestionController11::class, 'index'])->middleware('auth')->name('MostrarPDF11'); 
-
+Route::post('/Documento112', [PDFGestionController11::class, 'PDFExterno'])->middleware('auth')->name('MostrarPDF112'); 
 
 Route::post('/DocumentoPDF', [PDFGestionController::class, 'index'])->name('MostrarPDF2'); 
 
@@ -1226,12 +1333,17 @@ Route::post('/Sistema/CambiarCorreoinsp', [CambiarCorreoControler::class, 'index
 
 
 
+ 
+//GENERADOR DOCUMENTOS 
 
 
+Route::post('/ActaPrestamo', [ActaPrestamoController::class, 'index'])->middleware('auth')->name('ActaPrestamoController');
 
-
-
+Route::get('/ActaPrestamo',function () { 
+    return view('Posts/Solicitudes/Solicitudes'); 
+})->middleware('auth'); 
 
 
  
 
+ 

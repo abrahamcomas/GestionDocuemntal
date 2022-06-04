@@ -12,7 +12,7 @@
                                     <strong>
                                         INFORMACIÓN
                                     </strong>
-                                </h5>
+                                </h5> 
                             </center> 
                         </div>
                         <div class="card-body">
@@ -55,7 +55,7 @@
                     <div class="card bg-light mb-3"> 
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>SOLICITUDES EXTERNAS V°B°</strong></center></h1>
+                            <h1><center>SOLICITUDES EXTERNAS V°B° <strong> {{ $OPDSelectNombre}}</strong></strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body"> 
@@ -97,7 +97,7 @@
                         </div>    
                         @if($posts->count()) 
                             <div class="card-body table-responsive">
-                                <table table class="table table-hover">
+                                <table table class="table table-hover table-sm"> 
                                     <thead>  
                                         <tr>
                                             <th>ENVIADO POR</th>
@@ -237,8 +237,7 @@
                                 {{ $posts->links() }}
                             </div>	
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL <br>
-                                SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                SGD
                             </div>
                     </div>
                 </div>
@@ -252,7 +251,7 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>RECHAZAR PORTAFOLIO</strong></center></h1>
+                        <h2><center><strong>RECHAZAR PORTAFOLIO</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -276,8 +275,7 @@
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>
                 </div>
                 </div>
@@ -291,11 +289,11 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>ARCHIVOS</strong></center></h1>
+                            <h2><center><strong>ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
                                 <thead>  
                                     <tr>  
                                         <th>SUBIDO POR</th>
@@ -311,7 +309,7 @@
                                                 {{ $post->Nombres  }} {{ $post->Apellidos }} 
                                             </td>
                                             <td>
-                                                <textarea rows="3" style="width:100%;" disabled>   {{ $post->NombreDocumento }} </textarea>
+                                                {{ $post->NombreDocumento }}
                                             </td>
                                             <td> 
                                                 <form method="POST" action="{{ route('MostrarPDF') }}">   
@@ -338,11 +336,11 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>V°B°</strong></center></h1>
+                            <h2><center><strong>V°B°</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
                                 <thead>  
                                     <tr>
                                         <th>ESTADO</th>
@@ -456,7 +454,7 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>ENVIAR</strong></center></h1>
+                            <h2><center><strong>ENVIAR</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body">
@@ -482,7 +480,7 @@
                         </div>
                         <hr> 
                         <div class="card-body">
-                            <h5>Si el portafolio ha sido enviado a los funcionarios requeridos, puede dar por confirmada su recepción.</h5>
+                            <h5>Si la solicitud ha sido enviado a los funcionarios requeridos, puede dar por confirmada su recepción.</h5>
                         </div>
                         <br>
                         @if (session()->has('messageFinalizar1'))
@@ -492,14 +490,13 @@
                         @endif
                         <div class="card-footer text-muted">  
                             <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-success active" wire:click="ConfirmarFinalizarPortafolio">CONFIRMAR PORTAFOLIO</button>
+                                <button class="btn btn-success active" wire:click="ConfirmarFinalizarPortafolio">CONFIRMAR SOLICITUD</button>
                             </div> 
                         </div>
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                           SGD
                         </div>
                     </div>  
                 </div>	
@@ -513,11 +510,11 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>NO DISPONIBLE</strong></center></h1>
+                            <h2><center><strong>NO DISPONIBLE</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body">
-                            <h6>El portafolio fue enviado a un funcionario, por lo que la opción de rechazo no esta disponible.</h6>
+                        <h6>La solicitud fue enviado a un funcionario, por lo que la opción de rechazo no esta disponible.</h6>
                             <br>
                         </div> 
                         <center>
@@ -529,8 +526,7 @@
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -550,7 +546,7 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>FINALIZAR PORTAFOLIO</strong></center></h1>
+                            <h2><center><strong>FINALIZAR PORTAFOLIO</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body">
@@ -576,8 +572,7 @@
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>
                 </div>

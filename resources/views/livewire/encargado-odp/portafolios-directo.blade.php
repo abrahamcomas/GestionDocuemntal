@@ -1,7 +1,7 @@
 <div> 
 <br> 
 @if($Ayuda==1)    
-    <div class="container-fluid">  
+    <div class="container-fluid">   
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
@@ -12,7 +12,7 @@
                                     <strong>
                                         INFORMACIÓN
                                     </strong>
-                                </h5>
+                                </h5> 
                             </center> 
                         </div>
                         <div class="card-body">
@@ -63,13 +63,16 @@
                 @include('messages')  
                 <div class="col">     
                     <div class="card bg-light mb-3">
-                        <div class="card-header"> <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></g4></div>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">	 
                             <div id="Imagen" class="specific"> 
                                 <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} <br>{{$Cargo}}</strong></p>
                             </div>
-                            <br><br><br>  
-                            <form method="POST" action="{{ route('ImagenCreada4') }}">  
+                            <form method="POST" action="{{ route('ImagenCreada2') }}">  
                                 @csrf  
                                 <div style="display: none">   
                                     <input type="text" id="Firma" name="Firma">
@@ -88,7 +91,7 @@
                             </form>
                         </div> 
                         <div class="card-footer text-muted">
-                            GESTIÓN DOCUMENTAL 
+                            SGD 
                         </div>
                     </div>
                 </div> 
@@ -105,14 +108,16 @@
                             {{ session('message1') }}
                         </div>
                     @endif
-                        <div class="card bg-light mb-3">
-                            <div class="card-header">
-                             <h4><strong>PORTAFOLIO DIRECTO</strong></h4>
-                            </div> 
+                        <div class="card bg-light mb-3"> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>SOLICITUDES INTERNAS</strong></center></h1>
+                                <hr>
+                            </div>
                             <br>
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                    <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
+                                   <!--<button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>-->
                                     <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                 </div> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>    
@@ -126,9 +131,10 @@
                                                 <th>N° INTERNO</th>
                                                 <th>FOLIO</th>
                                                 <th>TÍTULO</th>
+                                                <th>DOCUMENTO</th>
                                                 <th>INGRESO</th>
                                                 <th>DÍAS PARA TERMINO</th>
-                                                <th>OPCIONES</th>
+                                                <th>OPCIONES</th> 
                                             </tr>
                                         </thead>  
                                         <tbody>  
@@ -151,6 +157,9 @@
                                                 </td>
                                                 <td>
                                                     {{$post->Titulo_T}}
+                                                </td>
+                                                <td>
+                                                    {{$post->Nombre_T}}
                                                 </td>
                                                 
                                                 @php
@@ -242,9 +251,8 @@
                                 </div>
                             @endif  	
                                 <div class="card-footer text-muted"> 
-                                    GESTIÓN DOCUMENTAL<br>
-                                    SECRETARIA/O ODP {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
-                                </div>
+                                    SGD
+                                </div> 
                             </div>
                         </div>
                     </div> 
@@ -253,19 +261,21 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="col">
-                                <div class="card bg-light mb-3">
-                                    <div class="card-header">
-                                        <h4><strong>ARCHIVOS</strong></h4>
-                                    </div>   
-                                    <div class="card-body"> 
-
-                                    <h4 style="color: #FF0C00;"><strong>{{ $FirmadoPorFuncionario }}</strong></h4>
+                                <div class="card bg-light mb-3">  
+                                    <div class="text-muted" >
+                                        <br> 
+                                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                                        <hr>
+                                    </div> 
+                                    <div class="card-body">
+                                   <!-- <h4 style="color: #FF0C00;"><strong>{{ $FirmadoPorFuncionario }}</strong></h4>-->
                                         <table table class="table table-hover">
                                             <thead>  
-                                                <tr>  
+                                                <tr>   
                                                     <th>SUBIDO POR</th>
                                                     <th>NOMBRE ARCHIVO</th>
                                                     <th>VER</th>
+                                                    <th>FIRMA NO REQUERIDA</th>
                                                     <th>ACEPTAR Y FIRMAR</th>
                                                 </tr>
                                             </thead> 
@@ -285,9 +295,12 @@
                                                                     <div class="btn-group" style=" width:50%;">	
                                                                         <button type="submit" class="btn btn-primary active" formtarget="_blank">PDF</button>
                                                                     </div>
-                                                                </form> 
+                                                                </form>  
                                                             </td> 
                                                         @if($post->Firmado==0)   
+                                                        <td>    
+                                                        <button class="btn btn-warning active" wire:click="ConfirmarFirma({{ $post->ID_DestinoDocumento  }})">OMITIR FIRMA</button>
+                                                    </td>
                                                             <td>     
                                                                 <form method="POST" action="{{ route('FirmarIndividualDirecto') }}">
                                                                     @csrf      
@@ -297,6 +310,14 @@
                                                                     </div>
                                                                 </form>
                                                             </td>  
+                                                        @elseif($post->Firmado==4)   
+                                                            <td colspan="2">
+                                                                @php 
+                                                                    $FechaFirma = $post->FechaFirma;
+                                                                    $MostrarFecha = date("d-m-Y", strtotime($FechaFirma));
+                                                                @endphp
+                                                                <strong>FIRMA NO REQUERIDA {{$MostrarFecha}}</strong>
+                                                            </td>
                                                         @else        
                                                             <td colspan="2">
                                                                 @php 
@@ -315,9 +336,11 @@
                                         <form method="POST" action="{{ route('FirmaMasivaDirecto') }}">
                                             @csrf      
                                             <input type="hidden" name="ID_Documento_T" value="{{ $ID_Documento_T  }}">	
-                                            <div class="btn-group" style=" width:100%;">	
+                                            <center>
+                                            <div class="btn-group" style=" width:80%;">	
                                                 <button type="submit" id="btnEnviar1" class="btn btn-info active">ACEPTAR TODOS</button>
                                             </div>
+                                            </center>
                                         </form>
                                     @endif
                                 </div>
@@ -331,10 +354,127 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div> 
-                                <div class="card bg-light mb-3">
-                                <div class="card-header"> 
-                                    <h4><strong>RECHAZAR</strong></h4>  
+                                </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col">
+                <div class="card bg-light mb-3">
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>AGREGAR ARCHIVOS</strong></center></h1>
+                        <hr>
+                    </div> 
+                    <div class="card-body">
+                        <div class="table-responsive"> 
+                            <table table class="table table-hover">
+                                <thead> 
+                                    <tr>  
+                                        <th>NOMBRE</th>
+                                        <th>ELIMINAR</th>
+                                    </tr>
+                                </thead>  
+                                <tbody>
+                                        @foreach($MostrarDocumentosSubidos as $post) 
+                                            <tr> 
+                                                   <td>
+                                                        <div style="width:200px;">
+                                                            <strong>{{ $post->NombreDocumento }}</strong>
+                                                        </div>
+                                                    </td>   
+                                            @if($post->Firmado==0)    
+                                                    @if($post->ID_FSube==Auth::user()->ID_Funcionario_T)
+                                                        <td>
+                                                            <div class="btn-group" style=" width:50%;">	
+                                                                <button class="btn btn-danger active" wire:click="EliminarArchivo({{ $post->ID_DestinoDocumento  }})">ELIMINAR</button>
+                                                            </div>
+                                                        </td>
+                                                    @endif 
+                                            @else        
+                                                    <td colspan="2">
+                                                        @php 
+                                                            $FechaFirma = $post->FechaFirma;
+                                                            $MostrarFecha = date("d-m-Y", strtotime($FechaFirma));
+                                                        @endphp
+                                                        <strong>FIRMADO EL {{$MostrarFecha   }}</strong>
+                                                    </td>
+                                            @endif
+                                            </tr>
+                                        @endforeach 
+                                </tbody>    
+                            </table> 
+                        </div>	 
+                        <br> 
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <h6>AGREGAR ARCHIVO/S* <strong>PDF</strong></h6>
+                                    <input type="file" class="form-control" wire:model="PDF" multiple accept="application/pdf">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
+                            </div> 
+                        </div>
+                        <div wire:loading wire:target="PDF"> 
+                            <center> 
+                                <h5><strong>Subiendo documentos, espere por favor...</strong></h5>
+                            </center>
+                        </div>
+                        <center>
+                        <div class="btn-group" style=" width:80%;">
+                            <button class="btn btn-primary active" wire:click="Ingresar" id="boton">INGRESAR</button>
+                        </div> 
+                        </center>
+                        <br>
+                        <center>
+                            <div wire:loading wire:target="Ingresar">
+                                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                                <h5><strong>Verificando documentos, espere por favor...</strong></h5>                         
+                            </div>  
+                        </center> 
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                
+                                <div class="card bg-light mb-3"> 
+                                    <div class="text-muted" >
+                                        <br> 
+                                        <h1><center><strong>RECHAZAR</strong></center></h1>
+                                        <hr>
                                     </div> 
                                     <div class="card-body"> 
                                         <label><strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong></label>
@@ -349,8 +489,7 @@
                                         </div> 
                                     </div>
                                     <div class="card-footer text-muted">
-                                        GESTION DOCUMENTAL <br>
-                                        SECRETARIA OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                        SGD
                                     </div>
                                 </div>	
                             </div>	
@@ -358,6 +497,40 @@
                     </div>
             </div>			
         </div>
+        @elseif($Detalles==5) <!--ELIMINAR VB-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+            <div class="col">
+                <div class="card bg-light mb-3"> 
+                    <div class="text-muted">
+                        <br> 
+                        <h1><center><strong>FIRMA NO REQUERIDA</strong></center></h1>
+                        <hr>
+                    </div> 
+                    <div class="card-body">
+                        <strong>¿Desea omitir firma?</strong>
+                        <br><br>
+                        <strong>Por favor, Confirme su contraseña de usuario.</strong>
+                        <div class="form-label-group">
+                            <input type="password" class="form-control" wire:model="ContraseniaFirmado"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
+                        </div>
+                    </div> 
+                    <center>
+                    <div class="btn-group" style=" width:80%;">
+                        <button type="button" class="btn btn-danger active" data-dismiss="modal" wire:click="VolverPrincipal">VOLVER</button>
+                        <button type="button" class="btn btn-success active" data-dismiss="modal" wire:click="Firmado">CONFIRMAR</button>
+                    </div> 
+                    </center>
+                    <br>
+                    <div class="card-footer text-muted">
+                        SGD
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+    </div> 
     @endif  
 @endif 
 </div>

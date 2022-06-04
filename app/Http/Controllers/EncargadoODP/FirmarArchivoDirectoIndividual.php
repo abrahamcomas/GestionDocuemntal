@@ -28,9 +28,11 @@ class FirmarArchivoDirectoIndividual extends Controller
 {
     public function index(Request $request)   
     {
-
+ 
         $Contrasenia = $request->input('Contrasenia'); 
+        $ObservacionPortafolio = $request->input('ObservacionPortafolio'); 
         $Ruta  = $request->input('Ruta');
+        $RutaImagenFirma  = $request->input('RutaImagenFirma');
         $mousePosX = $request->input('mousePosX'); 
         $mousePosY = $request->input('mousePosY'); 
         $Pagina = $request->input('Pagina'); 
@@ -103,8 +105,17 @@ class FirmarArchivoDirectoIndividual extends Controller
             $Sha256 = hash('sha256', $PDF);
 
             $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
-            $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
-            $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+            if($RutaImagenFirma==null){
+
+                $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
+                $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+
+
+            }else{
+
+                $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('Ruta', '=', $RutaImagenFirma)->first();
+                $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+            }
 
             $contenidoBinario = file_get_contents($rutaImagen2);
             $imagenComoBase64 = base64_encode($contenidoBinario);
@@ -211,7 +222,8 @@ class FirmarArchivoDirectoIndividual extends Controller
              
                                     $DocumentoFirma             =DocumentoFirma::find($ID_DocumentoF);
                                     $DocumentoFirma->FechaFirma = date("Y/m/d");
-                                    $DocumentoFirma->Firmado    = 1;
+                                    $DocumentoFirma->Firmado    = 1; 
+                                    $DocumentoFirma->ObservacionFirma    = $ObservacionPortafolio;
                                     $DocumentoFirma->save();
 
                                     //CREAR IMAGEN DE PDF
@@ -267,6 +279,7 @@ class FirmarArchivoDirectoIndividual extends Controller
 
                                     $InterPortaFuncionario                  =InterPortaFuncionario::find($IPF_ID->IPF_ID);
                                     $InterPortaFuncionario->Estado          = 22;
+                                    //$InterPortaFuncionario->ObservacionE    = $ObservacionPortafolio;
                                     $InterPortaFuncionario->save(); 
   
 

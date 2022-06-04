@@ -104,19 +104,30 @@ class NuevoPortafolioODP extends Component
                 } 
     
                 $ID_OficinaPartes =  DB::table('LugarDeTrabajo') 
-                    ->leftjoin('OficinaPartes', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'OficinaPartes.ID_OP_LDT')
-                    ->select('Id_OP')
-                    ->where('ID_Funcionario_LDT', '=',$Funcionario)
-                    ->where('Estado_LDT', '=',1)
-                    ->first();
-     
+                ->leftjoin('OficinaPartes', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'OficinaPartes.ID_OP_LDT')
+                ->select('Id_OP')
+                ->where('ID_Funcionario_LDT', '=',$Funcionario)
+                ->where('Estado_LDT', '=',1)
+                ->first();
+ 
                 $DiasTotal= date("Y/m/d",strtotime("+ $this->Fecha_T days")); 
+            
+                $LugarDeTrabajo =  DB::table('LugarDeTrabajo')
+                ->select('ID_DepDirecciones_LDT')
+                ->where('ID_Funcionario_LDT', '=',$Funcionario) 
+                ->first();
+
+                $ODP_Origen =  DB::table('OficinaPartes')
+                ->select('Id_OP')
+                ->where('ID_OP_LDT', '=',$LugarDeTrabajo->ID_DepDirecciones_LDT) 
+                ->first();
                 
                 $Portafolio                      = new Portafolio;
                 $Portafolio->ID_Funcionario_Sol  = $Funcionario;
                 $Portafolio->Encargado           = 1;
                 $Portafolio->ODP                 = 1;
                 $Portafolio->ID_OficinaP         = $ID_OficinaPartes->Id_OP;
+                $Portafolio->ID_OP_LDT_P         = $LugarDeTrabajo->ID_DepDirecciones_LDT;
                 $Portafolio->NumeroInterno       = $NumeroInterno;
                 $Portafolio->Privado             = $this->Privado;
                 $Portafolio->Folio               = $this->Folio;
@@ -159,11 +170,12 @@ class NuevoPortafolioODP extends Component
                     ->select('Id_OP')  
                     ->where('ID_OP_LDT', '=', $LugarDeTrabajo->ID_DepDirecciones_LDT)->first();
 
-
+ 
                 $InterPortaFuncionario1                      = new InterPortaFuncionario;
                 $InterPortaFuncionario1->IPF_ID_Funcionario  = $Funcionario;
                 $InterPortaFuncionario1->IPF_Portafolio      = $Portafolio->ID_Documento_T;  
                 $InterPortaFuncionario1->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+                $InterPortaFuncionario1->ID_OP_LDT_P_IP      = $LugarDeTrabajo->ID_DepDirecciones_LDT;  
                 $InterPortaFuncionario1->FechaR              = date("Y/m/d");  
                 $InterPortaFuncionario1->Visto               = 0;  
                 $InterPortaFuncionario1->Estado              = 11;
@@ -188,6 +200,7 @@ class NuevoPortafolioODP extends Component
                     $InterPortaFuncionario->IPF_ID_Funcionario  = $DatosEncargado->ID_Funcionario_T;
                     $InterPortaFuncionario->IPF_Portafolio      = $Portafolio->ID_Documento_T;  
                     $InterPortaFuncionario->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+                    $InterPortaFuncionario->ID_OP_LDT_P_IP      = $LugarDeTrabajo->ID_DepDirecciones_LDT;  
                     $InterPortaFuncionario->FechaR              = date("Y/m/d");  
                     $InterPortaFuncionario->Visto               = 0;  
                     $InterPortaFuncionario->Estado              = 11;
@@ -197,7 +210,7 @@ class NuevoPortafolioODP extends Component
             
                 $ID_Documento_T  = $Portafolio->ID_Documento_T;    
                   
-                $this->NumeroIngresado=$NumeroInterno.''.date("y");     
+                $this->NumeroIngresado=$NumeroInterno.'-'.date("y");     
      
                 foreach ($this->PDF as $Archivos) {  
     
@@ -324,6 +337,7 @@ class NuevoPortafolioODP extends Component
                
             $this->ListaFuncionariosOP =  DB::table('Funcionarios')
             ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
+            ->where('ID_Funcionario_T', '!=', $Funcionario)
             ->where('ID_DepDirecciones_LDT', '=', $ID_DepDir)->get();
             $this->mostrar=1;
 

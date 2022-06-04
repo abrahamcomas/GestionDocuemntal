@@ -44,7 +44,6 @@
                     <div class="card-body"> 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
                                 <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                 <strong><div id="ver"></div></strong>
                             </div>

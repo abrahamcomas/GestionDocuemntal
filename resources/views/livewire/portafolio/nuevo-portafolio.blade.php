@@ -41,7 +41,7 @@
                 img.izquierda { 
                     float: left;
                 }
-                img.derecha { 
+                img.derecha {  
                     float: right; 
                 }
                 p {
@@ -61,16 +61,16 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 @include('messages')  
-                <div class="col">     
+                <div class="col">      
                     <div class="card bg-light mb-3">
-                        <div class="card-header"> 
-                            <h4><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></g4>
+                        <div class="text-muted" > 
+                            <br> 
+                            <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
+                            <hr>
                         </div>
                         <div class="card-body">	 
-                            <div id="Imagen" class="specific" style="height:30vh;width:35vw;"> 
-                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="260" height="260"/>
-                                    <h2><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}}  <br>{{$Cargo}}</strong></h2>
-                                </p>
+                            <div id="Imagen" class="specific"> 
+                                <p><img class="izquierda" src="{{URL::asset('Imagenes/escudo.png')}}" width="120" height="120"/><strong>Firmado digitalmente por<br> {{$Nombres}} {{$Apellidos}} <br> {{$Rut}} <br>{{$Oficina}} <br>{{$Cargo}}</strong></p>
                             </div>
                             <form method="POST" action="{{ route('ImagenCreada2') }}"> 
                                 @csrf  
@@ -91,8 +91,7 @@
                             </form>
                         </div> 
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD<br>
                         </div>
                     </div>
                 </div> 
@@ -101,32 +100,29 @@
         </div>     
     @else                                     
         @if($Pagina==0) 
-            <div class="row">
+            <div class="row"> 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">   
                         @include('messages')  
                         <div class="card bg-light mb-3"> 
-                            <div class="text-muted" >
-                                <br> 
-                                <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
-                                <hr>
-                            </div>
+                           
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-                                        <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
-                                        <strong><div id="ver"></div></strong>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                        <!-- <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                        <strong><div id="ver"></div></strong>-->
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                        <strong>IMPORTANTE <br> El sistema ingresara de forma automática un código QR en cada archivo subido en la parte inferior derecha de dicho archivo.</strong>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                                        <div class="text-muted">
+                                            <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
+                                        </div>
                                     </div>      
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                        <h6>PLANTILLAS (OPCIONAL)</h6>
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                                                 <div class="form-label-group">  
                                                     <select wire:model="ID_Plantilla" class="form-control" >
-                                                        <option value="0" selected>---SELECCIONAR---</option>
+                                                        <option value="0" selected>---PLANTILLAS---</option>
                                                         @foreach($plantillas as $post)
                                                             <option value="{{ $post->id_plantillas}}">
                                                                 {{ $post->nombre_plantilla }}
@@ -188,7 +184,7 @@
                                         <div class="form-label-group"> 
                                         <textarea class=" form-control" wire:model="Materia_T"></textarea>
                                         </div>		
-                                    </div>
+                                    </div> 
                                 </div>
                                 <br> 
                                 @if(Auth::user()->Jefe==1)
@@ -206,7 +202,7 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>	
                                 </div>	 
                                 @endif 
-                                @if(Auth::user()->Acta==1)
+                                <!--@if(Auth::user()->Acta==1)
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                    <h6><strong>NO INGRESAR CODIGO QR</strong></h6>
@@ -220,19 +216,16 @@
                                     </div>	
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>	
                                 </div>	 
-                                @endif
+                                @endif-->
                                 <br> 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                         <div class="form-group">
-                                            <!--<strong>Si su archivo es Word debe convertirlo a PDF, debido a que el sistema acepta solo archivos en dicho formato.</strong>-->
-                                            <!--<div class="text-muted">
-                                                <strong>Importante, los archivos subidos a gestión documental no deben tener firmas digitales avanzadas, debido a que el sistema anulara estas firmas.</strong>
-                                            </div>-->
+                                            <strong>Si su archivo es Word debe convertirlo a PDF, debido a que el sistema acepta solo archivos en dicho formato.</strong>
                                             <hr>
                                             <h6>AGREGAR ARCHIVO/S* <strong>PDF</strong></h6>
-                                            <div class="form-label-group"> 
+                                            <div class="form-label-group">
                                                 <input type="file" class="form-control" id="PDF" wire:model="PDF" multiple accept="application/pdf">
                                                 <h6><strong>(MÁXIMO 10 PDF)</strong></h6>
                                             </div> 
@@ -240,23 +233,28 @@
                                                 <center> 
                                                     <h5><strong>Subiendo documentos, espere por favor...</strong></h5>
                                                 </center>
-                                            </div> 
+                                            </div>  
                                         </div>
                                         <div class="btn-group" style=" width:100%;">
-                                            <button class="btn btn-primary" wire:click="Ingresar">CONTINUAR</button>
+                                            <button class="btn btn-primary" wire:click="Ingresar" id="boton">CONTINUAR</button>
                                         </div>
+                                        <center>
+                                            <div wire:loading wire:target="Ingresar">
+                                                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                                                <h5><strong>Verificando documentos, espere por favor...</strong></h5>                         
+                                            </div>  
+                                        </center> 
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>	
                                 </div>  
-                            </div> 
+                            </div>  
                             <div class=" text-muted">
                                 <strong>(*)OBLIGATORIO</strong>
                             </div>
                             <div class="card-footer text-muted">
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL <br>
-                                SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                SGD
                             </div>
                         </div>
                     </div> 
@@ -269,7 +267,7 @@
                         <div class="card bg-light mb-3">
                                 <div class="text-muted">
                                     <br> 
-                                    <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></center></h1>
+                                    <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA <strong> {{ $NumeroIngresado }} </strong></center></h1>
                                     <hr>
                                 </div> 
                                 <div class="card-body">
@@ -290,8 +288,7 @@
                                 <div class="card-footer text-muted">
                                 </div>
                                 <div class="card-footer text-muted">
-                                    GESTIÓN DOCUMENTAL <br>
-                                    SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                    SGD
                                 </div>
                             </div>
                         </div>	

@@ -80,7 +80,7 @@
             <center>
                 © {{ date("Y") }} Dep. de informática V0.1<br>
                 Municipalidad de Curicó<br>
-                GESTIÓN DOCUMENTAL
+                SGD
             </center>
         </div>
     </div> 

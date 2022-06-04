@@ -51,17 +51,17 @@
 @if($Detalles==0)    
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col">
+                <div class="col"> 
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>SOLICITUDES EXTERNAS</strong></center></h1>
+                            <h1><center>SOLICITUDES EXTERNAS <strong> {{ $OPDSelectNombre}}</strong></strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body">  
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-                                    <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>
+                                    <!--<button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" onmouseover="mostrar('Más información.');" onmouseout="ocultar()" width="25" height="25"/></button>-->
                                     <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                                     <strong><div id="ver"></div></strong>
                                 </div>
@@ -97,7 +97,7 @@
                         </div>    
                         @if($posts->count()) 
                             <div class="card-body table-responsive">
-                                <table table class="table table-hover">
+                                <table table class="table table-hover table-sm"> 
                                     <thead>  
                                         <tr>
                                             <th>ENVIADO POR</th>
@@ -237,8 +237,7 @@
                                 {{ $posts->links() }}
                             </div>	
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL <br>
-                                SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                SGD
                             </div>
                     </div>
                 </div>
@@ -252,7 +251,7 @@
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
                         <br> 
-                        <h1><center><strong>RECHAZAR PORTAFOLIO</strong></center></h1>
+                        <h2><center><strong>RECHAZAR PORTAFOLIO</strong></center></h2>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -276,8 +275,7 @@
                     <div class="card-footer text-muted"> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>
                 </div>
                 </div>
@@ -291,11 +289,11 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>ARCHIVOS</strong></center></h1>
+                            <h2><center><strong>ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
                                 <thead>  
                                     <tr>  
                                         <th>SUBIDO POR</th> 
@@ -311,7 +309,7 @@
                                                     {{ $post->Nombres  }} {{ $post->Apellidos }} 
                                                 </td>
                                                 <td>
-                                                    <textarea rows="3" style="width:100%;" disabled>   {{ $post->NombreDocumento }} </textarea>
+                                                    {{ $post->NombreDocumento }}
                                                 </td>
                                                 <td> 
                                                     <form method="POST" action="{{ route('MostrarPDF') }}">   
@@ -335,24 +333,56 @@
                             </table>  
                         </div> 
                     </div>
-                    <div class="card bg-light mb-3"> 
+                    <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>FIRMANTES</strong></center></h1>
+                            <h2><center><strong>COMENTARIO POR ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
+                                <thead>  
+                                    <tr>  
+                                        <th>FUNCIONARIO</th>
+                                        <th>NOMBRE ARCHIVO</th>
+                                        <th>COMENTARIO</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    @foreach($MostrarDocumentosComentarios as $post)
+                                            <tr>  
+                                                <td>
+                                                    {{$post->Nombres}} {{$post->Apellidos}}
+                                                </td>
+                                                <td>
+                                                    {{$post->NombreDocumento}}
+                                                </td>
+                                                <td>
+                                                    {{$post->ObservacionFirma}}
+                                                </td>
+                                            </tr>
+                                    @endforeach 
+                                </tbody> 
+                            </table> 
+                        </div> 
+                    </div>
+                    <div class="card bg-light mb-3"> 
+                        <div class="text-muted">
+                            <br> 
+                            <h2><center><strong>FIRMANTES</strong></center></h2>
+                            <hr>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table table class="table table-sm table-bordered">
                                 <thead>  
                                     <tr>
                                         <th>ESTADO</th>
                                         <th>NOMBRE</th>
                                         <th>OBSERVACIÓN ENVIADO</th>
-                                        <th>RESPUESTA</th>
                                         <th>FECHA RECIBIDO</th>  
                                         <th>VISTO</th>
                                     </tr>
-                                </thead>
+                                </thead> 
                                 <tbody> 
                                     @foreach($DestinoPortafolio as $post)
                                         <tr>
@@ -387,10 +417,7 @@
                                             </td> 
                                             <td>
                                                 {{$post->Observacion}}
-                                            </td>  
-                                            <td>
-                                                {{$post->ObservacionE}}
-                                            </td> 
+                                            </td>
                                         @php
                                             $numeroDiaR = date('d', strtotime($post->FechaR));
                                             $mesR = date('F', strtotime($post->FechaR));
@@ -462,7 +489,7 @@
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
                                 <thead>  
                                     <tr>
                                         <th>FUNCIONARIO</th>
@@ -490,7 +517,7 @@
                                 <tbody> 
                             </table> 
                             <hr>
-                            <table table class="table table-hover">
+                            <table table class="table table-sm table-bordered">
                                 <label><strong>ENVIAR A:</strong></label>
                                 <select wire:model="DestinoFuncionario" class="form-control" >
                                     <option value="" selected>---SELECCIONAR---</option>
@@ -522,14 +549,13 @@
                         @endif
                         <div class="card-footer text-muted">  
                             <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-success active" wire:click="ConfirmarFinalizarPortafolio">FINALIZAR SOLICITUD</button>
+                                <button class="btn btn-success active" wire:click="ConfirmarFinalizarPortafolio">CONFIRMAR SOLICITUD</button>
                             </div> 
                         </div>
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>   
                 </div>	
@@ -543,7 +569,7 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>NO DISPONIBLE</strong></center></h1>
+                            <h2><center><strong>NO DISPONIBLE</strong></center></h2>
                             <hr>
                         </div> 
                         <div class="card-body">
@@ -559,8 +585,7 @@
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div> 
                 </div>
@@ -580,7 +605,7 @@
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
                             <br> 
-                            <h1><center><strong>FINALIZAR SOLICITUD</strong></center></h1>
+                            <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
                             <hr>
                         </div>
                         <div class="card-body">
@@ -600,8 +625,7 @@
                         <div class="card-footer text-muted"> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -613,7 +637,7 @@
 @endif
 
 
-  
+   
  
 
         

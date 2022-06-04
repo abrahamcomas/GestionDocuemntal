@@ -5,5 +5,14 @@
 	</div>  
 @endsection  
 @section('scripts')
-
+<script type="text/javascript"> 
+    $(document).ready(function(){
+            $("#boton").click(function(event){
+                event.preventDefault();
+            $("#boton").prop('disabled',true)
+             
+            return false;
+            })
+        })
+</script> 
 @endsection 

@@ -1,15 +1,15 @@
 <?php
 
-return [
+return [ 
     'name' => 'LaravelPWA',
     'manifest' => [
-        'name' => env('APP_NAME', 'My PWA App'),
+        'name' => env('APP_NAME', 'SGD'),
         'short_name' => 'PWA',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',
-        'orientation'=> 'any',
+        'orientation'=> 'any maskable',
         'status_bar'=> 'black',
         'icons' => [  
             '72x72' => [
@@ -36,7 +36,7 @@ return [
                 'path' => '/images/icons/icon-192x192.png',
                 'purpose' => 'any maskable'
             ],
-            '384x384' => [
+            '384x384' => [ 
                 'path' => '/images/icons/icon-384x384.png',
                 'purpose' => 'any maskable'
             ],
@@ -64,7 +64,7 @@ return [
                 'url' => '/shortcutlink1',
                 'icons' => [
                     "src" => "/images/icons/icon-72x72.png",
-                    "purpose" => "any"
+                    "purpose" => "any maskable"
                 ]
             ],
             [

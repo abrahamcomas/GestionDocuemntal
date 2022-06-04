@@ -44,7 +44,7 @@
                     </div> 
                     <div class="card-body table-responsive">
                         @if($TipoDocumento->count())
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr> 
                                         <th>NOMBRE</th>
@@ -100,7 +100,7 @@
                         <button class="btn btn-primary" wire:click="Ingresar">INGRESAR</button>
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div> 
             </div>
@@ -127,7 +127,7 @@
                         @endif  
                     </div> 
                     <div class="card-body table-responsive">
-                            <table table class="table table-hover">
+                        <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr>  
                                         <th>NOMBRE</th>
@@ -154,7 +154,7 @@
                         <button class="btn btn-danger" wire:click="Volver">VOLVER</button>
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                       SGD
                     </div>
                 </div> 
             </div>

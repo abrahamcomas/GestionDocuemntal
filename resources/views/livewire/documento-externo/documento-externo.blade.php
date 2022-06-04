@@ -11,10 +11,14 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
+                    </center> 
                     <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>
-
                         <h5><strong> 
                             Ingresando firma masiva.<br>
                             Cantidad de archivos a firmar {{ $cuantos}}. <br>
@@ -24,7 +28,7 @@
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div> 
         </div> 
@@ -34,7 +38,11 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">  
             <div class="col"> 
                 <div class="card bg-light mb-3"> 
-                        <h4><strong>FIRMAR ARCHIVO EXTERNO</strong></h4>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>FIRMAR ARCHIVO EXTERNO</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">  
                                 <h5 style="color: #FF0C00;"><strong>Advertencia, las firmas electrónica agregadas anteriormente en este archivo, pueden no verse reflejadas en este visualizador, en caso de que dicho archivo contenga firmas electrónicas se recomienda hacer clic en.</strong></h5>
                                 <form method="POST" action="{{ route('VisualizarPDFExterno') }}">   
@@ -92,7 +100,7 @@
                                 </div>
                             </form> 
                         <div class="card-footer text-muted">
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>   
                     </div>     
                 </div>

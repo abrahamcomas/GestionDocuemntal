@@ -27,12 +27,17 @@ class IndexController extends Controller
                 $puntosFuncionario[] =['name' => $n['Nombres'], 'y'=>floatval($n['NumeroFunc'])];
             }
         }
-        else{
+        else{ 
 
             $Funci = FirmadosFunc::where('Mes_Func', $NumeroMes)->where('Anio_Func', date("Y")) ->orderBy('NumeroFunc', 'DESC')->take(10)->get();
             foreach($Funci as $n){
                 $puntosFuncionario[] =['name' => $n['Nombres'], 'y'=>floatval($n['NumeroFunc'])];
             } 
+
+            if(empty($puntosFuncionario)){
+
+                $puntosFuncionario=0;
+            }
         }
 
         $FirmadosDD = FirmadosDD::where('Mes_DD', date("n"))->where('Anio_DD', date("Y"))->orderBy('Numero_DD', 'DESC')->take(10)->get();
@@ -51,6 +56,11 @@ class IndexController extends Controller
                 $puntos[] =['name' => $navegador['Nombre'], 'y'=>floatval($navegador['Numero_DD'])];
             }
 
+            if(empty($puntos)){
+
+                $puntos=0;
+            }
+
         }
 
         $Anio = AnioDD::where('Anio_DD', date("Y"))->orderBy('Numero_DD', 'DESC')->take(10)->get(); 
@@ -67,6 +77,11 @@ class IndexController extends Controller
             foreach($A as $navegador){
                 
                 $puntosAnio[] =['name' => $navegador['Nombre'], 'y'=>floatval($navegador['Numero_DD'])];
+            }
+
+            if(empty($puntosAnio)){
+
+                $puntosAnio=0;
             }
         }
 

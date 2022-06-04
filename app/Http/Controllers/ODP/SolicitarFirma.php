@@ -45,7 +45,7 @@ class SolicitarFirma extends Controller
             $Pagina = 1; 
         }     
    
-        $Contenido='gestiondocumental.test/firmarsolicitud/'.$ID_LinkFirma.'/'.$token.'';
+        $Contenido='sgd.municipalidadcurico.cl/firmarsolicitud/'.$ID_LinkFirma.'/'.$token.'';
         
         $LinkFirma                   = LinkFirma::find($ID_LinkFirma);  
         $LinkFirma->mousePosX        = $mousePosX; 

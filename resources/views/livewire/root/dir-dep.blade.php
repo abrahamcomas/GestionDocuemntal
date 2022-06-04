@@ -44,7 +44,7 @@
                     </div> 
                     <div class="card-body table-responsive">
                         @if($DepDirecciones->count())
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr> 
                                         <th>NOMBRE</th>
@@ -101,7 +101,7 @@
                         <button class="btn btn-primary" wire:click="Ingresar">INGRESAR</button>
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div> 
             </div>
@@ -128,34 +128,34 @@
                         @endif  
                     </div> 
                     <div class="card-body table-responsive">
-                            <table table class="table table-hover">
-                                <thead>
-                                    <tr>  
-                                        <th>NOMBRE</th>
-                                        <th>ACTUALIZAR</th>
-                                        <th>EDITAR</th>
-                                    </tr> 
-                                </thead>    
-                                <tbody>
-                                    <tr>
-                                        <td> 
-                                            <input type="text" class="form-control" placeholder="{{$NombreEditado}}" disabled>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" wire:model="NombreNuevo">
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-warning active"  wire:click="ConfirmarEditar">EDITAR</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> 
+                        <table table class="table table-hover table-sm"> 
+                            <thead>
+                                <tr>  
+                                    <th>NOMBRE</th>
+                                    <th>ACTUALIZAR</th>
+                                    <th>EDITAR</th>
+                                </tr> 
+                            </thead>    
+                            <tbody>
+                                <tr>
+                                    <td> 
+                                        <input type="text" class="form-control" placeholder="{{$NombreEditado}}" disabled>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" wire:model="NombreNuevo">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning active"  wire:click="ConfirmarEditar">EDITAR</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
                     </div>   
                     <div class="btn-group" style=" width:100%;">
                         <button class="btn btn-danger" wire:click="Volver">VOLVER</button>
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div> 
             </div>

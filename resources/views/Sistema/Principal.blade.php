@@ -17,7 +17,7 @@
     elseif($mesFC=='April'){
         $mesFC= 'Abril';
     }
-    elseif($mesFC=='May'){
+    elseif($mesFC=='May'){ 
         $mesFC= 'Mayo';
     }
     elseif($mesFC=='June'){
@@ -42,7 +42,7 @@
         $mesFC= 'Diciembre'; 
     } 
 @endphp
-<div class="container-fluid">  
+<div class="container-fluid">                                 
     @if(Auth::user()->Contrato==0)
         <div class="card bg-light mb-3">
             <div class="text-muted" >

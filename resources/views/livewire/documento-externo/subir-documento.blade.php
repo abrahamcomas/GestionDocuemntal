@@ -57,7 +57,7 @@
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div> 
         </div> 
@@ -122,7 +122,7 @@
                                 </form>
                             </div> 
                             <div class="card-footer text-muted">
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div>
                     </div> 
@@ -137,13 +137,15 @@
                     @include('messages')  
                     <div class="col"> 
                         <div class="card bg-light mb-3">
-                                <div class="card-header"> 
-                                    <h4><strong>FIRMAR ARCHIVO EXTERNO</strong></h4>
+                                <div class="text-muted" >
+                                    <br> 
+                                    <h1><center><strong>FIRMAR ARCHIVO EXTERNO</strong></center></h1>
+                                    <hr>
                                 </div>
                                 <div class="card-body"> 
                                     <h5><strong>Importante</strong></h5>
                                     <div class="text-muted"> 
-                                        <h5>El archivo firmado en este módulo no se almacena en el sistema gestión documental.</h5>
+                                        <h5>El archivo firmado en este módulo no se almacena en el Sistema Gestión Documental.</h5>
                                     </div>     
                                     @if($Subido==0)    
                                     <div class="form-group"> 
@@ -197,7 +199,7 @@
                                     </center>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    GESTIÓN DOCUMENTAL
+                                    SGD
                                 </div>   
                             </div>     
                         </div>

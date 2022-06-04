@@ -29,6 +29,7 @@ class FirmaMasivaController extends Controller
     { 
 
         $Ruta  = $request->input('Ruta');
+        $RutaImagenFirma  = $request->input('RutaImagenFirma');
 
         $DOC_ID_Documento =DB::table('DestinoDocumento')->Select('DOC_ID_Documento')->where('Ruta_T', '=', $Ruta)->first();
 
@@ -113,8 +114,18 @@ class FirmaMasivaController extends Controller
                 $Sha256 = hash('sha256', $PDF);
     
                 $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;   
-                $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
-                $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+
+                if($RutaImagenFirma==null){
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('id_Funcionario_T', '=', $ID_Funcionario)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+    
+
+                }else{
+
+                    $rutaImagen=DB::table('ImagenFirma')->Select('Ruta')->where('Ruta', '=', $RutaImagenFirma)->first();
+                    $rutaImagen2="Firmas/".$rutaImagen->Ruta;
+                }
     
                 $contenidoBinario = file_get_contents($rutaImagen2);
                 $imagenComoBase64 = base64_encode($contenidoBinario);

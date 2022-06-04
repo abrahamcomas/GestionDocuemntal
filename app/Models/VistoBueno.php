@@ -15,13 +15,16 @@ class VistoBueno extends Model
 
     //pongo los caampos para permitir insert multiple
     protected $fillable=[
+        "Anio",
         "ID_OP_E",
+        "ID_OP_LDT_P_VE",
         "ID_OP_R",
+        "ID_OP_LDT_P_VR",
         "ID_Documento",
         "Estado",
         "Visto",
         "FechaVisto",
-        "Fecha",
+        "Fecha", 
         "ObservacionE",
         "ObservacionR"
     ]; 

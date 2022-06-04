@@ -18,11 +18,11 @@
                     <br>
                     <div class="row"> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Principal</strong>   
+                            <strong>&nbsp;Principal</strong>   
                             <input type="color" class="form-control" value="{{ $ColorPrincipal }}" name="ColorPrincipal">
                         </div> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Secundario</strong>
+                            <strong>&nbsp;Secundario</strong>
                             <input type="color"  class="form-control" value="{{ $ColorSecundario }}" name="ColorSecundario">  
                         </div>
                     </div>
@@ -31,11 +31,11 @@
                     <br>
                     <div class="row"> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Principal</strong>
+                            <strong>&nbsp;Principal</strong>
                             <input type="color" class="form-control" value="{{ $BodyPrincipal }}" name="BodyPrincipal">
                         </div> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Secundario</strong>
+                            <strong>&nbsp;Secundario</strong>
                             <input type="color"  class="form-control" value="{{ $BodySecundario }}" name="BodySecundario">  
                         </div>
                     </div>
@@ -44,11 +44,11 @@
                     <br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Letra seleccionada</strong>
+                            <strong>&nbsp;Letra seleccionada</strong>
                             <input type="color" class="form-control" value="{{ $FocoNoSelecLetra }}" name="FocoNoSelecLetra">
                         </div> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Foco sin seleccionar</strong>
+                            <strong>&nbsp;Foco sin seleccionar</strong>
                             <input type="color" class="form-control" value="{{ $FocoNoSelecFondo }}" name="FocoNoSelecFondo">
                         </div>
                     </div>
@@ -57,11 +57,11 @@
                     <br>
                     <div class="row"> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Letra (menú desplegable)</strong>
+                            <strong>&nbsp;Letra (menú desplegable)</strong>
                             <input type="color" class="form-control" value="{{ $LetraLista }}" name="LetraLista">
                         </div> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Letra principal</strong>
+                            <strong>&nbsp;Letra principal</strong>
                             <input type="color" class="form-control" value="{{ $LetraPrincipal }}" name="LetraPrincipal">
                         </div>
                     </div>
@@ -70,11 +70,11 @@
                     <br>
                     <div class="row"> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Letra lista</strong>
+                            <strong>&nbsp;Letra lista</strong>
                             <input type="color" class="form-control" value="{{ $FocoSelecLetra }}" name="FocoSelecLetra">
                         </div> 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                            <strong>Principal lista</strong>
+                            <strong>&nbsp;Principal lista</strong>
                             <input type="color" class="form-control" value="{{ $FocoSelecFondo }}" name="FocoSelecFondo">
                         </div> 
                     </div>
@@ -93,7 +93,7 @@
                     </div>
                 </form>
                 <div class="card-footer text-muted">
-                    GESTION DOCUMENTAL
+                    SGD
                 </div>
             </div>
         </div>	

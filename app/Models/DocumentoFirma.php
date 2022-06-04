@@ -18,7 +18,8 @@ class DocumentoFirma extends Model
            "ID_Funcionario",
            "ID_Documento",
            "FechaFirma",
-           "Firmado"
+           "Firmado",
+           "ObservacionFirma"
        ];  
 
        public $timestamps = false;

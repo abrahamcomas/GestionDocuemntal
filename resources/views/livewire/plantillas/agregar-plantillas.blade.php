@@ -3,10 +3,12 @@
     <div class="row">  
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
-                <div class="card bg-light mb-3"> 
-                    <div class="card-header">
-                        <h4><strong>AGREGAR PLANTILLAS</h4></strong>
-                    </div> 
+                <div class="card bg-light mb-3">
+                    <div class="text-muted" >
+                        <br> 
+                        <h1><center><strong>AGREGAR PLANTILLAS</strong></center></h1>
+                        <hr>
+                    </div>
                     <div class="card-body">
                         <div class="row">  
                             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
@@ -87,7 +89,7 @@
                         <button class="btn btn-primary" wire:click="IngresarPalntilla">INGRESAR</button>
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div> 
             </div>

@@ -21,9 +21,11 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"> 
 			<div class="card bg-light mb-3">
-				<div class="card-header"> 
-					<center><strong><h5>CAMBIAR LUGAR DE TRABAJO</h5></strong></center> 
-				</div>
+                <div class="text-muted" >
+                    <br> 
+                    <h1><center><strong>CAMBIAR LUGAR DE TRABAJO</strong></center></h1>
+                    <hr>
+                </div>
 				<div class="card-body">
                 <div class="card-footer text-muted" >
                     <center><p><strong>INPORTANTE:</strong> Al cambiarse de lugar de trabajo su sesión se cerrara automáticamente y quedara a espera de aprobación de ingreso por parte de la ODP seleccionada.</p></center>
@@ -38,19 +40,24 @@
                         <div class="form-group">
                         <h6>LUGAR DE TRABAJO*</h6>				                    
                             <div class="form-label-group">   
+                               <center> 
                                 <select class='mi-selector' name='Lugar'>
                                     <option value="" selected>---SELECCIONAR---</option>        
                                     @foreach($Lugares as $post)
                                         <option value="{{ $post->ID_DepDir}}">{{ $post->Nombre_DepDir}}</option>
                                 @endforeach         
                                 </select> 
+                                </center>
                             </div>
-                        </div>
+                        </div> 
 						<div class="btn-group" style=" width:100%;">	
 							<button type="submit" class="btn btn-info active" >Aceptar</button>
 						</div>
 					</form>
 				</div>
+                <div class="card-footer text-muted"> 
+                    SGD
+                </div>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>

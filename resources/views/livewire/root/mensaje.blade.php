@@ -43,7 +43,7 @@
                     </div> 
                     <div class="card-body table-responsive">
                         @if($Mensaje->count())
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr> 
                                         <th>MENSAJE</th>
@@ -85,7 +85,7 @@
                         {{ $Mensaje ->links() }}
                     </div> 
                     <div class="card-body table-responsive">
-                        <table table class="table table-hover">   
+                        <table table class="table table-hover table-sm">   
                             <tbody>
                                 <tr>
                                     <td> 
@@ -99,7 +99,7 @@
                         </table>  
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL
+                        SGD
                     </div>
                 </div> 
             </div>

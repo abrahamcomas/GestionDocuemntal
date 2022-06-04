@@ -16,11 +16,14 @@ use App\Models\LinkFirma11;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviarLink11;   
 use setasign\Fpdi\Fpdi;
+use App\Models\Portafolio;
+use App\Models\DocumentoFirma;
+use App\Models\DestinoDocumento;
 
 class Solicitudes extends Component
 {
 
-    use WithPagination;  
+    use WithPagination;   
     use WithFileUploads; 
     public $search;  
     public $perPage = 5;
@@ -60,8 +63,8 @@ class Solicitudes extends Component
     
          
      
-                $codificado = Storage::disk('PDF11')->delete($ID_OficinaPartes->Ruta_T);
-                $codificado = Storage::disk('ImagenPDF11')->delete($ID_OficinaPartes->Ruta_T);
+                $codificado = Storage::disk('PDF')->delete($ID_OficinaPartes->Ruta_T);
+                $codificado = Storage::disk('ImagenPDF')->delete($ID_OficinaPartes->Ruta_T);
     
                 
  
@@ -156,6 +159,194 @@ class Solicitudes extends Component
 
 
     }
+    
+
+    public $TituloSolicitud;
+    public $NombreDocumento11;
+    public $Ruta_T11;
+    public $ID_Documento_TSol;
+    public function CrearSolicitud($ID_Documento_T,$ID_Funcionario_T){
+
+        $Datos =  DB::table('Portafolio11')
+        ->leftjoin('DestinoDocumento11', 'Portafolio11.ID_Documento_T', '=', 'DestinoDocumento11.DOC_ID_Documento')
+        ->where('ID_Documento_T', '=', $ID_Documento_T)    
+        ->first();
+
+        $this->TituloSolicitud = $Datos->Titulo_T;
+        $this->NombreDocumento11 = $Datos->NombreDocumento;
+        $this->Ruta_T11 = $Datos->Ruta_T;
+
+        $this->ID_Documento_TSol = $ID_Documento_T;
+
+        $this->Detalles=4; 
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+    
+    public $Folio,$Fecha_T,$Materia_T;
+
+    public $NumeroIngresado;
+    
+    public $Acta=0;
+
+    public $Pagina=0; 
+
+    protected $rules = ['Fecha_T' => 'required']; 
+ 
+	protected $messages = ['Fecha_T.required' =>'El campo "Dias para finalizar" es obligatorio.'];
+
+    public function Ingresar()
+    {   
+        $this->validate(); 
+            $Funcionario  =  Auth::user()->ID_Funcionario_T;
+
+            $AnioActual = date("y");  
+
+            $Numero = DB::table('Portafolio')
+                    ->select('NumeroInterno','Anio')
+                    ->orderBy('ID_Documento_T', 'DESC')->first();
+
+            if ($Numero==null) {
+                $NumeroInterno  = '0';
+                $Anio        = $AnioActual; 
+    
+            }
+            else{
+                $NumeroInterno  = $Numero->NumeroInterno;
+                $Anio           = $Numero->Anio; 
+            }
+             
+
+            if ($Anio==$AnioActual){ 
+                    
+                $NumeroInterno=$NumeroInterno+1;
+            }
+            else{ 
+                
+                $NumeroInterno=1;
+            } 
+
+            $ID_OficinaPartes =  DB::table('LugarDeTrabajo') 
+                ->leftjoin('OficinaPartes', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'OficinaPartes.ID_OP_LDT')
+                ->select('Id_OP')
+                ->where('ID_Funcionario_LDT', '=',$Funcionario)
+                ->where('Estado_LDT', '=',1)
+                ->first();
+  
+            $DiasTotal= date("Y/m/d",strtotime("+ $this->Fecha_T days")); 
+
+            $Portafolio11                      = Portafolio11::find( $this->ID_Documento_TSol);
+            $Portafolio11->Solicitud            = 1;
+            $Portafolio11->save(); 
+            
+            $Portafolio                      = new Portafolio;
+            $Portafolio->ID_Funcionario_Sol  = $Funcionario;
+            $Portafolio->Encargado           = 0;
+            $Portafolio->ODP                 = 0;
+            $Portafolio->ID_OficinaP         = $ID_OficinaPartes->Id_OP;
+            $Portafolio->NumeroInterno       = $NumeroInterno;
+            $Portafolio->Privado             = 0;
+            $Portafolio->Folio               = $this->Folio;
+            $Portafolio->Estado_T            = 1;
+            $Portafolio->Titulo_T            = $this->TituloSolicitud;
+            $Portafolio->Tipo_T              = 13;
+            $Portafolio->Fecha_T             = date("Y/m/d");
+            $Portafolio->Anio                = date("y");
+            $Portafolio->FechaUrgencia_T     = $DiasTotal;
+            $Portafolio->Observacion_T       = $this->Materia_T;
+            $Portafolio->save();  
+        
+            $ID_Documento_T  = $Portafolio->ID_Documento_T;    
+             
+            $this->NumeroIngresado=$NumeroInterno.''.date("y");     
+
+            $token = md5($this->NombreDocumento11);
+
+            $DestinoDocumento                   = new DestinoDocumento;
+            $DestinoDocumento->ID_FSube         = $Funcionario;
+            $DestinoDocumento->DOC_ID_Documento = $ID_Documento_T;
+            $DestinoDocumento->Token            = $token; 
+            $DestinoDocumento->NombreDocumento  = $this->NombreDocumento11; 
+            $DestinoDocumento->Ruta_T           = $this->Ruta_T11;   
+            $DestinoDocumento->save(); 
+
+            $DocumentoFirma                  = new DocumentoFirma;
+            $DocumentoFirma->ID_Funcionario  = $Funcionario;
+            $DocumentoFirma->ID_Documento    = $DestinoDocumento->ID_DestinoDocumento;  
+            $DocumentoFirma->Firmado         = 1;  
+            $DocumentoFirma->save(); 
+
+
+            $this->Pagina=1; 
+        
+    } 
+
+    public function Volver()
+    {  
+        $this->Pagina=0;
+    }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public $Funcionarios;
     public $NombreEncargado;

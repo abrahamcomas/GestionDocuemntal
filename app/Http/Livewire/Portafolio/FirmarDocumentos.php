@@ -392,7 +392,7 @@ class FirmarDocumentos extends Component
 
                 $DestinoDocumento                    = new DestinoDocumento;
                 $DestinoDocumento->ID_FSube         = $Funcionario;
-                $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T;
+                $DestinoDocumento->DOC_ID_Documento = $this->ID_Documento_T; 
                 $DestinoDocumento->Token            = $token; 
                 $DestinoDocumento->NombreDocumento  = $Archivos->getClientOriginalName(); 
                 $DestinoDocumento->Ruta_T           = $codificado;   
@@ -506,7 +506,7 @@ class FirmarDocumentos extends Component
  
             $DocumentoFirma             =DocumentoFirma::find($ID_OficinaPartes->ID_DocumentoFirma);
             $DocumentoFirma->FechaFirma = date("Y/m/d");
-            $DocumentoFirma->Firmado    = 1;
+            $DocumentoFirma->Firmado    = 4;//OMITIR FIRMA
             $DocumentoFirma->save();
 
 
@@ -518,7 +518,7 @@ class FirmarDocumentos extends Component
             ->where('ID_Documento', '=',$this->DocumentoFirmado)
             ->first();
     
-             
+              
             $pdf = new FPDI(); 
             $pagecount =  $pdf->setSourceFile('PDF'.'/'.$Ruta_T->Ruta_T);
             for($i =1; $i<=$pagecount; $i++){
@@ -529,7 +529,7 @@ class FirmarDocumentos extends Component
                 $pdf->useTemplate($template,0, 0, 215, 280, true);
                
             }
-
+ 
             $pdf->Output('F', 'ImagenPDF/'.$Ruta_T->Ruta_T);
             //FIN CREAR IMAGEN DE PDF
 
@@ -539,11 +539,11 @@ class FirmarDocumentos extends Component
             session()->flash('message2', 'Contraseña incorrecta.');  
         }
 
-        $this->Contrasenia='';   
+        $this->ContraseniaFirmado='';   
 
     }
 
-
+ 
 
 
 
@@ -676,7 +676,7 @@ class FirmarDocumentos extends Component
 
 
 
-
+ 
 
 
     public $MensajeRechazo;
@@ -685,10 +685,12 @@ class FirmarDocumentos extends Component
 
         $ObservacionE =  DB::table('InterPortaFuncionario')
         ->select('ObservacionE')
+        ->orderBy('IPF_ID', 'desc')
         ->where('IPF_Portafolio', '=',$ID_Documento_T)->first();
 
         $this->MensajeRechazo = $ObservacionE->ObservacionE;
 
+        session()->flash('message2', $this->MensajeRechazo);
 
         $this->Mostrar=1;
 
@@ -739,26 +741,21 @@ class FirmarDocumentos extends Component
         ->select('ID_DepDirecciones_LDT')  
         ->where('ID_Funcionario_T', '=', $ID_Funcionario)->first();
 
-
-
         $OficinaPartes =  DB::table('OficinaPartes')
-        ->select('Id_OP')  
-        ->where('ID_OP_LDT', '=', $LugarDeTrabajo->ID_DepDirecciones_LDT)->first();
+        ->select('Id_OP','ID_OP_LDT')  
+        ->where('ID_OP_LDT', '=', $LugarDeTrabajo->ID_DepDirecciones_LDT)->where('Original', '=', 1)->first(); 
  
     
         $InterPortaFuncionario                      = new InterPortaFuncionario;
         $InterPortaFuncionario->IPF_ID_Funcionario  = $this->ID_Jefatura;
         $InterPortaFuncionario->IPF_Portafolio      = $this->ID_Documento_T2;  
         $InterPortaFuncionario->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+        $InterPortaFuncionario->ID_OP_LDT_P_IP      = $OficinaPartes->ID_OP_LDT;  
         $InterPortaFuncionario->FechaR              = date("Y/m/d");  
         $InterPortaFuncionario->Visto               = 0;  
         $InterPortaFuncionario->Estado              = 11;
         $InterPortaFuncionario->save(); 
          
-                                
-        
-      
-        
         
         $ID_OficinaPartes =  DB::table('DestinoDocumento') 
                                 ->select('ID_DestinoDocumento')
@@ -907,10 +904,6 @@ class FirmarDocumentos extends Component
             ->leftjoin('DepDirecciones', 'LugarDeTrabajo.ID_DepDirecciones_LDT', '=', 'DepDirecciones.ID_DepDir')
             ->select('Nombre_DepDir')
             ->where('ID_Funcionario_T', '=', $ID_Funcionario)
-            ->first(),
-            'DatosOficinaPartes' =>  DB::table('OficinaPartes') 
-            ->leftjoin('Funcionarios', 'OficinaPartes.id_Funcionario_OP', '=', 'Funcionarios.ID_Funcionario_T') 
-            ->select("Nombres","Apellidos")->where('ID_OP_LDT', '=',$ID_DepDir)
             ->first(),
         ]);
     }

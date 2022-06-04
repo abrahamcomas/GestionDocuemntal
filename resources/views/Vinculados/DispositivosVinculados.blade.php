@@ -39,9 +39,9 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer text-muted">
-
-                    </div>	
+                    <div class="card-footer text-muted"> 
+                        SGD
+                    </div>
                 </div> 
             </div> 
 		</div>

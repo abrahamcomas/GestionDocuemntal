@@ -15,8 +15,11 @@ class DocFunc extends Model
 
     //pongo los caampos para permitir insert multiple
     protected $fillable=[
+        "Anio",
         "ID_OP_E",
+        "ID_OP_LDT_P_DE",
         "ID_OP_R",
+        "ID_OP_LDT_P_DR",
         "ID_Documento",
         "ActivoEnvio",
         "FechaR",

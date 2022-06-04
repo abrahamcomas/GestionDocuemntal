@@ -16,7 +16,7 @@ class Externos extends Component
 { 
     public $Ayuda=0; 
     
-    public function Ayuda(){
+    public function Ayuda(){ 
         $this->Ayuda = 1;
     }
     public function VolverAyuda(){
@@ -127,23 +127,34 @@ class Externos extends Component
         ->where('IPF_Portafolio', '=', $this->ID_Documento_T) 
         ->where('Estado', '!=', 11) 
         ->where('Estado', '!=', 22)   
-        ->get();
+        ->get(); 
 
         $Numeros = count($IngresadoInterPortaFuncionario);
 
-       if($Numeros==0){
+       if($Numeros==0){ 
   
             $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
 
-            $OficinaPartes =  DB::table('Funcionarios')
-            ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-            ->select('Id_OP')  
-            ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first();
-        
+            $OficinaPartes =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura') 
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)
+            ->where('Original', '=', 1)->first(); 
+    
+            if(empty($OficinaPartes)){
+    
+                $OficinaPartes =  DB::table('OficinaPartes')
+                ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+                ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+                ->where('ActivoODP', '=', 2)->first(); 
+    
+            } 
+         
             $InterPortaFuncionario                      = new InterPortaFuncionario;
             $InterPortaFuncionario->IPF_ID_Funcionario  = $this->DestinoFuncionario;
             $InterPortaFuncionario->IPF_Portafolio      = $this->ID_Documento_T;  
             $InterPortaFuncionario->IPF_Id_OP           = $OficinaPartes->Id_OP;  
+            $InterPortaFuncionario->ID_OP_LDT_P_IP      = $OficinaPartes->ID_OP_LDT;  
             $InterPortaFuncionario->FechaR              = date("Y/m/d");  
             $InterPortaFuncionario->Visto               = 0;  
             $InterPortaFuncionario->Estado              = 0;  
@@ -190,7 +201,7 @@ class Externos extends Component
         
         }
     
-    }  
+    }   
 
     public $ID_IntDocFunc;
 
@@ -294,7 +305,7 @@ class Externos extends Component
             $this->Detalles=0;
 
         }else{
-            session()->flash('message4', 'Para finalizar un portafolio debe existir al menos un firmante, y que haya aceptado o rechazado tal portafolio.');  
+            session()->flash('message4', 'Para finalizar una solicitud debe existir al menos un firmante, y que haya aceptado o rechazado.');  
         }
   
     }
@@ -387,22 +398,44 @@ class Externos extends Component
     protected $paginationTheme = 'bootstrap'; 
 
     public $Orden;
+    public $OPDSelectNombre; 
     public function render()
     {
+
+        
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
+
+        $OPDSelect =  DB::table('OficinaPartes')
+        ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+        ->select('Nombre_DepDir')
+        ->where('id_Funcionario_OP', '=',$ID_Funcionario)
+        ->where('ActivoODP', '=',2)
+        ->first();
+
+        $this->OPDSelectNombre = $OPDSelect->Nombre_DepDir;
+
 
         if($this->Orden==1){
             $Orden='ASC';
         }else{
-            $Orden='DESC';
+            $Orden='DESC'; 
         }
-
-
-        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;
-        $OficinaPartes =  DB::table('Funcionarios')
-        ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-        ->select('Id_OP','ID_OP_LDT')  
-        ->where('id_Funcionario_OP', '=', $ID_Funcionario)->first();
         
+        $Id_OficinaParte =  DB::table('OficinaPartes')
+        ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+        ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+        ->where('ActivoODP', '=', 2)
+        ->where('Original', '=', 1)->first(); 
+
+        if(empty($Id_OficinaParte)){
+
+            $Id_OficinaParte =  DB::table('OficinaPartes')
+            ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
+            ->where('id_Funcionario_OP', '=', $ID_Funcionario)
+            ->where('ActivoODP', '=', 2)->first(); 
+
+        } 
+
         return view('livewire.o-d-p.externos',[  
 			'posts' =>  DB::table('Portafolio') 
             ->leftjoin('Funcionarios', 'Portafolio.ID_Funcionario_Sol', '=', 'Funcionarios.ID_Funcionario_T')
@@ -418,16 +451,16 @@ class Externos extends Component
             })  
             ->where('ActivoEnvio', '=', 1) 
             ->where('Estado', '=', 0) 
-            ->where('Estado_T', '=', 2)   
-            ->where('ID_OP_R', '=', $OficinaPartes->Id_OP)   
+            ->where('Estado_T', '=', 2)    
+            ->where('ID_OP_LDT_P_DR', '=', $Id_OficinaParte->ID_OP_LDT)   
             ->where('DocFunc.ActivoEnvio', '=', 1)    
-            ->orderBy('Fecha_T', $Orden) 
+            ->orderBy('Fecha_T', $Orden)  
             ->paginate($this->perPage), 
   
             'FuncionariosAsig' =>  DB::table('LugarDeTrabajo') 
             ->leftjoin('Funcionarios', 'LugarDeTrabajo.ID_Funcionario_LDT', '=', 'Funcionarios.ID_Funcionario_T')
             ->select('ID_Funcionario_T','Nombres','Apellidos') 
-            ->where('ID_DepDirecciones_LDT', '=',$OficinaPartes->ID_OP_LDT)   
+            ->where('ID_DepDirecciones_LDT', '=', $Id_OficinaParte->ID_OP_LDT)   
             ->where('Estado_LDT', '=', 1) 
             ->where('Subrogante', '=', 0) 
             ->get(),
@@ -437,28 +470,35 @@ class Externos extends Component
             ->leftjoin('Funcionarios', 'DestinoDocumento.ID_FSube', '=', 'Funcionarios.ID_Funcionario_T')
             ->select('Privado','ID_FSube','NombreDocumento','ID_DestinoDocumento','Nombres','Apellidos')
             ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)->get(),
+
+            'MostrarDocumentosComentarios' =>  DB::table('DestinoDocumento')  
+            ->leftjoin('DocumentoFirma', 'DestinoDocumento.ID_DestinoDocumento', '=', 'DocumentoFirma.ID_Documento')
+            ->leftjoin('Funcionarios', 'DocumentoFirma.ID_Funcionario', '=', 'Funcionarios.ID_Funcionario_T')
+            ->leftjoin('LugarDeTrabajo', 'DocumentoFirma.ID_Funcionario', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
+            ->select('NombreDocumento','ObservacionFirma','Nombres','Apellidos')
+            ->where('ID_DepDirecciones_LDT', '=', $Id_OficinaParte->ID_OP_LDT)
+            ->where('DOC_ID_Documento', '=',$this->ID_Documento_T)->get(),
+
+
              
             'DestinoPortafolio' =>  DB::table('InterPortaFuncionario') 
             ->leftjoin('Funcionarios', 'InterPortaFuncionario.IPF_ID_Funcionario', '=', 'Funcionarios.ID_Funcionario_T')
             ->select('ID_Funcionario_T','FechaR','Visto','Estado','Observacion','ObservacionE','IPF_ID','Nombres','Apellidos') 
             ->where('Estado', '!=', 11) 
             ->where('Estado', '!=', 22)    
-            ->where('IPF_Id_OP', '=',$OficinaPartes->Id_OP)   
+            ->where('ID_OP_LDT_P_IP', '=',$Id_OficinaParte->ID_OP_LDT)   
             ->where('IPF_Portafolio', '=',$this->ID_Documento_T)  
             ->get(),
 
-            'DatosOficinaPartes' =>  DB::table('OficinaPartes') 
-            ->leftjoin('Funcionarios', 'OficinaPartes.id_Funcionario_OP', '=', 'Funcionarios.ID_Funcionario_T') 
-            ->select("Nombres","Apellidos")
-            ->first(),
 
 
+ 
             'Subrogantes' =>  DB::table('Subrogante') 
             ->leftjoin('Funcionarios AS FuncionariosS', 'Subrogante.Id_Subrogante_S', '=', 'FuncionariosS.ID_Funcionario_T')
             ->leftjoin('Funcionarios AS FuncionariosO', 'Subrogante.Id_Subrogante_O', '=', 'FuncionariosO.ID_Funcionario_T')
             ->leftjoin('LugarDeTrabajo', 'FuncionariosO.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
             ->select('Id_subrogante','FuncionariosS.ID_Funcionario_T as ID_Funcionario_TS','FuncionariosS.Nombres as NombresS','FuncionariosS.Apellidos as ApellidosS','FuncionariosO.Nombres as NombresO','FuncionariosO.Apellidos as ApellidosO') 
-            ->where('ID_DepDirecciones_LDT', '=',$OficinaPartes->ID_OP_LDT)  
+            ->where('ID_DepDirecciones_LDT', '=', $Id_OficinaParte->ID_OP_LDT)  
             ->where('Estado_LDT', '=', 1) 
             ->where('Subrogante.Activo', '=', 1) 
             ->get(),

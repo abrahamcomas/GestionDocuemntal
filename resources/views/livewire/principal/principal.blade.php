@@ -156,7 +156,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">     
                         <article class="card">
                             <div class="card__corner">
-                                <div class="card__corner-triangle"></div>
+                                <div class="card__corner-triangle"></div> 
                             </div>      
                             <div style="background: linear-gradient(10deg, #272C2E, #A4243F);">
                                 <br>
@@ -215,12 +215,37 @@
                     </div>
                 </div>
             </div>
-        @if(Auth::user()->Secretaria==1)
-            <div class="text-muted">
+        @if(Auth::user()->Secretaria==1) 
+            <div class="text-muted"> 
                 <br> 
-                <h1><center><strong>SECRETARIA</strong></center></h1>
-                <hr>
+                <h1><center><strong>ODP {{ $OPDSelectNombre}} </strong></center></h1>
+                <hr> 
             </div>
+            <div class="row"> 
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                    <div class="form-label-group">  
+                        <select wire:model="OPD" class="form-control" >
+                            <option value="0" selected>---CAMBIAR ODP---</option>
+                            @foreach($ListaODP as $post)
+                                <option value="{{ $post->Id_OP}}">
+                                    {{ $post->Nombre_DepDir }}
+                                </option>
+                            @endforeach  
+                        </select>  
+                    </div>
+                    <br>
+                    <center>
+                    <div class="btn-group" style=" width:50%;">	
+                        <button type="button" class="btn btn-success active" wire:click="CambiarOPD">
+                            CAMBIAR
+                        </button>          
+                    </div> 	 
+                </center>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
+            </div>
+            <hr>
             <div class="card-body"> 
                 <div class="row">  
                     <div class="col-sm-3">  
@@ -343,15 +368,6 @@
                 <center><h7>{{ $diaFC }} {{ $numeroDiaFC }} de {{ $mesFC }} {{ $anioFC }}</h7><br></center>
             </div> 
         </div>
-
-
-
-
-
-
-
-
-
 
 
 

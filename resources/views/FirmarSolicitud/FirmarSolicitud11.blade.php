@@ -36,13 +36,16 @@
         <div class="col">
             <div class="card bg-light mb-3" >
                 <div class="card-body">
-                    <center> 
-                        <img src="{{URL::asset('Imagenes/12.gif')}}" width="220" height="220"/>
-                        <h5><strong>Firmando archivo/s, espere por favor...</strong></h5>
+                    <center>
+                        <br>
+                        <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                        <hr>
+                        <h5><strong>Firmando archivos, espere por favor...</strong></h5>           
+                        <hr>       
                     </center>
                 </div>
                 <div class="card-footer text-muted">
-                    GESTIÓN DOCUMENTAL
+                    SGD
                 </div>
             </div> 
         </div>  
@@ -75,7 +78,7 @@
                                                 {{$post->NombreDocumento  }} 
                                             </td>
                                             <td>
-                                                <form method="POST" action="{{ route('MostrarPDF11') }}">   
+                                                <form method="POST" action="{{ route('MostrarPDF112') }}">   
                                                     @csrf             
                                                     <input type="hidden" name="ID_DestinoDocumento" value="{{ $post->ID_DestinoDocumento }}">
                                                     <div class="btn-group" style=" width:50%;">	
@@ -87,7 +90,7 @@
                                     @endforeach    
                                     </tbody>  
                                 </table>   
-                            </div> 
+                            </div>  
                             <div class="card-footer text-muted">
                                 <form id="F_prestamo" name="F_prestamo" method="POST" action="{{ route('FirmandoSolicitud11') }}" accept-charset="UTF-8" enctype="multipart/form-data">
                                     @csrf
@@ -111,7 +114,7 @@
                             </form> 
                         </div>
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>
                     </div>
                 </div>
@@ -123,9 +126,7 @@
         <div>
             <center><img src="{{URL::asset('Imagenes/escudo.png')}}" width="90" height="90"/></center>
             <center>
-                © {{ date("Y") }} Dep. de informática V0.1<br>
-                Municipalidad de Curicó<br>
-                VERSIÓN BETA 0.5.230322 
+                SGD
             </center>
         </div>
     </div> 

@@ -45,6 +45,11 @@ return [
             'root' => public_path('PDF'),
         ],
 
+        'ImagenQRPDF' => [
+            'driver' => 'local',
+            'root' => public_path('ImagenQRPDF'),
+        ],
+
         'CKeditorImagenes' => [
             'driver' => 'local',
             'root' => public_path('CKeditorImagenes'),

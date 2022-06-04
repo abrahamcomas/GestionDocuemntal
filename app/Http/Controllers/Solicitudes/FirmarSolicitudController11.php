@@ -126,7 +126,7 @@ class FirmarSolicitudController11 extends Controller
                                                     
                             $Ruta = $Ruta_T->Ruta_T;
 
-                            $PDF = Storage::disk('PDF11')->get($Ruta); 
+                            $PDF = Storage::disk('PDF')->get($Ruta); 
 
                             $codificado = base64_encode($PDF); 
                         
@@ -204,7 +204,7 @@ class FirmarSolicitudController11 extends Controller
                                         $image = str_replace('data:pdf;base64,', '', $decoded);
                                         $image = str_replace(' ', '+', $image);
                                         
-                                        Storage::disk('PDF11')->put($Ruta, $decoded);        
+                                        Storage::disk('PDF')->put($Ruta, $decoded);        
                                     
                                         if (file_exists($Ruta)){
                                             header("Content-Description: File Transfer");

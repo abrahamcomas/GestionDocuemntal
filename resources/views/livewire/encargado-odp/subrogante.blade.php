@@ -53,13 +53,15 @@
             <div class="row">  
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
-                        <div class="card bg-light mb-3"> 
-                            <div class="card-header">
-                                <h4><strong>SELECCIONAR SUBROGANTE</strong></h4>
-                            </div> 
+                        <div class="card bg-light mb-3">
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>SELECCIONAR SUBROGANTE</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="row"> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
-                                    <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
+                                   
                                 </div> 
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">  </div>    
                             </div> 
@@ -138,7 +140,7 @@
                                     <button type="button" class="btn btn-success" wire:click="MostrarLista">MOSTRAR HISTORIAL DE SUBROGANTES</button>
                                 </div>
                             </center>
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                     </div> 
@@ -150,9 +152,11 @@
             <div class="row">  
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
-                        <div class="card bg-light mb-3"> 
-                            <div class="card-header">
-                                <center><h4><strong>SELECCIONAR SUBROGANTE</strong></h4></center> 
+                        <div class="card bg-light mb-3">
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>SELECCIONAR SUBROGANTE</strong></center></h1>
+                                <hr>
                             </div>
                             <div class="card-body">
                                 <center>
@@ -173,7 +177,7 @@
                                 </center>
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                     </div> 
@@ -186,8 +190,10 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
                         <div class="card bg-light mb-3"> 
-                            <div class="card-header">
-                                <center><h4><strong>DESACTIVAR SUBROGANTE</strong></h4></center> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>DESACTIVAR SUBROGANTE</strong></center></h1>
+                                <hr>
                             </div>
                             <div class="card-body">
                                 <center>
@@ -210,7 +216,7 @@
                                 </center>
                             </div>
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                     </div> 
@@ -223,9 +229,11 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="table-responsive">
-                            <div class="card-header"> 
-                                <h5><strong>PORTAFOLIOS FINALIZADOS {{ $AnioSelect}}  </strong></h5>
-                            </div> 
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>PORTAFOLIOS FINALIZADOS {{ $AnioSelect}}  </strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body"> 
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -349,7 +357,7 @@
                                 {{ $posts->links() }}
                             </div>	
                             <div class="card-footer text-muted">
-                                GESTIÓN DOCUMENTAL<br>
+                                SGD
                             </div>
                         @else 
                         <div class="card-body">
@@ -371,9 +379,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ARCHIVOS</strong></h4>
-                        </div> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>ARCHIVOS</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body">
                             <table table class="table table-hover">
                                 <thead>  
@@ -405,9 +415,11 @@
                     </div>
                 @if($Cambiar==0)
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ODP FIRMANTES</strong></h4>
-                        </div> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>ODP FIRMANTES</strong></center></h1>
+                            <hr>
+                        </div>
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
                                 <thead>  
@@ -523,8 +535,10 @@
                     </div> 
                 @else 
                     <div class="card bg-light mb-3">
-                        <div class="card-header">
-                            <h4><strong>ODP V°B°</strong></h4>
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>ODP V°B°</strong></center></h1>
+                            <hr>
                         </div> 
                         <div class="card-body table-responsive">
                             <table table class="table table-hover">
@@ -650,10 +664,12 @@
             <div class="row">  
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="col">
-                        <div class="card bg-light mb-3"> 
-                            <div class="card-header">
-                                <center><h4><strong>HISTORIAL SUBROGANTE</strong></h4></center> 
-                            </div> 
+                        <div class="card bg-light mb-3">
+                            <div class="text-muted" >
+                                <br> 
+                                <h1><center><strong>HISTORIAL SUBROGANTE</strong></center></h1>
+                                <hr>
+                            </div>
                             <div class="card-body table-responsive">
                             <div class="row">  
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
@@ -724,7 +740,7 @@
                                     <button type="button" class="btn btn-danger" wire:click="VolverPrincipal">VOLVER</button>
                                 </div>
                             </center>
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div> 
                 

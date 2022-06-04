@@ -1,62 +1,25 @@
 <div>
-<br>  
-@if($Ayuda==1)    
-    <div class="container-fluid">  
-        <div class="row">  
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="col">
-                    <div class="card bg-light mb-3">  
-                        <div class="card-header"> 
-                        <center>
-                                <h5> 
-                                    <strong>
-                                        INFORMACIÓN
-                                    </strong>
-                                </h5>
-                            </center> 
-                        </div>
-                        <div class="card-body">
-                            <center><img src="{{URL::asset('Imagenes/EncargadoODP/PortafolioDirecto.JPG')}}" width="1200" height="1200" class="img-fluid" alt="Responsive image"/></center> 
-                        </div>
-                        <div class="card-footer text-muted"> 
-                            <div class="btn-group" style=" width:100%;">	
-                                <button class="btn btn-danger active" wire:click="VolverAyuda">
-                                    VOLVER
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@else
+<br>    
+@if($MostrarPagina==1)   
 @if($mostrar==1)
     <div class="container-fluid">   
         <div class="row">  
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="col">
                     <div class="card bg-light mb-3"> 
-                        <div class="text-muted">
+                        <div class="text-muted"> 
                             <br> 
                             <h1><center><strong>LISTA FUNCIONARIOS</strong></center></h1>
                             <hr>
                         </div>
                         <div class="row"> 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                <button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button>
                                 <button class="btn btn-warning" onclick="location.reload()"><img src="{{URL::asset('Imagenes/Actualizar.png')}}" width="25" height="25"/></button>
                             </div> 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8"></div>    
                         </div> 
                         <div class="card-body table-responsive">
-                            <tbody> 
-                                <td> 
-                                    <h5><strong>{{ $NombreDireccion }}</strong></h5>
-                                </td> 
-                            </tbody>    
-                            <br> 
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr> 
                                         <th>RUN</th>
@@ -64,7 +27,7 @@
                                         <th>APELLIDO</th>
                                         <th>DESACTIVAR</th>
                                     </tr> 
-                                </thead> 
+                                </thead>  
                                 <tbody>  
                                     @foreach($ListaFuncionariosOP as $post)
                                     <tr>
@@ -86,10 +49,9 @@
                             </table>
                     </div>  
                     <div class="card-footer text-muted">
-                        <!--{{ $Lista->links() }}-->
                     </div>	
                     <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL
+                            SGD
                     </div>
                 </div> 
             </div>
@@ -122,7 +84,7 @@
                                 </tbody>  
                             </div>  
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL
+                                SGD
                             </div>
                         </div>
                     </div> 
@@ -131,5 +93,34 @@
         </div> 
     </div> 
 @endif
-</div>
+@else
+
+<div class="container-fluid">  
+        <div class="row">  
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col">
+                    <div class="card bg-light mb-3"> 
+                        <div class="text-muted" >
+                            <br> 
+                            <h1><center><strong>LISTA FUNCIONARIOS</strong></center></h1>
+                            <hr>
+                        </div>
+                        <div class="row">  
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                                <div class="text-muted" >
+                                    <h4><center><strong>Opción no disponible para el funcionario/a actual.</strong></center></h4>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+                        </div>      	
+                        <div class="card-footer text-muted"> 
+                            SGD
+                        </div>
+                    </div> 
+                </div>
+            </div> 
+        </div>
+    </div>  
 @endif
+</div>

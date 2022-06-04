@@ -17,7 +17,9 @@ class OficinaPartes extends Model
     protected $fillable=[
           "ID_OP_LDT",
           "id_Funcionario_OP",
-          "ID_Jefatura"
+          "ID_Jefatura",
+          "ActivoODP",
+          "Original"
     ]; 
  
     public $timestamps = false;

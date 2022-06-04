@@ -12,8 +12,7 @@
             $(document).on('click', '#btnEnviar1', function(){ 
                 $("#IngresoFirma").hide();     
                 $("#siguelo").hide();  
-                $("#errors").hide();  
-                
+                $("#errors").hide();
                 $("#MostrarFor").show(); 
             }); 
         }); 

@@ -18,8 +18,9 @@ class HistorialOficinaPartes extends Model
            "Id_OP",
            "ID_OP_LDT",
            "id_Funcionario_OP",
-           "ID_Jefatura"
+           "ID_Jefatura",
+           "Fecha"
       ]; 
-  
+   
       public $timestamps = false;
 }

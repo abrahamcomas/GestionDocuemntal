@@ -19,6 +19,7 @@ class Portafolio extends Model
         "Encargado",
         "ODP",
         "ID_OficinaP",
+        "ID_OP_LDT_P",
         "NumeroInterno",
         "Privado",
         "Folio",

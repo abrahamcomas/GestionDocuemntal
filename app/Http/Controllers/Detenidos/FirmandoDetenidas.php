@@ -27,7 +27,6 @@ class FirmandoDetenidas extends Controller
 {
     public function index(Request $request)   
     {
-
         $Contrasenia = $request->input('Contrasenia'); 
         $Ruta  = $request->input('Ruta');
         $ID_Documento_T  = $request->input('ID_Documento_T');
