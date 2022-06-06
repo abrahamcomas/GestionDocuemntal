@@ -578,40 +578,28 @@
                         <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ENCARGADO/A ODP</strong></a>
                         <ul class="collapse list-unstyled" id="homeSubmenu3">
                             <hr style="background-color: #FFFFFF;">
-                            <li>
-                                <a href="#homeSubmenuEPD1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRAR</strong></a>
-                                <ul class="collapse list-unstyled" id="homeSubmenuEPD1">
-                                    <hr style="background-color: #FFFFFF;">
-                                    <form method="POST" action="{{ route('AdministrarSecretaria') }}">
-                                        @csrf
-                                        <button type="submit" class="btn list-group-item-action btn-link">
-                                            SECRETARIA ODP
-                                        </button> 
-                                    </form>
-                                    <form method="POST" action="{{ route('Subrogante') }}">
-                                        @csrf
-                                        <button type="submit" class="btn list-group-item-action btn-link">
-                                            SUBROGANTE
-                                        </button>
-                                    </form>
-                                    <hr style="background-color: #FFFFFF;">
-                                </ul>
-                            </li>
+                            <form method="POST" action="{{ route('AdministrarSecretaria') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SECRETARIA ODP
+                                </button> 
+                            </form>
+                            <form method="POST" action="{{ route('Subrogante') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    SUBROGANTE
+                                </button>
+                            </form>
                         </ul>
                         <hr style="height:3px;background-color: #56FF02;">
                     </li>
                     <li>
-                        <a href="#homeSubmenuEC1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>SOLICITUDES INTERNAS</strong></a>
-                        <ul class="collapse list-unstyled" id="homeSubmenuEC1">
-                            <hr style="background-color: #FFFFFF;">
-                            <form method="POST" action="{{ route('PortafolioDirecto') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SOLICITUDES INTERNAS
-                                </button> 
-                            </form>
-                        </ul>
-                    </li>
+                    <form method="POST" action="{{ route('PortafolioDirecto') }}">
+                        @csrf
+                        <button type="submit" class="btn list-group-item-action btn-link">
+                            <strong>SOLICITUDES INTERNAS</strong>
+                        </button> 
+                    </form>
                 @endif
                 @if(Auth::user()->Secretaria==1)
                     <hr style="height:3px;background-color: #56FF02;">
@@ -639,18 +627,14 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#homeSubmenuOPD2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP INTERNA</strong></a>
-                                <ul class="collapse list-unstyled" id="homeSubmenuOPD2">
-                                    <hr style="background-color: #FFFFFF;">
-                                    <form method="POST" action="{{ route('Distribuccion') }}">
-                                        @csrf
-                                        <button type="submit" class="btn list-group-item-action btn-link">
-                                            SOLIC. INTERNAS
-                                        </button> 
-                                    </form>
-                                    <hr style="background-color: #FFFFFF;">
-                                </ul>
-                            </li>
+                            <hr style="background-color: #FFFFFF;">
+                                <form method="POST" action="{{ route('Distribuccion') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        <strong>OPD INTERNA</strong>
+                                    </button> 
+                                </form>
+                            <hr style="background-color: #FFFFFF;">
                             <li>
                                 <a href="#homeSubmenuOPD3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP EXTERNA</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD3">
@@ -676,19 +660,14 @@
                                     <hr style="background-color: #FFFFFF;">
                                 </ul>
                             </li>
-                            <li>
-                                <a href="#homeSubmenuOPD4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>HISTORIAL ODP</strong></a>
-                                <ul class="collapse list-unstyled" id="homeSubmenuOPD4">
-                                    <hr style="background-color: #FFFFFF;">
-                                    <form method="POST" action="{{ route('HistorialODP') }}">
-                                        @csrf
-                                        <button type="submit" class="btn list-group-item-action btn-link">
-                                            HISTORIAL ODP
-                                        </button> 
-                                    </form>
-                                    <hr style="background-color: #FFFFFF;">
-                                </ul>
-                            </li>
+                            <hr style="background-color: #FFFFFF;">
+                            <form method="POST" action="{{ route('HistorialODP') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    HISTORIAL ODP
+                                </button> 
+                            </form>
+                            <hr style="background-color: #FFFFFF;">
                             <li>
                                 <a href="#homeSubmenuOPD5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRAR ODP</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD5">

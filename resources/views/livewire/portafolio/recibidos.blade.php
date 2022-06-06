@@ -249,8 +249,7 @@
                                 {{ $posts->links() }}
                             </div>	
                             <div class="card-footer text-muted"> 
-                                GESTIÓN DOCUMENTAL<br>
-                                SECRETARIA/O ODP {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                                SGD
                             </div>
                         </div>
                     </div>

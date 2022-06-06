@@ -102,14 +102,10 @@ class HistorialODP extends Component
 
         $ID_DepDir = $DatosFirma->ID_DepDir;
 
-        $ID_Oficina =  DB::table('Funcionarios')
-        ->leftjoin('OficinaPartes', 'Funcionarios.ID_Funcionario_T', '=', 'OficinaPartes.id_Funcionario_OP') 
-        ->select('Id_OP')->where('id_Funcionario_OP', '=',$this->ID_Funcionario)->first();
-
         $ID_Oficina =  DB::table('OficinaPartes')
         ->select('Id_OP','ID_OP_LDT','ID_Jefatura')
         ->where('id_Funcionario_OP', '=', $this->ID_Funcionario)
-        ->where('Original', '=', 1)->first(); 
+        ->where('ActivoODP', '=', 2)->first(); 
 
         return view('livewire.o-d-p.historial-o-d-p',[
 

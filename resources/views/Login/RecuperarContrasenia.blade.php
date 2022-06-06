@@ -13,7 +13,7 @@
                         @csrf 
                         @if (count($errors) > 0)
                             @foreach ($errors->get('Rut') as $message)
-                                <p style="color: red;">{{ $message }}</p>
+                                <p style="color: white;">{{ $message }}</p>
                             @endforeach
                         @endif
                         <div class="input-group mb-3">

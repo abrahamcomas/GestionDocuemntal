@@ -48,7 +48,8 @@ class SecretariaOdp extends Component
 
         $OficinaPartes =  DB::table('OficinaPartes')
         ->select('Id_OP','ID_OP_LDT','ID_Jefatura','id_Funcionario_OP')
-        ->where('ID_Jefatura', '=', $ID_Funcionario)->first();
+        ->where('ID_Jefatura', '=', $ID_Funcionario)
+        ->where('Original', '=', 1)->first();
 
         $Id_OP = $OficinaPartes->Id_OP; 
         $ID_OP_LDT = $OficinaPartes->ID_OP_LDT; 
@@ -81,7 +82,7 @@ class SecretariaOdp extends Component
 
         $ID_LugarDeTrabajo  =  DB::table('Funcionarios')
         ->leftjoin('LugarDeTrabajo', 'Funcionarios.ID_Funcionario_T', '=', 'LugarDeTrabajo.ID_Funcionario_LDT')
-        ->select('ID_LugarDeTrabajo')
+        ->select('ID_LugarDeTrabajo','ID_DepDirecciones_LDT')
         ->where('ID_Funcionario_T', '=', $ID_Funcionario_T)->first();
 
         $FuncionarioModels               = LugarDeTrabajo::find($ID_LugarDeTrabajo->ID_LugarDeTrabajo);
@@ -89,7 +90,10 @@ class SecretariaOdp extends Component
         $FuncionarioModels->save();
 
         $OficinaPartes                      = OficinaPartes::find($Id_OP);
+        $OficinaPartes->ID_OP_LDT           = $ID_LugarDeTrabajo->ID_DepDirecciones_LDT; 
         $OficinaPartes->id_Funcionario_OP   = $ID_Funcionario_T; 
+        $OficinaPartes->ActivoODP           = 2; 
+        $OficinaPartes->Original            = 1; 
         $OficinaPartes->save();
 
         $HistorialOficinaPartes                     = new HistorialOficinaPartes;
@@ -97,6 +101,7 @@ class SecretariaOdp extends Component
         $HistorialOficinaPartes->ID_OP_LDT          = $ID_OP_LDT;
         $HistorialOficinaPartes->id_Funcionario_OP  = $ID_Funcionario_T;
         $HistorialOficinaPartes->ID_Jefatura        = $ID_Jefatura;
+        $HistorialOficinaPartes->Fecha              = date("Y/m/d");;
         $HistorialOficinaPartes->save();
 
         $this->mostrar=2;

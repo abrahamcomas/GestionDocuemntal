@@ -138,7 +138,7 @@ class AdministrarODP extends Component
             ->first();
    
         $OficinaPartes                    = OficinaPartes::where('ID_OP_LDT',$ODP_Origen->ID_OP_LDT)->where('id_Funcionario_OP',$this->Seleccionado_ID)->first();
-        $OficinaPartes->ActivoODP            = 3;
+        $OficinaPartes->ActivoODP         = 3;
         $OficinaPartes->Original          = 0;
         $OficinaPartes->save();
 
@@ -146,6 +146,9 @@ class AdministrarODP extends Component
         $ActivoSecretaria             = FuncionarioModels::find($this->Seleccionado_ID);
         $ActivoSecretaria->Secretaria  = 0;
         $ActivoSecretaria->save();
+
+        
+        DB::table('sessions')->where('user_id', $this->Seleccionado_ID)->delete(); 
         
         $this->Detalles=0;    
           
@@ -171,67 +174,69 @@ class AdministrarODP extends Component
             ->where('Original', '=', 0)
             ->first();
 
+ 
+        if(!empty($ODP_SiExiste)){
 
-        $VerEstado =  DB::table('Funcionarios')
-            ->select('Secretaria')
-            ->where('ID_Funcionario_T', '=',$this->Seleccionado_ID) 
-            ->first();
-    
-        if($VerEstado->Secretaria==1){
+                $ODP_SiTieneOPD =  DB::table('OficinaPartes')
+                ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+                ->select('ID_DepDir','Id_OP','ID_Jefatura')
+                ->where('id_Funcionario_OP', '=', $this->Seleccionado_ID) 
+                ->where('Original', '=', 1)
+                ->first();
 
-            if(!empty($ODP_SiExiste)){
+                if(!empty($ODP_SiTieneOPD)){
+
+                    $OficinaPartes                    = OficinaPartes::find($ODP_SiExiste->Id_OP);
+                    $OficinaPartes->ActivoODP         = 1;
+                    $OficinaPartes->Original          = 0;
+                    $OficinaPartes->save();
                 
-                $OficinaPartes                    = OficinaPartes::find($ODP_SiExiste->Id_OP);
-                $OficinaPartes->ActivoODP         = 1;
-                $OficinaPartes->Original          = 0;
-                $OficinaPartes->save();
+                }else{
+                
+                    $OficinaPartes                    = OficinaPartes::find($ODP_SiExiste->Id_OP);
+                    $OficinaPartes->ActivoODP         = 2;
+                    $OficinaPartes->Original          = 0;
+                    $OficinaPartes->save();
+                
+                }
+
+        }else{
 
 
-            }else{
+                $ODP_SiTieneOPD =  DB::table('OficinaPartes')
+                ->leftjoin('DepDirecciones', 'OficinaPartes.ID_OP_LDT', '=', 'DepDirecciones.ID_DepDir') 
+                ->select('ID_DepDir','Id_OP','ID_Jefatura')
+                ->where('id_Funcionario_OP', '=', $this->Seleccionado_ID) 
+                ->where('Original', '=', 1)
+                ->first();
 
-                $OficinaPartes                    = new OficinaPartes;
-                $OficinaPartes->ID_OP_LDT         = $ODP_Origen->ID_DepDir;
-                $OficinaPartes->id_Funcionario_OP = $this->Seleccionado_ID;
-                $OficinaPartes->ID_Jefatura       = $ODP_Origen->ID_Jefatura;
-                $OficinaPartes->ActivoODP         = 1;
-                $OficinaPartes->Original          = 0;
-                $OficinaPartes->save();
+                if(!empty($ODP_SiTieneOPD)){
 
-            }
+                    $OficinaPartes                    = new OficinaPartes;
+                    $OficinaPartes->ID_OP_LDT         = $ODP_Origen->ID_DepDir;
+                    $OficinaPartes->id_Funcionario_OP = $this->Seleccionado_ID;
+                    $OficinaPartes->ID_Jefatura       = $ODP_Origen->ID_Jefatura;
+                    $OficinaPartes->ActivoODP         = 1;
+                    $OficinaPartes->Original          = 0;
+                    $OficinaPartes->save();
+
+                }else{
+                    
+                    $OficinaPartes                    = new OficinaPartes;
+                    $OficinaPartes->ID_OP_LDT         = $ODP_Origen->ID_DepDir;
+                    $OficinaPartes->id_Funcionario_OP = $this->Seleccionado_ID;
+                    $OficinaPartes->ID_Jefatura       = $ODP_Origen->ID_Jefatura;
+                    $OficinaPartes->ActivoODP         = 2;
+                    $OficinaPartes->Original          = 0;
+                    $OficinaPartes->save();
+                
+                }
 
         }
-        else{
 
-            $ActivoSecretaria             = FuncionarioModels::find($this->Seleccionado_ID);
-            $ActivoSecretaria->Secretaria  = 1;
-            $ActivoSecretaria->save();
-            
-            if(!empty($ODP_SiExiste)){
-                
-                $OficinaPartes                    = OficinaPartes::find($ODP_SiExiste->Id_OP);
-                $OficinaPartes->ActivoODP         = 2;
-                $OficinaPartes->Original          = 0;
-                $OficinaPartes->save();
-
-
-            }else{
-
-                $OficinaPartes                    = new OficinaPartes;
-                $OficinaPartes->ID_OP_LDT         = $ODP_Origen->ID_DepDir;
-                $OficinaPartes->id_Funcionario_OP = $this->Seleccionado_ID;
-                $OficinaPartes->ID_Jefatura       = $ODP_Origen->ID_Jefatura;
-                $OficinaPartes->ActivoODP         = 2;
-                $OficinaPartes->Original          = 0;
-                $OficinaPartes->save();
-
-            }
-        
-        
-        
-        
-        }
-
-    
+        $ActivoSecretaria             = FuncionarioModels::find($this->Seleccionado_ID);
+        $ActivoSecretaria->Secretaria  = 1;
+        $ActivoSecretaria->save();
 
         $this->Detalles=0;
 

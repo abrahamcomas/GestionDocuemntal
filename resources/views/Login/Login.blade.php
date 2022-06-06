@@ -48,7 +48,7 @@
                     <center><p style="color: #FFFFFF;">ILUSTRE MUNICIPALIDAD DE CURICÓ</p></center> 
                 </div>
                 <br>
-                <center><strong style="color: #56FF02;">VERSIÓN 1.1</strong></center>
+                <center><strong style="color: #56FF02;">VERSIÓN 1.2</strong></center>
             </div>
             </section>
         </div>
