@@ -23,7 +23,6 @@
             <div class="col">
                 <div class="card bg-light mb-3"> 
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>SOLICITUDES DETENIDAS</strong></center></h1>
                         <hr>
                     </div> 
@@ -291,7 +290,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>LISTA DE ARCHIVOS</strong></center></h1>
                         <hr>
                     </div> 
@@ -300,7 +298,7 @@
                             <h5>Antes de enviar una solicitud, debe existir al menos uno o más archivos.</h5>
                         </div> 
                         <div class="table-responsive"> 
-                            <table table class="table table-hover table-sm"> 
+                            <table table class="table table-hover table-sm table-bordered"> 
                                 <thead> 
                                     <tr>  
                                         <th>NOMBRE</th>
@@ -398,7 +396,7 @@
                         <center>
                         <div class="btn-group" style=" width:80%;">	
                             <button class="btn btn-danger active" id="CancelarConfirmarIngreso"  wire:click="VolverPrincipal">VOLVER</button>
-                            <button class="btn btn-primary active" wire:click="Ingresar">INGRESAR</button>
+                            <button class="btn btn-primary active" wire:click="Ingresar" id="boton">INGRESAR</button>
                         </div>
                         </center>
                         <center>
@@ -411,7 +409,7 @@
                         </div>
                         <div class="card-footer text-muted"> 
                            SGD
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -424,7 +422,6 @@
             <div class="col">
                 <div class="card bg-light mb-3"> 
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>ELIMINAR</strong></center></h1>
                         <hr>
                     </div>
@@ -457,7 +454,6 @@
                 <div class="card bg-light mb-3" > 
                     <table table class="table table-hover table-sm"> 
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>ENVIAR PORTAFOLIO</strong></center></h1>
                             <hr>
                         </div>
@@ -553,8 +549,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
                 <div class="card bg-light mb-3"> 
-                    <div class="text-muted">
-                        <br> 
+                    <div class="text-muted"> 
                         <h1><center><strong>FIRMA NO REQUERIDA</strong></center></h1>
                         <hr>
                     </div> 
@@ -588,7 +583,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>ARCHIVOS FIRMADOS</strong></center></h1>
                         <hr>
                     </div> 
@@ -622,7 +616,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>ELIMINAR ARCHIVO</strong></center></h1>
                         <hr>
                     </div>
@@ -656,7 +649,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>SOLICITAR FIRMA</strong></center></h1>
                         <hr>
                     </div>
@@ -686,7 +678,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>LISTA DE ARCHIVOS</strong></center></h1>
                         <hr>
                     </div>

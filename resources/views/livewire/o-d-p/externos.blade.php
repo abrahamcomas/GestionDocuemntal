@@ -54,7 +54,6 @@
                 <div class="col"> 
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center>SOLICITUDES EXTERNAS <strong> {{ $OPDSelectNombre}}</strong></strong></center></h1>
                             <hr>
                         </div>
@@ -250,7 +249,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>RECHAZAR PORTAFOLIO</strong></center></h2>
                         <hr>
                     </div>
@@ -288,7 +286,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
@@ -334,8 +331,7 @@
                         </div> 
                     </div>
                     <div class="card bg-light mb-3">
-                        <div class="text-muted">
-                            <br> 
+                        <div class="text-muted"> 
                             <h2><center><strong>COMENTARIO POR ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
@@ -368,7 +364,6 @@
                     </div>
                     <div class="card bg-light mb-3"> 
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>FIRMANTES</strong></center></h2>
                             <hr>
                         </div>
@@ -484,7 +479,6 @@
                     </div>
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>ENVIAR</strong></center></h1>
                             <hr>
                         </div>
@@ -568,7 +562,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>NO DISPONIBLE</strong></center></h2>
                             <hr>
                         </div> 
@@ -604,7 +597,6 @@
                     @endif
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
                             <hr>
                         </div>

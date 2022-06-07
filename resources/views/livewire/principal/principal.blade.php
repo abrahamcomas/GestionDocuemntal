@@ -85,9 +85,13 @@
         border-color: transparent #f1f2f2 transparent transparent;
         }
     </style>
+        <div class="row"> 
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @include('messages')
+            </div>
+        </div> 
         <div class="card bg-light mb-3">
             <div class="text-muted">
-                <br> 
                 <h1><center><strong>SOLICITUDES</strong></center></h1>
                 <hr>
             </div> 
@@ -213,11 +217,10 @@
                             </div>
                         </article>  
                     </div>
-                </div>
+                </div> 
             </div>
         @if(Auth::user()->Secretaria==1) 
             <div class="text-muted"> 
-                <br> 
                 <h1><center><strong>ODP {{ $OPDSelectNombre}} </strong></center></h1>
                 <hr> 
             </div>
@@ -225,8 +228,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                     <div class="form-label-group">  
-                        <select wire:model="OPD" class="form-control" >
-                            <option value="0" selected>---CAMBIAR ODP---</option>
+                        <select wire:model="OPD" class="form-control" > 
+                            <option value="" selected>---CAMBIAR ODP---</option>
                             @foreach($ListaODP as $post)
                                 <option value="{{ $post->Id_OP}}">
                                     {{ $post->Nombre_DepDir }}
@@ -333,7 +336,6 @@
         @endif
         @if(Auth::user()->Jefe==1)
             <div class="text-muted">
-                <br> 
                 <h1><center><strong>JEFE</strong></center></h1>
                 <hr>
             </div>

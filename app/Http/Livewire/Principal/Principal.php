@@ -11,10 +11,16 @@ class Principal extends Component
 { 
 
     public $OPD; 
+
+    protected $Rules = ['OPD' => 'required'];
+	protected $RelusMessages = ['OPD.required' =>'El campo "OPD" es obligatorio.'];
+
     public function CambiarOPD()
     {
+
+        $this->validate($this->Rules,$this->RelusMessages); 
         
-        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T; 
+        $ID_Funcionario  =  Auth::user()->ID_Funcionario_T;  
 
         $ListaODP =  DB::table('OficinaPartes')
         ->select('Id_OP','ActivoODP')

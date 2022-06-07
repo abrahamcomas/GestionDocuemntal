@@ -138,7 +138,6 @@
                     <div class="col"> 
                         <div class="card bg-light mb-3">
                                 <div class="text-muted" >
-                                    <br> 
                                     <h1><center><strong>FIRMAR ARCHIVO EXTERNO</strong></center></h1>
                                     <hr>
                                 </div>

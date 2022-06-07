@@ -25,7 +25,6 @@
             @include('messages')  
                 <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>FIRMAR ARCHIVOS</strong></center></h1>
                             <hr>
                         </div>
@@ -95,7 +94,7 @@
                                 </div>
                             </form>  
                         <div class="card-footer text-muted">
-                            GESTIÓN DOCUMENTAL
+                            SGD
                         </div>    
                     </div>      
                 </div>

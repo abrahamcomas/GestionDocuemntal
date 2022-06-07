@@ -42,8 +42,9 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="table-responsive">
-                        <div class="card-header"> 
+                        <div class="text-muted">
                             <h4><strong><span class="float-left"><button class="btn" wire:click="Ayuda"><img src="{{URL::asset('Imagenes/ayuda.png')}}" width="25" height="25"/></button></span>SOLICITUDES V°B° {{ $AnioSelect}}  </strong></h4>
+                            <hr>
                         </div> 
                         <div class="card-body"> 
                             <div class="row">
@@ -225,8 +226,7 @@
                             {{ $posts->links() }}
                         </div>	
                         <div class="card-footer text-muted"> 
-                            GESTIÓN DOCUMENTAL <br>
-                            SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                           SGD
                         </div>
                     @else 
                         <div class="card-body">
@@ -243,8 +243,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>ARCHIVOS</strong></h4>
+                    <div class="text-muted">
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body">
                         <table table class="table table-hover">

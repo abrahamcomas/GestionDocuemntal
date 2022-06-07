@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailSecretaria;   
 
 use setasign\Fpdi\Fpdi;
-use Spatie\PdfToImage\pdf;
+use Spatie\PdfToImage\Pdf;
 use Org_Heigl\Ghostscript\Ghostscript;
 use Zxing\QrReader;
 use Imagick;

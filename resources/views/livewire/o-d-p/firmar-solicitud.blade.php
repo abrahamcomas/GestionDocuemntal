@@ -25,7 +25,6 @@
             @include('messages')  
                 <div class="card bg-light mb-3"> 
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>FIRMAR ARCHIVO</strong></center></h1>
                             <hr>
                         </div>

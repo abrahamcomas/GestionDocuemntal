@@ -24,7 +24,7 @@ use App\Models\DocumentoFirma;
 use Response;
 use Illuminate\Support\Facades\DB;  
 use ZipArchive;
-use Spatie\PdfToImage\pdf;
+use Spatie\PdfToImage\Pdf;
 use Org_Heigl\Ghostscript\Ghostscript;
 use Zxing\QrReader;
 use Imagick;

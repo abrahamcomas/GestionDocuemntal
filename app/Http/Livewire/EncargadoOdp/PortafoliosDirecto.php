@@ -16,7 +16,7 @@ use App\Models\LinkFirma;
 use App\Models\DestinoDocumento;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
-use Spatie\PdfToImage\pdf;
+use Spatie\PdfToImage\Pdf;
 use Org_Heigl\Ghostscript\Ghostscript;
 use Zxing\QrReader;
 use Imagick;

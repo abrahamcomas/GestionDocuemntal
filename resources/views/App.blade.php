@@ -161,6 +161,15 @@
                 document.getElementById('ver').style.opacity= 1;
             }
 
+
+            $(document).ready(function(){
+                $("#boton").click(function(event){
+                    event.preventDefault();
+                $("#boton").prop('disabled',true)
+                
+                return false;
+                })
+            })
             
            
 	</script>
@@ -431,6 +440,38 @@
         transform: scale(1.1)
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     /*Fondo animado*/
+		section{
+			width: 40%;
+			color: #fff;
+			background: linear-gradient(45deg,red,blue,green,black);
+			background-size: 400% 400%;
+			position: relative;
+			animation: cambiar 7s ease-in-out infinite;
+            border-radius: 20px;
+            opacity: 0.9;
+		}
+
+		@keyframes cambiar{
+			0%{background-position: 0 50%;}
+			50%{background-position: 100% 50%;}
+			100%{background-position: 0 50%;}
+		}
+
 	</style> 
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light" id="h">
@@ -607,6 +648,12 @@
                         <a href="#homeSubmenuOPD0" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP</strong></a>
                         <ul class="collapse list-unstyled" id="homeSubmenuOPD0">
                             <hr style="background-color: #FFFFFF;">
+                            <form method="POST" action="{{ route('Distribuccion') }}">
+                                @csrf
+                                <button type="submit" class="btn list-group-item-action btn-link">
+                                    <strong>OPD INTERNA</strong>
+                                </button> 
+                            </form>
                             <li>
                                 <a href="#homeSubmenuOPD1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>CREAR</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD1">
@@ -626,15 +673,6 @@
                                     <hr style="background-color: #FFFFFF;">
                                 </ul>
                             </li>
-                            <li>
-                            <hr style="background-color: #FFFFFF;">
-                                <form method="POST" action="{{ route('Distribuccion') }}">
-                                    @csrf
-                                    <button type="submit" class="btn list-group-item-action btn-link">
-                                        <strong>OPD INTERNA</strong>
-                                    </button> 
-                                </form>
-                            <hr style="background-color: #FFFFFF;">
                             <li>
                                 <a href="#homeSubmenuOPD3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ODP EXTERNA</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD3">
@@ -660,14 +698,6 @@
                                     <hr style="background-color: #FFFFFF;">
                                 </ul>
                             </li>
-                            <hr style="background-color: #FFFFFF;">
-                            <form method="POST" action="{{ route('HistorialODP') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    HISTORIAL ODP
-                                </button> 
-                            </form>
-                            <hr style="background-color: #FFFFFF;">
                             <li>
                                 <a href="#homeSubmenuOPD5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ADMINISTRAR ODP</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD5">
@@ -695,6 +725,12 @@
                                         @csrf
                                         <button type="submit" class="btn list-group-item-action btn-link">
                                         LISTA FUNCIONARIOS
+                                        </button> 
+                                    </form>
+                                    <form method="POST" action="{{ route('HistorialODP') }}">
+                                        @csrf
+                                        <button type="submit" class="btn list-group-item-action btn-link">
+                                            HISTORIAL ODP
                                         </button> 
                                     </form>
                                     <hr style="background-color: #FFFFFF;">
@@ -868,7 +904,7 @@
                     <marquee><h5><strong>{{ $Mensaje }}</strong></h5></marquee> 
                 </li>
             </ul>
-            <h1 style="color: #FFFFFF;"><strong>SGD</strong></h1>
+            <center><section><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></section></center>
         </nav>
 @endif	
         <div id="page-content-wrapper">

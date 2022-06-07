@@ -150,6 +150,7 @@ class AgregarJefes extends Component
             $HistorialOficinaPartes->Id_OP      = $Id_OP;
             $HistorialOficinaPartes->ID_OP_LDT  = $this->ID_DepDir;
             $HistorialOficinaPartes->ID_Jefatura= $ID_Funcionario_T;
+            $HistorialOficinaPartes->Fecha      = date("Y/m/d"); 
             $HistorialOficinaPartes->save();
 
             $LugarDeTrabajo =  DB::table('LugarDeTrabajo')->select('ID_LugarDeTrabajo')->where('ID_Funcionario_LDT', '=', $ID_Funcionario_T)->first();

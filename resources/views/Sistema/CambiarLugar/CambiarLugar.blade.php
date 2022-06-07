@@ -21,8 +21,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"> 
 			<div class="card bg-light mb-3">
-                <div class="text-muted" >
-                    <br> 
+                <div class="text-muted">
                     <h1><center><strong>CAMBIAR LUGAR DE TRABAJO</strong></center></h1>
                     <hr>
                 </div>

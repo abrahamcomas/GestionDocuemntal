@@ -11,7 +11,7 @@ use App\Models\DestinoDocumento;
 use Illuminate\Support\Facades\DB;  
 use Illuminate\Support\Facades\Auth;
 use setasign\Fpdi\Fpdi;
-use Spatie\PdfToImage\pdf;
+use Spatie\PdfToImage\Pdf;
 use Org_Heigl\Ghostscript\Ghostscript;
 use Zxing\QrReader;
 use Imagick;

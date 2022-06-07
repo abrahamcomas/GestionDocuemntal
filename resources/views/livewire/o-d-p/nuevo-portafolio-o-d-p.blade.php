@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-@else                            
+@else                             
     @if($Existe==0) 
         <style>
                 #Imagen {
@@ -63,8 +63,7 @@
                 @include('messages')  
                 <div class="col">       
                     <div class="card bg-light mb-3">
-                        <div class="text-muted" >
-                            <br> 
+                        <div class="text-muted"> 
                             <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
                             <hr>
                         </div>
@@ -116,8 +115,7 @@
                     <div class="col">   
                         @include('messages')  
                         <div class="card bg-light mb-3">
-                            <div class="text-muted" >
-                                <br> 
+                            <div class="text-muted">
                                 <h1><center><strong>NUEVA SOLICITUD</strong></center></h1>
                                 <hr> 
                             </div>
@@ -201,7 +199,7 @@
                                             <input type="number" class="form-control" wire:model="Fecha_T" min="1" pattern="^[0-9]+" >
                                         </div>		
                                     </div>
-                                </div>   
+                                </div>    
                                 <br>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
@@ -220,8 +218,14 @@
                                             </div> 
                                         </div>
                                         <div class="btn-group" style=" width:100%;">
-                                            <button class="btn btn-primary" wire:click="Ingresar">INGRESAR</button>
+                                            <button class="btn btn-primary" wire:click="Ingresar" id="boton">INGRESAR</button>
                                         </div>
+                                        <center>
+                                            <div wire:loading wire:target="Ingresar">
+                                                <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
+                                                <h5><strong>Verificando documentos, espere por favor...</strong></h5>                         
+                                            </div>  
+                                        </center> 
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>	
                                 </div>  
@@ -244,7 +248,6 @@
                     <div class="col">
                         <div class="card bg-light mb-3">
                                 <div class="text-muted">
-                                    <br> 
                                     <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA<strong> {{ $NumeroIngresado }} </strong></center></h1>
                                     <hr>
                                 </div>

@@ -6,7 +6,6 @@
             <div class="col"> 
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>SOLICITUDES COMPARTIDAS {{ $AnioSelect}}</strong></center></h1>
                         <hr>
                     </div>
@@ -154,7 +153,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>ARCHIVOS</strong></center></h1>
                         <hr>
                     </div>
@@ -192,7 +190,6 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card bg-light mb-3">
                             <div class="text-muted" >
-                                <br> 
                                 <h1><center><strong>ODP FIRMANTES</strong></center></h1>
                                 <hr>
                             </div>
@@ -312,7 +309,6 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card bg-light mb-3">
                             <div class="text-muted" >
-                                <br> 
                                 <h1><center><strong>FIRMANTES</strong></center></h1>
                                 <hr>
                             </div> 
@@ -362,7 +358,6 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                         <div class="card bg-light mb-3">
                             <div class="text-muted" >
-                                <br> 
                                 <h1><center><strong>ODP V°B°</strong></center></h1>
                                 <hr>
                             </div>  
@@ -482,7 +477,6 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                         <div class="card bg-light mb-3"> 
                             <div class="text-muted" >
-                                <br> 
                                 <h1><center><strong>V°B°</strong></center></h1>
                                 <hr>
                             </div>  

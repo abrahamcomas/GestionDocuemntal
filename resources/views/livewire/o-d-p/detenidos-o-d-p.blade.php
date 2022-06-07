@@ -54,7 +54,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>SOLICITAR FIRMAS</strong></center></h1>
                             <hr>
                         </div> 
@@ -276,7 +275,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>SOLICITAR FIRMAS</strong></center></h1>
                             <hr>
                         </div>
@@ -406,7 +404,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h1><center><strong>ELIMINAR</strong></center></h1>
                             <hr>
                         </div> 

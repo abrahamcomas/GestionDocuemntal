@@ -63,8 +63,7 @@
                 @include('messages')  
                 <div class="col">      
                     <div class="card bg-light mb-3">
-                        <div class="text-muted" > 
-                            <br> 
+                        <div class="text-muted"> 
                             <h1><center><strong>IMAGEN DE FIRMA AUTOMÁTICA</strong></center></h1>
                             <hr>
                         </div>
@@ -105,7 +104,6 @@
                     <div class="col">   
                         @include('messages')  
                         <div class="card bg-light mb-3"> 
-                           
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
@@ -266,7 +264,6 @@
                     <div class="col">
                         <div class="card bg-light mb-3">
                                 <div class="text-muted">
-                                    <br> 
                                     <h1><center><strong>NÚMERO DE IDENTIFICACIÓN INTERNA <strong> {{ $NumeroIngresado }} </strong></center></h1>
                                     <hr>
                                 </div> 

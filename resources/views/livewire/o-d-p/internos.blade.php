@@ -23,7 +23,6 @@
             <div class="col"> 
                 <div class="card bg-light mb-3"> 
                     <div class="text-muted">
-                        <br> 
                         <h1><center>SOLICITUDES INTERNAS <strong> {{ $OPDSelectNombre}}</strong></center></h1>
                         <hr>
                     </div>
@@ -246,7 +245,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ELIMINAR SOLICITUD</strong></center></h2>
                         <hr>
                     </div>
@@ -281,7 +279,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ARCHIVOS</strong></center></h2>
                         <hr>
                     </div>
@@ -359,7 +356,6 @@
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ODP FIRMANTES</strong></center></h2>
                         <hr>
                     </div>
@@ -490,7 +486,6 @@
             @elseif($Cambiar==1)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ODP V°B°</strong></center></h2>
                         <hr>
                     </div>
@@ -621,7 +616,6 @@
             @else 
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ODP ENVIADO</strong></center></h2>
                         <hr>
                     </div>
@@ -758,7 +752,6 @@
                 @endif
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ENVIAR</strong></center></h2>
                         <hr>
                     </div>
@@ -829,7 +822,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ELIMINAR V°B°</strong></center></h2>
                         <hr>
                     </div>
@@ -865,7 +857,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h2><center><strong>ELIMINAR FIRMANTE</strong></center></h2>
                         <hr>
                     </div>
@@ -906,7 +897,6 @@
                     @endif
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
                             <hr>
                         </div>
@@ -938,7 +928,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
                         <h1><center><strong>ELIMINAR ENVIO</strong></center></h1>
                         <hr>
                     </div>

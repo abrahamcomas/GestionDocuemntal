@@ -42,7 +42,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>SOLICITUDES V°B°</strong></center></h1>
                         <hr>
                     </div>
@@ -222,8 +221,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="col">
                 <div class="card bg-light mb-3"> 
-                    <div class="text-muted" >
-                        <br> 
+                    <div class="text-muted">
                         <h1><center><strong>ARCHIVOS</strong></center></h1>
                         <hr>
                     </div>
@@ -262,8 +260,7 @@
                 </div>
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
-                    <div class="text-muted" >
-                        <br> 
+                    <div class="text-muted">
                         <h1><center><strong>FIRMANTES</strong></center></h1>
                         <hr>
                     </div> 
@@ -419,8 +416,7 @@
                 </div>
             @else 
                 <div class="card bg-light mb-3">
-                    <div class="text-muted" >
-                        <br> 
+                    <div class="text-muted">
                         <h1><center><strong>V°B°</strong></center></h1>
                         <hr>
                     </div> 
@@ -564,8 +560,7 @@
                         </div> 
                     </div>
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>
                 </div>
             </div>

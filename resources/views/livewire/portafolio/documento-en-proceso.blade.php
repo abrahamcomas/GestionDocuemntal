@@ -37,7 +37,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>SOLICITUDES EN PROCESO</strong></center></h1>
                         <hr>
                     </div>
@@ -171,8 +170,7 @@
                         {{ $posts->links() }}
                     </div>	
                     <div class="card-footer text-muted"> 
-                        GESTIÓN DOCUMENTAL <br>
-                        SECRETARIA/O OFICINA DE PARTES {{  $DatosOficinaPartes->Nombres }}  {{  $DatosOficinaPartes->Apellidos }} 
+                        SGD
                     </div>   
                 </div>
             </div>
@@ -184,7 +182,6 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>ARCHIVOS</strong></center></h1>
                         <hr>
                     </div>
@@ -220,7 +217,6 @@
             @if($Cambiar==0)
                 <div class="card bg-light mb-3"> 
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>ODP FIRMANTES</strong></center></h1>
                         <hr>
                     </div>
@@ -340,7 +336,6 @@
             @else 
                 <div class="card bg-light mb-3">
                     <div class="text-muted" >
-                        <br> 
                         <h1><center><strong>ODP V°B°</strong></center></h1>
                         <hr>
                     </div>

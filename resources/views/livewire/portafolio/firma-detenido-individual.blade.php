@@ -24,8 +24,7 @@
             <div class="col">  
             @include('messages')  
                 <div class="card bg-light mb-3"> 
-                        <div class="text-muted" >
-                            <br> 
+                        <div class="text-muted">
                             <h1><center><strong>FIRMAR ARCHIVO</strong></center></h1> 
                             <hr>
                         </div>

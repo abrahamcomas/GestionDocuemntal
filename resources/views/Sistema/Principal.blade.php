@@ -45,8 +45,7 @@
 <div class="container-fluid">                                 
     @if(Auth::user()->Contrato==0)
         <div class="card bg-light mb-3">
-            <div class="text-muted" >
-                <br> 
+            <div class="text-muted">
                 <center><strong><h1>POR FAVOR ACTUALIZAR TIPO DE CONTRATO</h1></strong></center> 
                 <hr>
             </div>
@@ -75,7 +74,6 @@
     @else
         <div class="card bg-light mb-3">
             <div class="text-muted" >
-                <br>
                 <h1><center><strong>ESTADÍSTICAS DE USO</strong></center></h1>
                 <hr>
             </div> 

@@ -23,7 +23,6 @@
                 <div class="col"> 
                     <div class="card bg-light mb-3"> 
                         <div class="text-muted">
-                            <br> 
                             <h1><center>SOLICITUDES RECIBIDAS <strong> {{ $OPDSelectNombre}}</strong></strong></center></h1>
                             <hr>
                         </div>
@@ -201,7 +200,6 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>ARCHIVOS</strong></center></h2>
                             <hr>
                         </div>
@@ -248,7 +246,6 @@
                     </div>
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>FUNCIONARIOS</strong></center></h2>
                             <hr>
                         </div>
@@ -337,7 +334,6 @@
                     </div>
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <br> 
                             <h2><center><strong>COMPARTIR</strong></center></h2>
                             <hr>
                         </div>
