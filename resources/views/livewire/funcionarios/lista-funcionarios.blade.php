@@ -22,7 +22,7 @@
                             <table table class="table table-hover table-sm"> 
                                 <thead>
                                     <tr> 
-                                        <th>RUN</th>
+                                        <th>RUT</th>
                                         <th>NOMBRE</th>
                                         <th>APELLIDO</th>
                                         <th>DESACTIVAR</th>

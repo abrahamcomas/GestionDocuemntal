@@ -245,7 +245,7 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ELIMINAR SOLICITUD</strong></center></h2>
+                        <h1><center><strong>ELIMINAR SOLICITUD</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -279,7 +279,7 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ARCHIVOS</strong></center></h2>
+                        <h1><center><strong>ARCHIVOS</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
@@ -326,8 +326,7 @@
                 </div>
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
-                        <h2><center><strong>COMENTARIO POR ARCHIVO</strong></center></h2>
+                        <h1><center><strong>COMENTARIO POR ARCHIVO</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
@@ -356,7 +355,7 @@
             @if($Cambiar==0)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ODP FIRMANTES</strong></center></h2>
+                        <h1><center><strong>ODP FIRMANTES</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
@@ -486,7 +485,7 @@
             @elseif($Cambiar==1)
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ODP V°B°</strong></center></h2>
+                        <h1><center><strong>ODP V°B°</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
@@ -616,7 +615,7 @@
             @else 
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ODP ENVIADO</strong></center></h2>
+                        <h1><center><strong>ODP ENVIADO</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body table-responsive">
@@ -752,7 +751,7 @@
                 @endif
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>ENVIAR</strong></center></h2>
+                        <h1><center><strong>ENVIAR</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -897,7 +896,7 @@
                     @endif
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
+                            <h1><center><strong>¿FINALIZAR SOLICITUD?</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body">

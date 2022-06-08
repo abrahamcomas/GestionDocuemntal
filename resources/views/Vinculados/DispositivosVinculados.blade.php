@@ -7,13 +7,12 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <br> 
-                        <h1><center><strong>DISPOSITIVOS</strong></center></h1>
+                        <h1><center><strong>DISPOSITIVOS VINCULADOS</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table table class="table table-hover">
+                            <table table class="table table-hover table-sm table-bordered"> 
                                 <thead>
                                     <tr> 
                                         <th><center>DISPOSITIVOS</center></th>
@@ -31,7 +30,7 @@
                                         <td><form method="POST" action="{{ route('EliminarVinculo') }}">
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $post->id }}" >
-                                            <button type="submit" class="btn btn-danger active btn-info">ELIMINAR</button>
+                                            <center><button type="submit" class="btn btn-danger active btn-info">ELIMINAR</button></center>
                                         </form></td>
                                     </tr>
                                     @endforeach 

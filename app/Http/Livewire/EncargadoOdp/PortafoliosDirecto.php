@@ -350,6 +350,7 @@ class PortafoliosDirecto extends Component
 
 
             $codificado = Storage::disk('PDF')->delete($VistoBueno->Ruta_T);
+            $codificado = Storage::disk('ImagenPDF')->delete($VistoBueno->Ruta_T);
                 
             $DestinoDocumento                   = DestinoDocumento::find($ID_DestinoDocumento);
             $DestinoDocumento->delete();

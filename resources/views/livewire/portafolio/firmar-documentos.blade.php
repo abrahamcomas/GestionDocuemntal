@@ -121,7 +121,7 @@
                                         </td>
                                     @endif
                                         <td>
-                                            {{$post->NumeroInterno }}{{$post->Anio }}
+                                            {{$post->NumeroInterno }}-{{$post->Anio }}
                                         </td>
                                         <td>
                                             {{$post->Folio}}
@@ -290,7 +290,7 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h1><center><strong>LISTA DE ARCHIVOS</strong></center></h1>
+                        <h1><center><strong>ADMINISTRAR ARCHIVOS</strong></center></h1>
                         <hr>
                     </div> 
                     <div class="card-body">
@@ -454,7 +454,7 @@
                 <div class="card bg-light mb-3" > 
                     <table table class="table table-hover table-sm"> 
                         <div class="text-muted">
-                            <h1><center><strong>ENVIAR PORTAFOLIO</strong></center></h1>
+                            <h1><center><strong>ENVIAR SOLICITUD</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body"> 
@@ -463,7 +463,7 @@
                                 <div class="col-sm-6">
                                     <div class="card bg-light mb-3" >
                                         <div class="card-footer text-muted">
-                                            <h4>SOLICITAR FIRMA</h4>
+                                            <h4>SOLICITAR FIRMA ENCARGADO ODP</h4>
                                         </div>  
                                         <div class="card-body">
                                             Antes de enviar el portafolio a la ODP correspondiente, considere si es necesario solicitar la firma de su jefe/a directo.<br>
@@ -556,6 +556,9 @@
                     <div class="card-body">
                         <strong>¿Desea omitir firma?</strong>
                         <br><br>
+                        <p>Si el archivo fue firmado en el módulo 
+                            <strong>“FIRMA MASIVA”</strong> 
+                            y no se debe firmar nuevamente o considera que el archivo simplemente no debe ir firmado puede omitir el ingreso de dicha firma.</p>
                         <strong>Por favor, Confirme su contraseña de usuario.</strong>
                         <div class="form-label-group">
                             <input type="password" class="form-control" wire:model="ContraseniaFirmado"  placeholder="Confirme Contraseña Usuario" autocomplete="off">
@@ -649,13 +652,12 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h1><center><strong>SOLICITAR FIRMA</strong></center></h1>
+                        <h1><center><strong>SOLICITAR FIRMA ENCARGADO ODP</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body">
-                        ¿Desea enviar solicitud a  <strong>{{ $NombreEncargado}} {{ $ApellidoEncargado}}?</strong>
+                        <h4>¿Desea enviar solicitud a  <strong>{{ $NombreEncargado}} {{ $ApellidoEncargado}}?</strong></h4>
                         <br><br>
-                       
                     </div> 
                     <center>
                     <div class="btn-group" style=" width:80%;">

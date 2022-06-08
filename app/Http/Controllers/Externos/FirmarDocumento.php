@@ -27,7 +27,7 @@ use ZipArchive;
 use Spatie\PdfToImage\Pdf;
 use Org_Heigl\Ghostscript\Ghostscript;
 use Zxing\QrReader;
-use Imagick;
+use imagick;
 use setasign\Fpdi\Fpdi;
 
 class FirmarDocumento extends Controller

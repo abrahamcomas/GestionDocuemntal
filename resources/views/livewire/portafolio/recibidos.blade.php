@@ -773,9 +773,10 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
             <div class="col">
-                <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <h4><strong>FIRMA NO REQUERIDA</strong></h4>
+                <div class="card bg-light mb-3"> 
+                    <div class="text-muted">
+                        <h1><center><strong>FIRMA NO REQUERIDA</strong></center></h1>
+                        <hr>
                     </div> 
                     <div class="card-body">
                         <strong>¿Desea omitir firma?</strong>

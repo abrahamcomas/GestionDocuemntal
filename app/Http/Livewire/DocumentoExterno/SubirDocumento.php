@@ -117,8 +117,6 @@ class SubirDocumento extends Component
             $DocumentosExterno->DIA              = $DIA;   
             $DocumentosExterno->save();   
 
-
-
             //CREAR IMAGEN DE PDF
             $contenido='sgd.municipalidadcurico.cl';
 
@@ -128,40 +126,50 @@ class SubirDocumento extends Component
             $qrimage= public_path('../public/QR/'.$NuevaRuta.'.png');
             \QRCode::url($contenido)->setOutfile($qrimage)->png();
 
-   
-            $pdf = new FPDI(); 
-            $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
-            $UltimaPagina=$pagecount;
-     
-            for($i =1; $i<=$pagecount; $i++){
+            $filepdf = fopen('PDF'.'/'.$codificado,"r");
+            $line_first = fgets($filepdf);
+
+            if($line_first == "%PDF-1.5\r\n"){
                 
-                if($i!=$UltimaPagina){
-                    $pdf->AddPage();
-                    $pdf->setSourceFile('PDF'.'/'.$codificado);
-                    $template = $pdf->importPage($i);
-                    $pdf->useTemplate($template,0, 0, 215, 280, true);
+                $pdf = new FPDI(); 
+                $pagecount =  $pdf->setSourceFile('PDF'.'/'.$codificado);
+                $UltimaPagina=$pagecount;
+         
+                for($i =1; $i<=$pagecount; $i++){
+                    
+                    if($i!=$UltimaPagina){
+                        $pdf->AddPage();
+                        $pdf->setSourceFile('PDF'.'/'.$codificado);
+                        $template = $pdf->importPage($i);
+                        $pdf->useTemplate($template,0, 0, 215, 280, true);
+                    }
+                    else{  
+                        $pdf->AddPage();
+                        $pdf->setSourceFile('PDF'.'/'.$codificado);
+                        $template = $pdf->importPage($i);
+                        $pdf->useTemplate($template,0, 0, 215, 280, true);
+                        $pdf->Image('QR/'.$NuevaRuta2, 173, 240, 40, 40);
+                        $pdf->SetY(239);
+                        $pdf->SetFont('Arial','B',7);
+                        $pdf->Cell(172);
+                        $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
+                        $pdf->Ln(4);
+                    }
                 }
-                else{ 
-                    $pdf->AddPage();
-                    $pdf->setSourceFile('PDF'.'/'.$codificado);
-                    $template = $pdf->importPage($i);
-                    $pdf->useTemplate($template,0, 0, 215, 280, true);
-                    $pdf->Image('QR/'.$NuevaRuta2, 173, 240, 40, 40);
-                    $pdf->SetY(239);
-                    $pdf->SetFont('Arial','B',7);
-                    $pdf->Cell(172);
-                    $pdf->Cell(0,6,utf8_decode("VALIDAR FIRMAS Y V°B°"),0,0,'C');
-                    $pdf->Ln(4);
-                }
+     
+                $pdf->Output('F', 'ImagenPDF/'.$codificado);
+                Storage::disk('QR')->delete($NuevaRuta2);
+                //FIN CREAR IMAGEN DE PDF
+    
+    
+                $this->Subido = 1;   
+                $this->Ruta = $DocumentosExterno->Ruta_T; 
+                 
+            }else{
+                session()->flash('message2', '"PDF NO COMPATIBLE".');  
             }
+ 
 
-            $pdf->Output('F', 'ImagenPDF/'.$codificado);
-            Storage::disk('QR')->delete($NuevaRuta2);
-            //FIN CREAR IMAGEN DE PDF
-
-
-            $this->Subido = 1;   
-            $this->Ruta = $DocumentosExterno->Ruta_T; 
             
         }
 

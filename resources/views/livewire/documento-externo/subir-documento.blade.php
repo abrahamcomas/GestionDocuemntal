@@ -135,6 +135,11 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                     @include('messages')  
+                    @if (session()->has('message2'))
+                        <div class="alert alert-danger">
+                            {{ session('message2') }}
+                        </div>
+                    @endif
                     <div class="col"> 
                         <div class="card bg-light mb-3">
                                 <div class="text-muted" >

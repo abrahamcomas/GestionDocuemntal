@@ -589,7 +589,15 @@
                         </ul>
                     </li>
                 @endif 
-           
+                @if(Auth::user()->Jefe==1)
+                        <hr style="height:3px;background-color: #56FF02;">
+                        <form method="POST" action="{{ route('PortafolioDirecto') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                <strong>SOLICITUDES INTERNAS</strong>
+                            </button> 
+                        </form>
+                    @endif
                 @if(Auth::user()->Acta==1)
                     <hr style="height:3px;background-color: #56FF02;">
                     <li>
@@ -613,35 +621,6 @@
                         </ul>
                     </li>
                 @endif
-                @if(Auth::user()->Jefe==1)
-                    <hr style="height:3px;background-color: #56FF02;">
-                    <li>
-                        <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ENCARGADO/A ODP</strong></a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu3">
-                            <hr style="background-color: #FFFFFF;">
-                            <form method="POST" action="{{ route('AdministrarSecretaria') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SECRETARIA ODP
-                                </button> 
-                            </form>
-                            <form method="POST" action="{{ route('Subrogante') }}">
-                                @csrf
-                                <button type="submit" class="btn list-group-item-action btn-link">
-                                    SUBROGANTE
-                                </button>
-                            </form>
-                        </ul>
-                        <hr style="height:3px;background-color: #56FF02;">
-                    </li>
-                    <li>
-                    <form method="POST" action="{{ route('PortafolioDirecto') }}">
-                        @csrf
-                        <button type="submit" class="btn list-group-item-action btn-link">
-                            <strong>SOLICITUDES INTERNAS</strong>
-                        </button> 
-                    </form>
-                @endif
                 @if(Auth::user()->Secretaria==1)
                     <hr style="height:3px;background-color: #56FF02;">
                     <li>
@@ -654,6 +633,7 @@
                                     <strong>OPD INTERNA</strong>
                                 </button> 
                             </form>
+                            <hr style="background-color: #FFFFFF;">
                             <li>
                                 <a href="#homeSubmenuOPD1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>CREAR</strong></a>
                                 <ul class="collapse list-unstyled" id="homeSubmenuOPD1">
@@ -821,6 +801,36 @@
                     <a href="#homeSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>OPCIONES</strong></a>
                     <ul class="collapse list-unstyled" id="homeSubmenu7">
                     <hr style="background-color: #FFFFFF;">
+
+                    @if(Auth::user()->Jefe==1)
+                        <hr style="height:3px;background-color: #56FF02;">
+                        <li>
+                            <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><strong>ENCARGADO/A ODP</strong></a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu3">
+                                <hr style="background-color: #FFFFFF;">
+                                <form method="POST" action="{{ route('AdministrarSecretaria') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        CAMBIAR SECRETARIA ODP
+                                    </button> 
+                                </form>
+                                <form method="POST" action="{{ route('Subrogante') }}">
+                                    @csrf
+                                    <button type="submit" class="btn list-group-item-action btn-link">
+                                        SUBROGANTE
+                                    </button>
+                                </form>
+                            </ul>
+                            <hr style="height:3px;background-color: #56FF02;">
+                        </li>
+                        <li>
+                        <form method="POST" action="{{ route('PortafolioDirecto') }}">
+                            @csrf
+                            <button type="submit" class="btn list-group-item-action btn-link">
+                                <strong>SOLICITUDES INTERNAS</strong>
+                            </button> 
+                        </form>
+                    @endif
                         <form method="POST" action="{{ route('CambiarLugar') }}">
                             @csrf
                             <button type="submit" class="btn list-group-item-action btn-link">
@@ -872,23 +882,25 @@
                     </li>
                 @endif
             </ul>
+            <hr style="height:3px;background-color: #56FF02;">
             <ul class="list-unstyled CTAs">
                 <li>
                     <div class="sidebar-heading"><a href="{{ route('Graficos') }}" style="color: #FFFFFF;"><center><h4>GRÁFICOS</h4></center></a></div>
                 </li>
             </ul>
+            <hr style="background-color: #FFFFFF;">
             <ul class="list-unstyled">
                 <center>
-                    INFORMÁTICA {{ date("Y") }}<br>
                     @if(Auth::user()->Subrogante==1)
                         <a class="navbar-brand" href="#" style="color: red; font-size:13px;"><strong>IMPORTANTE<br>SUBROGANTE HABILITADO</strong></a>
                     @endif
                     <body onload="mueveReloj()">
                     <center><h7>{{ $diaFC }} {{ $numeroDiaFC }} de {{ $mesFC }} {{ $anioFC }}</h7><br></center>
                     <strong><div id="Hora"></div></strong>
-                    <p><strong><?php echo session('LugarDeTrabajo'); ?></strong></p>
+                    <p><strong>ODP <?php echo session('LugarDeTrabajo'); ?></strong></p>
                 </center>
             </ul>
+            <hr style="background-color: #FFFFFF;">
             <ul class="list-unstyled">
                 <li>
                     @php
@@ -905,6 +917,7 @@
                 </li>
             </ul>
             <center><section><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></section></center>
+            <center><strong><p>INFORMÁTICA {{ date("Y") }}</p></strong></center>
         </nav>
 @endif	
         <div id="page-content-wrapper">
@@ -935,12 +948,11 @@
             <center>          
                 <div class="circle bounce2"><h1 style="color: #FFFFFF;"><strong>SGD</strong></h1></div>
                 <hr>
-                <h5><strong>Sistema Gestión Documental (SGD)</strong></h5>             
-                <hr>                      
+                <h5><strong>Sistema Gestión Documental (SGD)</strong></h5>                                 
             </center> 
 			<div class="btn-group">
-				<button class="btn btn-danger active" type="button" data-dismiss="modal">CANCELAR</button>
-        		<a class="btn btn-primary active" href="{{ route('CerrarSesion') }}">ACEPTAR</a>
+				<button class="btn btn-danger active" type="button" data-dismiss="modal">NO</button>
+        		<a class="btn btn-primary active" href="{{ route('CerrarSesion') }}">SI</a>
       		</div>
     	</div>
  	</div>

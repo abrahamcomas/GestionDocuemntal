@@ -249,7 +249,7 @@
             <div class="col">
                 <div class="card bg-light mb-3">
                     <div class="text-muted">
-                        <h2><center><strong>RECHAZAR PORTAFOLIO</strong></center></h2>
+                        <h1><center><strong>RECHAZAR PORTAFOLIO</strong></center></h1>
                         <hr>
                     </div>
                     <div class="card-body">
@@ -286,7 +286,7 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <h2><center><strong>ARCHIVOS</strong></center></h2>
+                            <h1><center><strong>ARCHIVOS</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
@@ -332,7 +332,7 @@
                     </div>
                     <div class="card bg-light mb-3">
                         <div class="text-muted"> 
-                            <h2><center><strong>COMENTARIO POR ARCHIVOS</strong></center></h2>
+                            <h1><center><strong>COMENTARIO POR ARCHIVOS</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
@@ -364,7 +364,7 @@
                     </div>
                     <div class="card bg-light mb-3"> 
                         <div class="text-muted">
-                            <h2><center><strong>FIRMANTES</strong></center></h2>
+                            <h1><center><strong>FIRMANTES</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body table-responsive">
@@ -562,7 +562,7 @@
                 <div class="col">
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <h2><center><strong>NO DISPONIBLE</strong></center></h2>
+                            <h1><center><strong>NO DISPONIBLE</strong></center></h1>
                             <hr>
                         </div> 
                         <div class="card-body">
@@ -597,11 +597,10 @@
                     @endif
                     <div class="card bg-light mb-3">
                         <div class="text-muted">
-                            <h2><center><strong>FINALIZAR SOLICITUD</strong></center></h2>
+                            <h1><center><strong>¿FINALIZAR SOLICITUD?</strong></center></h1>
                             <hr>
                         </div>
                         <div class="card-body">
-                            <h6>¿Desea finalizar?</h6>
                             <br> 
                         <strong>AGREGAR OBSERVACIÓN (OPCIONAL)</strong>
                         <div class="form-label-group"> 
